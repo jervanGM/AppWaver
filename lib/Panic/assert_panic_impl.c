@@ -2,7 +2,7 @@
 
 void assert_panic_implementation
 (
-    uint32_t const u32_line,
+    c_uint32_t const u32_line,
     char const * const pch_file,
     char const * const pch_info
 )

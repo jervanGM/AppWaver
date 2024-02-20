@@ -1,0 +1,699 @@
+AutoGen Definitions dummy;
+file = {
+  file-id   = 'test__suite_8c';
+  file-name = 'test_suite.c';
+    func = {
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'test__suite_8c_1a18c08f9aa5dca7e075adceb1b7dc980f';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'UNITY_TEST_SUITE';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.c';
+      func-mem-desc-line = '5';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    };
+  file-full-name  = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.c';
+  file-first-line = '1';
+  file-briefdesc  = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+  file-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+}; /* file */
+file = {
+  file-id   = 'test__suite_8h';
+  file-name = 'test_suite.h';
+    define = {
+    define-member = {
+      define-mem-kind = 'define';
+      define-mem-id   = 'test__suite_8h_1a560906aa91b82959e13ce3bce3514dd2';
+      define-mem-virt = normal;
+      define-mem-prot = public;
+      define-mem-name = 'UNITY_TEST_RESET';
+      define-mem-initializer = <<_EnD_oF_dEf_TeXt_
+    void resetTest(void) \
+    {   \
+        tearDown(); \
+        setUp();    \
+    }
+_EnD_oF_dEf_TeXt_;
+      define-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      define-mem-desc-line = '15';
+      define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      define-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* define-member */
+    define-member = {
+      define-mem-kind = 'define';
+      define-mem-id   = 'test__suite_8h_1aee306c6ad36d1b835c1562e45296e68f';
+      define-mem-virt = normal;
+      define-mem-prot = public;
+      define-mem-name = 'UNITY_TEST_SUITE';
+      define-mem-initializer = <<_EnD_oF_dEf_TeXt_
+    int main() { \
+        UNITY_BEGIN(); \
+        run_test_suites(); \
+        return UNITY_END(); \
+    }
+_EnD_oF_dEf_TeXt_;
+      define-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      define-mem-desc-line = '22';
+      define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      define-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* define-member */
+    };
+    func = {
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'test__suite_8h_1a4ffb37a2535162eaaa90fbbb28f4af8d';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+static void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'run_test_suites';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      func-mem-desc-line = '10';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'test__suite_8h_1a95c834d6178047ce9e1bce7cbfea2836';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'setUp';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      func-mem-desc-line = '7';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'test__suite_8h_1a9909011e5fea0c018842eec4d93d0662';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'tearDown';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      func-mem-desc-line = '8';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'test__suite_8h_1a7dad4c0ea4585474f46353a7638bb000';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'trace_test_suite';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+      func-mem-desc-line = '6';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    };
+  file-full-name  = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/test_suite.h';
+  file-first-line = '1';
+  file-briefdesc  = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+  file-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+}; /* file */
+file = {
+  file-id   = 'trace__test_8c';
+  file-name = 'trace_test.c';
+    func = {
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1ab0babaea76023cdfb392e7cea45e3ec2';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'concurrent_trace';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'arg';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '83';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a95c834d6178047ce9e1bce7cbfea2836';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'setUp';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '5';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a9909011e5fea0c018842eec4d93d0662';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'tearDown';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '9';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a1ece5e96527affb67408a5e13b721df9';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_capacity_limits';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '102';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace capacity limits test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function generates a large number of messages to test trace capacity limits.
+
+@post The trace capacity limits test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1ad18a50c72699446c49c07b89a3c7cf3f';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_concurrency';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '89';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace concurrency test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function creates multiple threads to perform concurrent calls to TRACE_INFO.
+
+@post The trace concurrency test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1ac4bc7d6b42fee782bc99f7b8310f6022';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_debug';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '46';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a debug trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a debug trace using TRACE_DEBUG.
+It also performs a trace with a specified number.
+
+@post The debug trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a639d299f29e32cfb44ff9a34700328b0';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_error';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '35';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an error trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs an error trace using TRACE_ERROR.
+It also performs a trace with a specified number.
+
+@post The error trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1af335d14a596776abf9ce793c7b964f46';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_info';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '13';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an information trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs an information trace using TRACE_INFO.
+It also performs a trace with a specified number.
+
+@post The information trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1ab505ed24964466b4fa69640a65fe12d2';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_message_type_failure';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '57';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an invalid message type trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function attempts to perform a trace with an invalid message type.
+
+@post It is ensured that the function handles the invalid message type appropriately.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a21cd1a78d08c4c7703c4db134934a5f9';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_multiple_arguments';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '65';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace with multiple arguments.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a trace with multiple arguments using TRACE_INFO.
+
+@post The trace with multiple arguments is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a031b054d6b202d9c0031eed22aaec675';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_performance';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '73';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace performance test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs multiple calls to TRACE_INFO to evaluate performance.
+
+@post The trace performance test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a4378a6bb2aae07bd9e510c290147dd17';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_stress';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '113';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace stress test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function generates a large number of calls to TRACE_INFO under heavy load.
+
+@post The trace stress test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a5550f25605f3a6710a38343d1246efca';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_warning';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '24';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a warning trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a warning trace using TRACE_WARNING.
+It also performs a trace with a specified number.
+
+@post The warning trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8c_1a7dad4c0ea4585474f46353a7638bb000';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'trace_test_suite';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+      func-mem-desc-line = '122';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    };
+  file-full-name  = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.c';
+  file-first-line = '1';
+  file-briefdesc  = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+  file-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+}; /* file */
+file = {
+  file-id   = 'trace__test_8h';
+  file-name = 'trace_test.h';
+    func = {
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a1ece5e96527affb67408a5e13b721df9';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_capacity_limits';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '89';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace capacity limits test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function generates a large number of messages to test trace capacity limits.
+
+@post The trace capacity limits test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1ad18a50c72699446c49c07b89a3c7cf3f';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_concurrency';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '80';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace concurrency test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function creates multiple threads to perform concurrent calls to TRACE_INFO.
+
+@post The trace concurrency test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1ac4bc7d6b42fee782bc99f7b8310f6022';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_debug';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '44';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a debug trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a debug trace using TRACE_DEBUG.
+It also performs a trace with a specified number.
+
+@post The debug trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a639d299f29e32cfb44ff9a34700328b0';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_error';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '34';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an error trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs an error trace using TRACE_ERROR.
+It also performs a trace with a specified number.
+
+@post The error trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1af335d14a596776abf9ce793c7b964f46';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_info';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '14';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an information trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs an information trace using TRACE_INFO.
+It also performs a trace with a specified number.
+
+@post The information trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1ab505ed24964466b4fa69640a65fe12d2';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_message_type_failure';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '53';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs an invalid message type trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function attempts to perform a trace with an invalid message type.
+
+@post It is ensured that the function handles the invalid message type appropriately.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a21cd1a78d08c4c7703c4db134934a5f9';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_multiple_arguments';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '62';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace with multiple arguments.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a trace with multiple arguments using TRACE_INFO.
+
+@post The trace with multiple arguments is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a031b054d6b202d9c0031eed22aaec675';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_performance';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '71';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace performance test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs multiple calls to TRACE_INFO to evaluate performance.
+
+@post The trace performance test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a4378a6bb2aae07bd9e510c290147dd17';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_stress';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '98';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a trace stress test.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function generates a large number of calls to TRACE_INFO under heavy load.
+
+@post The trace stress test is completed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'trace__test_8h_1a5550f25605f3a6710a38343d1246efca';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'test_safe_trace_warning';
+      func-mem-desc-file = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+      func-mem-desc-line = '24';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Performs a warning trace.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+This function performs a warning trace using TRACE_WARNING.
+It also performs a trace with a specified number.
+
+@post The warning trace is performed successfully.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    };
+  file-full-name  = 'C:/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/lib/Safe_Trace/Test/trace_test.h';
+  file-first-line = '1';
+  file-briefdesc  = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+  file-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+}; /* file */

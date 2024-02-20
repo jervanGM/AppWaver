@@ -18,7 +18,7 @@ void taskAnalog(void *pvParameters)
     plantbuffer = getSDataBuffer_t();
     if(plantbuffer.size>0 && plantbuffer.ready)
     {
-      for(uint16_t i = 0;i<plantbuffer.size;i++)
+      for(c_uint16_t i = 0;i<plantbuffer.size;i++)
       {
         TRACE_INFO("PLANT INFO:", TO_STRING(plantbuffer.data[i]));
       }

@@ -2,3 +2,5 @@
 .vscode
 sdkconfig.dfrobot_beetle_esp32c3
 AppWaver.code-workspace
+lib/Safe_Trace/MakeTest/test_report.txt
+lib/Safe_Trace/MakeTest/build/*

@@ -1,9 +1,9 @@
 #include "sw_tmr_cfg.h"
 
 
-int64_t get_sw_system_time(void)
+c_int64_t get_sw_system_time(void)
 {
-    return (int64_t)xTaskGetTickCount() / (int64_t)configTICK_RATE_HZ;
+    return (c_int64_t)xTaskGetTickCount() / (c_int64_t)configTICK_RATE_HZ;
 }
 
 ETimerCfgError_t sw_timer_init(STimer_t *timer)
@@ -28,7 +28,7 @@ ETimerCfgError_t sw_timer_init(STimer_t *timer)
     {
         return TMR_BAD_STATE_ERR;
     }
-    timer->rtos_timer.start_time = (int64_t)xTimerGetExpiryTime(timer->rtos_timer.handler);
+    timer->rtos_timer.start_time = (c_int64_t)xTimerGetExpiryTime(timer->rtos_timer.handler);
 
     return TMR_OK;
 }
@@ -55,7 +55,7 @@ bool sw_timer_is_on(STimer_t *timer)
 
 bool sw_timer_is_expired(STimer_t *timer)
 {
-    uint32_t current_time = (uint32_t)xTaskGetTickCount();
+    c_uint32_t current_time = (c_uint32_t)xTaskGetTickCount();
     if (timer->rtos_timer.start_time < current_time)
     {
         if (current_time != portMAX_DELAY)

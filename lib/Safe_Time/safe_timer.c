@@ -5,8 +5,8 @@
 STime_t get_system_time(void)
 {
     static bool hw_sys_time_err = false;
-    static int64_t prev_sys_time = TIME_START;
-    int64_t sys_time = TIME_START;
+    static c_int64_t prev_sys_time = TIME_START;
+    c_int64_t sys_time = TIME_START;
     if (!hw_sys_time_err)
     {
         sys_time = get_hw_system_time();
@@ -32,7 +32,7 @@ STime_t get_system_time(void)
     return encode_time_to_date(sys_time);
 }
 
-STime_t encode_time_to_date(int64_t time)
+STime_t encode_time_to_date(c_int64_t time)
 {
     STime_t date;
 

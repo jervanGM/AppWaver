@@ -13,13 +13,13 @@ typedef struct {
 } SBufferTime_t;
 
 typedef struct {
-    uint8_t data[BUFFER_SIZE];
+    c_uint8_t data[BUFFER_SIZE];
     size_t size;
     SBufferTime_t buffer_timestamp;
     bool ready;
 } SDataBuffer_t;
 
-void addToBuffer(SDataBuffer_t *buffer, uint8_t value);
+void addToBuffer(SDataBuffer_t *buffer, c_uint8_t value);
 
 SDataBuffer_t getSDataBuffer_t();
 

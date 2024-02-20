@@ -9,9 +9,9 @@ static void ana_port_init(void);
 
 static void ana_port_reset(void);
 
-static void ana_port_read(uint8_t channel,uint32_t * data);
+static void ana_port_read(c_uint8_t channel,c_uint32_t * data);
 
-static void ana_port_write(uint8_t channel,uint32_t data);
+static void ana_port_write(c_uint8_t channel,c_uint32_t data);
 
 // Implementación de la interfaz de la HAL del ADC
 static const IAnaPort ana_port_interface = {

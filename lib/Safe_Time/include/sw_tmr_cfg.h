@@ -13,7 +13,7 @@
 
 #define TIMER_WAIT_TICK_NULL 0 
 
-int64_t get_sw_system_time(void);
+c_int64_t get_sw_system_time(void);
 
 ETimerCfgError_t sw_timer_init(STimer_t *timer);
 

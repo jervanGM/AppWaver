@@ -1,7 +1,7 @@
 #include "dsp.h"
 #include "data_buffer.h"
 
-void addToBuffer(SDataBuffer_t *buffer, uint8_t value) {
+void addToBuffer(SDataBuffer_t *buffer, c_uint8_t value) {
     if (buffer->size < BUFFER_SIZE) {
         if(buffer->size == 0)
         {
@@ -16,7 +16,7 @@ void addToBuffer(SDataBuffer_t *buffer, uint8_t value) {
 }
 
 SDataBuffer_t getSDataBuffer_t() {
-    uint8_t data = 0;
+    c_uint8_t data = 0;
     static SDataBuffer_t SDataBuffer_t = { .size = 0, .ready = false };
     if(SDataBuffer_t.ready) clearSDataBuffer_t(&SDataBuffer_t);
     data = getDSPData();

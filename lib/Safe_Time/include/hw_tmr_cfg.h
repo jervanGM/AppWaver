@@ -7,7 +7,7 @@
 
 #define SYS_TIME_DIV 1000000 //uSeconds to Seconds
 
-int64_t get_hw_system_time(void);
+c_int64_t get_hw_system_time(void);
 
 ETimerCfgError_t hw_timer_init(STimer_t *timer);
 

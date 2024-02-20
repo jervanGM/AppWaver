@@ -28,18 +28,18 @@ typedef enum{
 } ETimerCfgError_t;
 
 typedef struct {
-    uint32_t start_time;
+    c_uint32_t start_time;
     void *handler;
 } SSwTimer_t;
 
 typedef struct {
-    int64_t start_time;
+    c_int64_t start_time;
     bool is_active;
 } SHwTimer_t;
 
 typedef struct {
     char *id;
-    uint64_t period;
+    c_uint64_t period;
     ETypeTimer_t type;
     SSwTimer_t rtos_timer;
     SHwTimer_t rtc_timer;
@@ -47,12 +47,12 @@ typedef struct {
 } STimer_t;
 
 typedef struct{
-    uint8_t sec;
-    uint8_t min;
-    uint8_t hour;
-    uint8_t day;
-    uint8_t month;
-    uint8_t year;
+    c_uint8_t sec;
+    c_uint8_t min;
+    c_uint8_t hour;
+    c_uint8_t day;
+    c_uint8_t month;
+    c_uint8_t year;
 } STime_t;
 
 #endif /* TIMER_TYPES_H_ */

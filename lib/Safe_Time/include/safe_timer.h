@@ -8,7 +8,7 @@
 
 STime_t get_system_time(void);
 
-STime_t encode_time_to_date(int64_t time);
+STime_t encode_time_to_date(c_int64_t time);
 
 ETimerCfgError_t safe_timer_init(STimer_t *timer);
 

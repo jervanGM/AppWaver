@@ -15,6 +15,6 @@
 static int adc_raw[2][10];
 static int voltage[2][10];
 
-void read_adc(uint8_t channel,uint32_t * data);
+void read_adc(c_uint8_t channel,c_uint32_t * data);
 
 #endif /* ADC_DRV_H_ */

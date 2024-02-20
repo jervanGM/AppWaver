@@ -5,7 +5,7 @@
 #include "esp_timer.h"
 
 
-int64_t get_hw_system_time(void)
+c_int64_t get_hw_system_time(void)
 {
     return esp_timer_get_time();
 }
@@ -54,7 +54,7 @@ static ETimerCfgError_t hw_timer_restart_internal(STimer_t *timer)
 
 static bool hw_timer_is_expired_internal(STimer_t *timer)
 {
-    int64_t time_delta = (timer->rtc_timer.start_time - esp_timer_get_time());
+    c_int64_t time_delta = (timer->rtc_timer.start_time - esp_timer_get_time());
     if (time_delta >= timer->period)
     {
         if (timer->type == PERIODIC)
