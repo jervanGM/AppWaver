@@ -86,7 +86,7 @@ void test_safe_trace_concurrency(); /**< \test */
  *
  * @post The trace concurrency test is completed successfully.
  */
-void* test_safe_trace_concurrent_trace(void* arg) /**< \test */
+void* test_safe_trace_concurrent_trace(void* arg); /**< \test */
 
 /**
  * @brief Performs a trace capacity limits test.

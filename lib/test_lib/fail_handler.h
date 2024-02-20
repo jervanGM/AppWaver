@@ -1,7 +1,8 @@
 #ifndef FAIL_HANDLER_H_
 #define FAIL_HANDLER_H_
-
+ 
 #include <signal.h>
+#include <stdbool.h>
 
 void Test_OK_Handler(int signo)
 {

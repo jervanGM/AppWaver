@@ -106,7 +106,7 @@ void test_safe_trace_concurrency() {
     signal(SIGSEGV, TEST_Fail_Handler);
     pthread_t threads[5];
     for (int i = 0; i < 5; ++i) {
-        pthread_create(&threads[i], NULL, concurrent_trace, NULL);
+        pthread_create(&threads[i], NULL, test_safe_trace_concurrent_trace, NULL);
     }
     for (int i = 0; i < 5; ++i) {
         pthread_join(threads[i], NULL); // Wait for threads to finish
