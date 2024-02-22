@@ -1,19 +1,25 @@
 #include "dsp.h"
 #include "ana_port.h"
 
-c_uint8_t getDSPData()
+
+void dsp_init_port()
 {
-    c_uint32_t data;
-    const IAnaPort *port = HAL_ANA_GetPort();
+    hal_ana_get_port()->init();
+}
+
+uint8_t get_dsp_data()
+{
+    uint32_t data;
+    const IAnaPort *port = hal_ana_get_port();
     port->read(2,&data);
     // the size of this array represents how many numbers will be used
     // to calculate the average
-    iirFilter(&data);
-    c_uint8_t normalized_data = dataNormalization(data);
+    iir_filter(&data);
+    uint8_t normalized_data = data_normalization(data);
     return normalized_data;
 }
 
-void iirFilter(c_uint32_t *input)
+void iir_filter(uint32_t *input)
 {
     static float x[] = {0, 0, 0};
     static float y[] = {0, 0, 0};
@@ -26,23 +32,23 @@ void iirFilter(c_uint32_t *input)
     y[0] = (a[0] * y[1] + a[1] * y[2] +
             b[0] * x[0] + b[1] * x[1] + b[2] * x[2]) / z;
 
-    *input = (c_uint32_t)y[0];
+    *input = (uint32_t)y[0];
     for (int i = 1; i >= 0; i--) {
         x[i + 1] = x[i]; // almacenar xi
         y[i + 1] = y[i]; // almacenar yi
     }
 }
 
-c_uint8_t dataNormalization(c_uint32_t input) {
+uint8_t data_normalization(uint32_t input) {
     // Valor mínimo y máximo esperado para los datos de entrada
-    c_uint32_t min_value = 0;  // Valor mínimo
-    c_uint32_t max_value = 2048;  // Valor máximo
+    uint32_t min_value = 0;  // Valor mínimo
+    uint32_t max_value = 2048;  // Valor máximo
 
     // Valor mínimo y máximo para los datos normalizados
-    c_uint8_t normalized_min = 0;  // Valor mínimo normalizado
-    c_uint8_t normalized_max = 255;  // Valor máximo normalizado
+    uint8_t normalized_min = 0;  // Valor mínimo normalizado
+    uint8_t normalized_max = 255;  // Valor máximo normalizado
 
     // Realiza la normalización utilizando una regla de tres y redondeo
-    c_uint8_t normalized_data = (c_uint8_t)(((input - min_value) * (normalized_max - normalized_min) + (max_value - 1) / 2) / (max_value - min_value));
+    uint8_t normalized_data = (uint8_t)(((input - min_value) * (normalized_max - normalized_min) + (max_value - 1) / 2) / (max_value - min_value));
     return normalized_data;
 }

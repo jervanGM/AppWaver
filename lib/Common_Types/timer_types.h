@@ -4,6 +4,7 @@
 #define TIME_START 0 
 #include <stdlib.h>
 #include <stdbool.h>
+#include "gen_types.h"
 
 #define SEC_DIV 60
 #define MIN_DIV 60

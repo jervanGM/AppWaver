@@ -4,5 +4,7 @@ sdkconfig.dfrobot_beetle_esp32c3
 AppWaver.code-workspace
 lib/Safe_Trace/MakeTest/test_report.txt
 lib/Panic/MakeTest/test_report.txt
+lib/Safe_Time/MakeTest/test_report.txt
 lib/Safe_Trace/MakeTest/build/*
 lib/Panic/MakeTest/build/*
+lib/Safe_Time/MakeTest/build/*

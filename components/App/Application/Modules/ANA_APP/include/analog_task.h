@@ -2,12 +2,20 @@
 #define ANALOG_TASK_H_
 
 
-void taskAnalog(void *pvParameters);
+void task_analog(void *pvParameters);
 
-void taskAnalogInit();
+void task_analog_init();
 
-void taskAnalogQGet();
+void task_analog_q_get();
 
-void taskAnalogQSet();
+void task_analog_q_set();
+
+void on_ana_init();
+
+void on_ana_ready();
+
+void on_ana_execute();
+
+void on_ana_breakdown();
 
 #endif /* ANALOG_TASK_H_ */

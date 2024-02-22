@@ -8,14 +8,16 @@
 #define WIRELESS_T_PRIOR 5
 #define POWER_T_PRIOR 5
 #define IND_T_PRIOR 5
+#define CONTROL_T_PRIOR 5
 
-#define ANA_T_PERIOD 10
+#define ANA_T_PERIOD 100
 #define DIGI_T_PERIOD 100
 #define FLASH_T_PERIOD 100
 #define SERIAL_RX_T_PERIOD 100
 #define WIRELESS_T_PERIOD 100
 #define POWER_T_PERIOD 100
 #define IND_T_PERIOD 100
+#define CONTROL_T_PERIOD 10
 
 void systemConfig();
 
