@@ -1,7 +1,7 @@
 #ifndef ANALOG_TASK_H_
 #define ANALOG_TASK_H_
 
-
+#include "i_analog_data.h"
 /**
  * @brief Task function responsible for managing the analog task.
  * 

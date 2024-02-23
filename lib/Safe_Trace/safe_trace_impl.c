@@ -44,13 +44,18 @@ void safe_trace_implementation(ETypeTrace_t trace_type, const char *args[])
     prefix = get_prefix(trace_type);
     // Llamar a safe_trace_implementation solo si los argumentos son válidos y seguros
     if (args_valid) {
-        printf("%s: [ ", prefix);
+        fputs(prefix, stdout);
+        fputs(": [ ", stdout);
+
         for (int i = 0; args[i] != NULL; ++i) {
-            printf("%s ", args[i]);
+            fputs(args[i], stdout);
+            putchar(' ');  // Agregar espacio entre los elementos
         }
-        printf("]\n");
+
+        puts("]");
     } else {
-        printf("[TRACE ERROR][INVALID ARGUMENT]\n");
+        puts("[TRACE ERROR][INVALID ARGUMENT]");
     }
+
 }
 

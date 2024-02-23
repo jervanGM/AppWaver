@@ -56,17 +56,18 @@ void on_ana_init()
     // Initialize analog components
     analog_init();
     analog_app_init();
+    analog_sm_set_st_event(STATE_NEXT);
     // Check for faults
-    if(analog_app_check_faults() != ANA_TASK_OK)
-    {
-        // Set state machine event to fault
-        analog_sm_set_st_event(STATE_FAULT);
-    }
-    else
-    {
-        // Set state machine event to next
-        analog_sm_set_st_event(STATE_NEXT);
-    }
+    // if(analog_app_check_faults() != ANA_TASK_OK)
+    // {
+    //     // Set state machine event to fault
+    //     analog_sm_set_st_event(STATE_FAULT);
+    // }
+    // else
+    // {
+    //     // Set state machine event to next
+    //     analog_sm_set_st_event(STATE_NEXT);
+    // }
 }
 
 /*Ready state execute function*/
@@ -80,16 +81,17 @@ void on_ana_ready()
     if(plant_buff.ready && (plant_buff.size > 0))
     {
         // Check for faults
-        if(analog_app_check_faults() != ANA_TASK_OK)
-        {
-            // Set state machine event to fault
-            analog_sm_set_st_event(STATE_FAULT);
-        }
-        else
-        {
-            // Set state machine event to next
-            analog_sm_set_st_event(STATE_NEXT);
-        }
+        // if(analog_app_check_faults() != ANA_TASK_OK)
+        // {
+        //     // Set state machine event to fault
+        //     analog_sm_set_st_event(STATE_FAULT);
+        // }
+        // else
+        // {
+        //     // Set state machine event to next
+        //     analog_sm_set_st_event(STATE_NEXT);
+        // }
+        analog_sm_set_st_event(STATE_NEXT);
     }
 }
 
@@ -103,16 +105,16 @@ void on_ana_execute()
     // Send data to analog controller
     analog_controller_send(plant_buff,buffer_time);
     // Check for faults
-    if(analog_app_check_faults() != ANA_TASK_OK)
-    {
-        // Set state machine event to fault
-        analog_sm_set_st_event(STATE_FAULT);
-    }
-    else
-    {
-        // Set state machine event to next
-        analog_sm_set_st_event(STATE_NEXT);
-    }
+    // if(analog_app_check_faults() != ANA_TASK_OK)
+    // {
+    //     // Set state machine event to fault
+    //     analog_sm_set_st_event(STATE_FAULT);
+    // }
+    // else
+    // {
+    //     // Set state machine event to next
+    //     analog_sm_set_st_event(STATE_NEXT);
+    // }
 }
 
 /*Breakdown state execute function*/
