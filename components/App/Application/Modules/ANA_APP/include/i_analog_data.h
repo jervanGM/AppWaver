@@ -4,11 +4,18 @@
 #include "safe_timer.h"
 
 #define BUFFER_SIZE 128
+#define ANALOGIC_ERROR_SLOT 0
+#define HAL_ANA_CONFIG_ERROR -255
+#define ANA_DSP_IIR_ERROR -19
+#define ANA_DSP_NORMALIZE_ERROR -18
+#define ANA_DRV_BUFFER_EMPTY -17
 
 typedef enum{
     ANA_TASK_OK,
     ANA_TASK_INIT_FAIL,
     ANA_TASK_SM_INIT_FAIL,
+    ANA_MINOR_FAULT,
+    ANA_MAYOR_FAULT
 }ETaskStatus_t;
 
 typedef struct {

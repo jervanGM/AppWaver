@@ -6,12 +6,19 @@
 #define SM_FALSE 0
 
 typedef enum{
-    INIT,
-    READY,
-    OPERATIONAL,
-    BREAKDOWN,
-    UNKNOWN
+    ANA_INIT,
+    ANA_READY,
+    ANA_OPERATIONAL,
+    ANA_BREAKDOWN,
+    ANA_UNKNOWN
 }ETaskState_t;
+
+typedef enum{
+    STATE_IDLE,
+    STATE_NEXT,
+    STATE_PREV,
+    STATE_FAULT
+}EStateEvent_t;
 
 typedef struct {
     void            (*handle_execute)  (void);
@@ -20,8 +27,9 @@ typedef struct {
 
 typedef struct {
     ETaskState_t sm_state;
-    IAnaSmStateFunc state_func[UNKNOWN];
-    uint8_t change_event;
+    ETaskState_t sm_prev_state;
+    IAnaSmStateFunc state_func[ANA_UNKNOWN];
+    EStateEvent_t st_event;
 } SAnaSmStates;
 
 #endif /* I_ANALOG_SM_H_ */

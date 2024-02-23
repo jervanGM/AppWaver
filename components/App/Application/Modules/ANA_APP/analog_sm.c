@@ -1,124 +1,133 @@
 #include "analog_sm.h"
 
+/* Define the state machine states */
 SAnaSmStates state_sm;
 
-ETaskStatus_t analog_sm_init
-(
+/* Initializes the analog state machine with the provided transition functions for each state */
+ETaskStatus_t analog_sm_init(
     void (*init_func)(void), 
     void (*ready_func)(void), 
     void (*operational_func)(void), 
     void (*breakdown_func)(void)
 )
 {
-    state_sm.state_func[INIT].handle_execute = init_func;
-    state_sm.state_func[INIT].handle_transition = init_transition;
+    /* Assigns the provided functions to the corresponding states in the state machine */
+    state_sm.state_func[ANA_INIT].handle_execute = init_func;
+    state_sm.state_func[ANA_INIT].handle_transition = init_transition;
 
-    state_sm.state_func[READY].handle_execute = ready_func;
-    state_sm.state_func[READY].handle_transition = ready_transition;
+    state_sm.state_func[ANA_READY].handle_execute = ready_func;
+    state_sm.state_func[ANA_READY].handle_transition = ready_transition;
 
-    state_sm.state_func[OPERATIONAL].handle_execute = operational_func;
-    state_sm.state_func[OPERATIONAL].handle_transition = operational_transition;
+    state_sm.state_func[ANA_OPERATIONAL].handle_execute = operational_func;
+    state_sm.state_func[ANA_OPERATIONAL].handle_transition = operational_transition;
 
-    state_sm.state_func[BREAKDOWN].handle_execute = breakdown_func;
-    state_sm.state_func[BREAKDOWN].handle_transition = breakdown_transition;
+    state_sm.state_func[ANA_BREAKDOWN].handle_execute = breakdown_func;
+    state_sm.state_func[ANA_BREAKDOWN].handle_transition = breakdown_transition;
 
-    state_sm.change_event = SM_FALSE;
-    state_sm.sm_state = INIT;
-    if(state_sm.sm_state == INIT)
-    {
+    /* Sets the initial state and checks if it's successfully set */
+    state_sm.st_event = STATE_IDLE;
+    state_sm.sm_state = ANA_INIT;
+    if (state_sm.sm_state == ANA_INIT) {
         return ANA_TASK_OK;
-    }
-    else
-    {
+    } else {
         return ANA_TASK_SM_INIT_FAIL;
     }
 }
 
+/* Runs the current state's execution function in the analog state machine */
 void analog_sm_run()
 {
     state_sm.state_func[state_sm.sm_state].handle_execute();
     state_sm.state_func[state_sm.sm_state].handle_transition();
 }
 
+/* Retrieves the current state of the analog state machine */
 ETaskState_t analog_sm_get_state()
 {
-     
     return state_sm.sm_state;
 }
 
-void analog_sm_set_event()
+/* Sets the event for the analog state machine */
+void analog_sm_set_st_event(EStateEvent_t event)
 {
-    state_sm.change_event = SM_TRUE;
+    state_sm.st_event = event;
 }
 
+/* Transition function for the initialization state */
 void init_transition()
 {
-    switch (state_sm.change_event)
+    switch (state_sm.st_event)
     {
-    case SM_TRUE:
-        state_sm.sm_state = READY;
-        state_sm.change_event = SM_FALSE;
+    case STATE_NEXT:
+        state_sm.sm_state = ANA_READY;
+        state_sm.st_event = STATE_IDLE; 
         break;
-    case SM_FALSE:
-        state_sm.sm_state = INIT;
+    case STATE_FAULT:
+        state_sm.sm_prev_state = state_sm.sm_state;
+        state_sm.sm_state = ANA_BREAKDOWN;
+        state_sm.st_event = STATE_IDLE; 
         break;
     default:
-        state_sm.sm_state = BREAKDOWN;
-        state_sm.change_event = SM_FALSE;
+        state_sm.sm_state = ANA_INIT;
+        state_sm.st_event = STATE_IDLE; 
         break;
     }
 }
 
+/* Transition function for the ready state */
 void ready_transition()
 {
-    switch (state_sm.change_event)
+    switch (state_sm.st_event)
     {
-    case SM_TRUE:
-        state_sm.sm_state = OPERATIONAL;
-        state_sm.change_event = SM_FALSE;
+    case STATE_NEXT:
+        state_sm.sm_state = ANA_OPERATIONAL;
+        state_sm.st_event = STATE_IDLE; 
         break;
-    case SM_FALSE:
-        state_sm.sm_state = READY;
+    case STATE_FAULT:
+        state_sm.sm_prev_state = state_sm.sm_state;
+        state_sm.sm_state = ANA_BREAKDOWN;
+        state_sm.st_event = STATE_IDLE; 
         break;
     default:
-        state_sm.sm_state = BREAKDOWN;
-        state_sm.change_event = SM_FALSE;
+        state_sm.sm_state = ANA_READY;
+        state_sm.st_event = STATE_IDLE; 
         break;
     }
 }
 
+/* Transition function for the operational state */
 void operational_transition()
 {
-    switch (state_sm.change_event)
+    switch (state_sm.st_event)
     {
-    case SM_TRUE:
-        state_sm.sm_state = BREAKDOWN;
-        state_sm.change_event = SM_FALSE;
-        break;
-    case SM_FALSE:
-        state_sm.sm_state = OPERATIONAL;
+    case STATE_FAULT:
+        state_sm.sm_prev_state = state_sm.sm_state;
+        state_sm.sm_state = ANA_BREAKDOWN;
+        state_sm.st_event = STATE_IDLE; 
         break;
     default:
-        state_sm.sm_state = BREAKDOWN;
-        state_sm.change_event = SM_FALSE;
+        state_sm.sm_state = ANA_OPERATIONAL;
+        state_sm.st_event = STATE_IDLE; 
         break;
     }
 }
 
+/* Transition function for the breakdown state */
 void breakdown_transition()
 {
-    switch (state_sm.change_event)
+    switch (state_sm.st_event)
     {
-    case SM_TRUE:
-        state_sm.sm_state = INIT;
-        state_sm.change_event = SM_FALSE;
+    case STATE_NEXT:
+        state_sm.sm_state = ANA_INIT;
+        state_sm.st_event = STATE_IDLE; 
         break;
-    case SM_FALSE:
-        state_sm.sm_state = BREAKDOWN;
+    case STATE_PREV:
+        state_sm.sm_state = state_sm.sm_prev_state;
+        state_sm.st_event = STATE_IDLE; 
         break;
     default:
-        state_sm.sm_state = INIT;
-        state_sm.change_event = SM_FALSE;
+        state_sm.sm_state = ANA_BREAKDOWN;
+        state_sm.st_event = STATE_IDLE; 
         break;
     }
 }

@@ -9,7 +9,7 @@ void assert_panic_implementation
 {
     printf("***********************************ASSERT PANIC EXECUTED***********************************\n");
     printf("PANIC INFO: %s\n" "file: %s\n" "line: %u\n",pch_info, pch_file, (unsigned int)u32_line);
-    printf("****************************************RESTARTING*****************************************\n");
+    printf("****************************************REBOOTING*****************************************\n");
     fflush(0);
     //For debugging
     assert(0);
