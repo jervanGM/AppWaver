@@ -1,15 +1,15 @@
 #ifndef MEM_MAP_H_
 #define MEM_MAP_H_
-
+#include "esp_attr.h"
 //Error memory map
 #define ERROR_ADDR_COUNT 20
 
-// Arreglo para almacenar las direcciones de memoria de los errores
+// Direcciones de memoria útiles desde 0x3FC8_B404 hasta 0x3FCD_FFFF
 static const unsigned long error_addresses[ERROR_ADDR_COUNT] = {
-    0x3FF00001, 0x3FF00002, 0x3FF00003, 0x3FF00004, 0x3FF00005,
-    0x3FF00006, 0x3FF00007, 0x3FF00008, 0x3FF00009, 0x3FF00010,
-    0x3FF00011, 0x3FF00012, 0x3FF00013, 0x3FF00014, 0x3FF00015,
-    0x3FF00016, 0x3FF00017, 0x3FF00018, 0x3FF00019, 0x3FF00020
+    0x3FC8B404, 0x3FC8B405, 0x3FC8B406, 0x3FC8B407, 0x3FC8B408,
+    0x3FC8B409, 0x3FC8B40A, 0x3FC8B40B, 0x3FC8B40C, 0x3FC8B40D,
+    0x3FC8B40E, 0x3FC8B40F, 0x3FC8B41F, 0x3FC8B42F, 0x3FC8B43F,
+    0x3FC8B44F, 0x3FC8B45F, 0x3FC8B46F, 0x3FC8B47F, 0x3FC8B48F
 };
 
 #endif /* MEM_MAP_H_ */
