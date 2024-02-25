@@ -11,28 +11,31 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 # Include source files directories
 file(GLOB TEST_SOURCES 
 ../Test/*.c
-../assert_panic_impl_pc.c)
+../safe_timer.c
+../Test/mock/*.c)
 
 # Create executable
 add_executable(test_suite ${TEST_SOURCES})
 
 target_include_directories(test_suite PUBLIC
-    ../include
+    ../Test/include
 )
 
 # Add library directories
 add_library(lib STATIC
     ../../../test_fwk/Unity/src/unity.c
-    ../../../test_fwk/freertos/freeRTOS.c
-    ../../../test_fwk/freertos/timers.c
-    ../../../test_fwk/freertos/task.c
+    ../../Panic/assert_panic_impl_pc.c
+    ../../test_lib/panic_mock.c
+    ../../Safe_Trace/safe_trace_impl.c
 )
 
 target_include_directories(lib PUBLIC
     ../../../test_fwk/Unity/src
     ../../Common_Types
     ../../Common
-    ../../../test_fwk/freertos
+    ../../Panic/include
+    ../../Safe_Trace/include
+    ../../test_lib
 )
 
 # Link sources with libraries

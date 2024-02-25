@@ -18,7 +18,7 @@ target_include_directories(unity PUBLIC
 )
 
 # Incluye los archivos fuente del proyecto
-file(GLOB PROJECT_SOURCES ../*.c)
+file(GLOB PROJECT_SOURCES ../safe_trace_impl.c)
 
 # Crea el ejecutable del proyecto
 add_library(release ${PROJECT_SOURCES})

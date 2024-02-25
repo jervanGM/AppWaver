@@ -24,7 +24,7 @@ STime_t get_system_time(void)
     else
     {
         sys_time = get_sw_system_time();
-        ASSERT_PANIC((sys_time == TIME_START) || (sys_time == prev_sys_time),
+        ASSERT_PANIC((sys_time != TIME_START) || (sys_time != prev_sys_time),
         "Hardware and software system time failure, rebooting");
     }
 

@@ -1,0 +1,44 @@
+# This file was automatically generated for projects
+# without default 'CMakeLists.txt' file.
+cmake_minimum_required(VERSION 3.5)
+project("UnityTest" VERSION 1.0 LANGUAGES C)
+
+
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_STANDARD 11)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
+# Include source files directories
+file(GLOB TEST_SOURCES 
+../Test/*.c
+../safe_memory_impl.c)
+
+# Create executable
+add_executable(test_suite ${TEST_SOURCES})
+
+target_include_directories(test_suite PUBLIC
+    ../include
+)
+
+# Add library directories
+add_library(lib STATIC
+    ../../../test_fwk/Unity/src/unity.c
+    ../../Safe_Trace/safe_trace_impl.c
+    ../../Safe_Mem/safe_trace_impl.c
+    ../../Safe_Time/safe_trace_impl.c
+    ../../RTOS/rtos_pc.c
+)
+
+target_include_directories(lib PUBLIC
+    ../../../test_fwk/Unity/src
+    ../../Common_Types
+    ../../Safe_Trace/include
+)
+
+# Link sources with libraries
+target_link_libraries(test_suite lib)
+
+# Add suite to CTest test runner
+add_test(test_runner test_suite)
+
+
