@@ -8,10 +8,11 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_C_STANDARD 11)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
+set(ROOT ../../../../..)
 # Include source files directories
 file(GLOB TEST_SOURCES 
 ../Test/*.c
-../safe_memory_impl.c)
+../*.c)
 
 # Create executable
 add_executable(test_suite ${TEST_SOURCES})
@@ -22,17 +23,23 @@ target_include_directories(test_suite PUBLIC
 
 # Add library directories
 add_library(lib STATIC
-    ../../../test_fwk/Unity/src/unity.c
-    ../../Safe_Trace/safe_trace_impl.c
-    ../../Safe_Mem/safe_trace_impl.c
-    ../../Safe_Time/safe_trace_impl.c
-    ../../RTOS/rtos_pc.c
+    ${ROOT}/test_fwk/Unity/src/unity.c
+    ${ROOT}/lib/Safe_Trace/safe_trace_impl.c
+    ${ROOT}/lib/Safe_Mem/safe_memory_impl.c
+    ${ROOT}/lib/Safe_Time/safe_timer.c
+    ${ROOT}/lib/Safe_Time/Test/mock/*.c
+    ${ROOT}/lib/Panic/assert_panic_impl_pc.c
+    ${ROOT}/lib/RTOS/rtos_pc.c
 )
 
 target_include_directories(lib PUBLIC
-    ../../../test_fwk/Unity/src
-    ../../Common_Types
-    ../../Safe_Trace/include
+    ${ROOT}/test_fwk/Unity/src
+    ${ROOT}/lib/Common_Types
+    ${ROOT}/lib/Safe_Trace/include
+    ${ROOT}/lib/Safe_Mem/Test/include
+    ${ROOT}/lib/Safe_Time/Test/include
+    ${ROOT}/lib/Panic/include
+    ${ROOT}/lib/RTOS/include
 )
 
 # Link sources with libraries

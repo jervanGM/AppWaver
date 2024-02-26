@@ -11,7 +11,35 @@
  *
  * This function runs all the test defined for this test suite.
  */
-extern void mem_error_test_suite();
+extern void dsp_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void ana_drv_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void ana_sm_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void ana_app_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void ana_task_test_suite();
 
 /**
  * @brief Set up function.
@@ -30,11 +58,16 @@ extern void tearDown(void);
 /**
  * @brief Run the test suites.
  *
- * This function runs the test suites by calling `panic_test_suite()`.
+ * This function runs the test suites by calling `dsp_test_suite()`,`ana_drv_test_suite()`
+ * ,`ana_sm_test_suite()`,`ana_app_test_suite()`,`ana_task_test_suite()`.
  */
 static inline void run_test_suites()
 {
-    mem_error_test_suite();
+    dsp_test_suite();
+    ana_drv_test_suite();
+    ana_sm_test_suite();
+    ana_app_test_suite();
+    ana_task_test_suite();
 }
 
 /**

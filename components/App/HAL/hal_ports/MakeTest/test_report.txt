@@ -1,0 +1,17 @@
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/HAL/hal_ports/Test/test_suite.c:72:test_hal_ana_get_port:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/HAL/hal_ports/Test/test_suite.c:73:test_hal_ana_is_init:PASS
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+[INFO]: [ INPUT VALUES TO ADC:  OUTPUT VALUES FROM ADC:  ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/HAL/hal_ports/Test/test_suite.c:74:test_hal_ana_read:PASS
+
+-----------------------
+3 Tests 0 Failures 0 Ignored 
+OK

@@ -3,6 +3,7 @@ include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 # Get a list of all folders within components directory
 file(GLOB_RECURSE component_folders LIST_DIRECTORIES true components/*)
+list(FILTER component_folders EXCLUDE REGEX "components/.*/MakeTest")
 
 # Get a list of all folders within lib directory except those containing MakeTest
 file(GLOB_RECURSE lib_folders LIST_DIRECTORIES true lib/*)

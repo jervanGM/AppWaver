@@ -6,7 +6,9 @@ lib/Safe_Trace/MakeTest/test_report.txt
 lib/Panic/MakeTest/test_report.txt
 lib/Safe_Time/MakeTest/test_report.txt
 lib/Safe_Mem/MakeTest/test_report.txt
+components/App/HAL/MakeTest/test_report.txt
 lib/Safe_Trace/MakeTest/build/*
 lib/Panic/MakeTest/build/*
 lib/Safe_Time/MakeTest/build/*
 lib/Safe_Mem/MakeTest/build/*
+components/App/HAL/hal_ports/MakeTest/build/*
