@@ -3,7 +3,7 @@
 #include <string.h>
 #include "safe_trace.h"
 
-SAnalogSensMsg_t _msg;
+static SAnalogSensMsg_t _msg = {0};
 
 void set_task_analog_info(STaskInfo_t task_info)
 {

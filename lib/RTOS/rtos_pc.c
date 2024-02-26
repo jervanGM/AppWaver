@@ -1,7 +1,6 @@
 #include "rtos.h"
 #include "assert_panic.h"
 
-SemaphoreHandle_t xMutex[MAX_MUTEX];
 
 ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,int period,unsigned int priority)
 {

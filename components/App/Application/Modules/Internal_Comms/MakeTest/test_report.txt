@@ -1,0 +1,9 @@
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/Test/test_suite.c:111:test_set_and_read_task_analog_info:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/Test/test_suite.c:112:test_send_and_read_analog_controller_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/Test/test_suite.c:113:test_set_and_read_task_analog_status:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/Test/test_suite.c:114:test_send_and_read_analog_controller_data_large_buffers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/Test/test_suite.c:115:test_read_analog_controller_data_before_sending:PASS
+
+-----------------------
+5 Tests 0 Failures 0 Ignored 
+OK
