@@ -1,0 +1,4 @@
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/MakeTest/build/CMakeFiles/test_suite.dir
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/MakeTest/build/CMakeFiles/lib.dir
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/MakeTest/build/CMakeFiles/edit_cache.dir
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/Internal_Comms/MakeTest/build/CMakeFiles/rebuild_cache.dir

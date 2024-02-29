@@ -1,8 +1,8 @@
-#include "ana_port.h"
 #include "sw_init.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+#include "rtos.h"
 #include "analog_task.h"
+#include "control_task.h"
+#include <stdio.h>
 
 
 void systemConfig()
@@ -12,10 +12,10 @@ void systemConfig()
 }
 
 void taskConfig()
-{   
-    TickType_t ticks_period = pdMS_TO_TICKS(NULL);
-    ticks_period = pdMS_TO_TICKS(ANA_T_PERIOD);
-    xTaskCreate(taskAnalog, "Analog Task", 4096,&ticks_period,ANA_T_PRIOR, NULL);
+{  
+    mutex_create();
+    create_task(task_analog,"Analog Task",ANA_T_PERIOD,ANA_T_PRIOR);
+    create_task(task_control,"Control Task",CONTROL_T_PERIOD,CONTROL_T_PRIOR);
 }
 
 void otaConfig()
@@ -30,5 +30,4 @@ void openThreadInit()
 
 void hwInit()
 {
-    HAL_ANA_GetPort()->init();
 }

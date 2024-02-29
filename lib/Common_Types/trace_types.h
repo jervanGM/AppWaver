@@ -33,15 +33,15 @@ typedef enum {
     TYPE_POINTER_TO_VOID,
     TYPE_POINTER_TO_INT,
     TYPE_OTHER
-} ETypeNameEnum_t;
+} EtypenameEnum_t;
 
 #define typename(x) _Generic((x),                                                     \
             _Bool: TYPE_BOOL,                  char: TYPE_CHAR,                             \
               int: TYPE_INT,                     unsigned int: TYPE_UINT,            \
-          int8_t: TYPE_INT8,                     uint8_t: TYPE_UINT8,                      \
-         int16_t: TYPE_INT16,                   uint16_t: TYPE_UINT16,                     \
-         int32_t: TYPE_INT32,                   uint32_t: TYPE_UINT32,                     \
-         int64_t: TYPE_INT64,                   uint64_t: TYPE_UINT64,                     \
+          c_int8_t: TYPE_INT8,                     c_uint8_t: TYPE_UINT8,                      \
+         c_int16_t: TYPE_INT16,                   c_uint16_t: TYPE_UINT16,                     \
+         c_int32_t: TYPE_INT32,                   c_uint32_t: TYPE_UINT32,                     \
+         c_int64_t: TYPE_INT64,                   c_uint64_t: TYPE_UINT64,                     \
             float: TYPE_FLOAT,                         double: TYPE_DOUBLE,                    \
       long double: TYPE_LONG_DOUBLE,                   char *: TYPE_POINTER_TO_CHAR,           \
            void *: TYPE_POINTER_TO_VOID,                int *: TYPE_POINTER_TO_INT,            \

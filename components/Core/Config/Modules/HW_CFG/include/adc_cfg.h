@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include "sdkconfig.h"
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/semphr.h"
 #include "esp_adc/adc_continuous.h"
 #include "soc/soc_caps.h"
 #include "esp_adc/adc_oneshot.h"
@@ -35,12 +32,8 @@ static const char *TAG = "ADC";
 
 static adc_channel_t channel[1] = {ADC_CHANNEL_2};
 
-
-static TaskHandle_t s_task_handle;
-
-
 static void continuous_adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle_t *out_handle);
-static bool adc_calibration_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);
+static bool adc_calibration_ana_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);
 static void adc_calibration_deinit(adc_cali_handle_t handle);
 void adc_config_init();
 void adc_config_reset();

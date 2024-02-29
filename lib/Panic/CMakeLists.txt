@@ -4,5 +4,5 @@
 FILE(GLOB_RECURSE panic_lib assert_panic_impl.c)
 
 idf_component_register(SRCS ${panic_lib}
-                       INCLUDE_DIRS "include")
+                       INCLUDE_DIRS "include" "../Common_Types")
 
