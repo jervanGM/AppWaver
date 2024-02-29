@@ -52,37 +52,7 @@ ETaskState_t analog_sm_get_state();
  * @param event State machine event.
  */
 void analog_sm_set_st_event(EStateEvent_t event);
-/**
- * @brief Transition function for the initialization state.
- * 
- * This function defines the state transitions for the initialization state
- * based on the event triggered.
- */
-void init_transition();
 
-/**
- * @brief Transition function for the ready state.
- * 
- * This function defines the state transitions for the ready state
- * based on the event triggered.
- */
-void ready_transition();
-
-/**
- * @brief Transition function for the operational state.
- * 
- * This function defines the state transitions for the operational state
- * based on the event triggered.
- */
-void operational_transition();
-
-/**
- * @brief Transition function for the breakdown state.
- * 
- * This function defines the state transitions for the breakdown state
- * based on the event triggered.
- */
-void breakdown_transition();
 
 
 #endif /* ANALOG_SM_H_ */

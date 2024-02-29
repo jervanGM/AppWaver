@@ -14,7 +14,6 @@ ETaskStatus_t analog_app_check_faults()
 
     // Read the error from the specified error slot
     error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
-
     // Determine the task status based on the error value
     if ((error < MINOR_FAULT_THRESHOLD) && (error > MAYOR_FAULT_THESHOLD))
     {

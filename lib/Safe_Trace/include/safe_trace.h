@@ -38,7 +38,9 @@ static inline void safe_trace(ETypeTrace_t trace_type, const char *args[]) {
 
     if(trace_type >= DEBUG && trace_type <= ERROR)
     {
+        #ifndef SECURE_TRACES
         safe_trace_implementation(trace_type,args);
+        #endif
     }
     else
     {

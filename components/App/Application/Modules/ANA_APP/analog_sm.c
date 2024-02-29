@@ -1,4 +1,37 @@
 #include "analog_sm.h"
+#include "safe_trace.h"
+
+/**
+ * @brief Transition function for the initialization state.
+ * 
+ * This function defines the state transitions for the initialization state
+ * based on the event triggered.
+ */
+static void init_transition();
+
+/**
+ * @brief Transition function for the ready state.
+ * 
+ * This function defines the state transitions for the ready state
+ * based on the event triggered.
+ */
+static void ready_transition();
+
+/**
+ * @brief Transition function for the operational state.
+ * 
+ * This function defines the state transitions for the operational state
+ * based on the event triggered.
+ */
+static void operational_transition();
+
+/**
+ * @brief Transition function for the breakdown state.
+ * 
+ * This function defines the state transitions for the breakdown state
+ * based on the event triggered.
+ */
+static void breakdown_transition();
 
 /* Define the state machine states */
 SAnaSmStates state_sm;
@@ -11,6 +44,12 @@ ETaskStatus_t analog_sm_init(
     void (*breakdown_func)(void)
 )
 {
+    /* Verify if any of the function pointers is null */
+    if (init_func == NULL || ready_func == NULL || 
+        operational_func == NULL || breakdown_func == NULL) {
+        TRACE_ERROR("Any execute state function is null or not valid");
+        return ANA_TASK_SM_INIT_FAIL; // Return failure if any function pointer is null
+    }
     /* Assigns the provided functions to the corresponding states in the state machine */
     state_sm.state_func[ANA_INIT].handle_execute = init_func;
     state_sm.state_func[ANA_INIT].handle_transition = init_transition;
@@ -54,7 +93,7 @@ void analog_sm_set_st_event(EStateEvent_t event)
 }
 
 /* Transition function for the initialization state */
-void init_transition()
+static void init_transition()
 {
     switch (state_sm.st_event)
     {
@@ -75,7 +114,7 @@ void init_transition()
 }
 
 /* Transition function for the ready state */
-void ready_transition()
+static void ready_transition()
 {
     switch (state_sm.st_event)
     {
@@ -96,7 +135,7 @@ void ready_transition()
 }
 
 /* Transition function for the operational state */
-void operational_transition()
+static void operational_transition()
 {
     switch (state_sm.st_event)
     {
@@ -113,7 +152,7 @@ void operational_transition()
 }
 
 /* Transition function for the breakdown state */
-void breakdown_transition()
+static void breakdown_transition()
 {
     switch (state_sm.st_event)
     {
