@@ -124,6 +124,8 @@ void on_ana_breakdown()
     // Fault reason
     ETaskStatus_t fault_reason = ANA_TASK_OK;
     fault_reason = analog_app_check_faults();
+    //Clean the error memory
+    store_error_in_slot(ANALOGIC_ERROR_SLOT,0);
     switch (fault_reason)
     {
     case ANA_MINOR_FAULT:

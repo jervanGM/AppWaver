@@ -11,7 +11,7 @@ void dsp_init_port()
     const IAnaPort *port = hal_ana_get_port();
 
     // Check if the port interface is valid
-    if(port != NULL)
+    if (port != NULL)
     {
         port->init(); // Call the initialization function of the analog port
     }
@@ -31,11 +31,11 @@ uint8_t get_dsp_data()
     const IAnaPort *port = hal_ana_get_port();
 
     // Check if the analog port interface is valid
-    if(port != NULL)
+    if (port != NULL)
     {
         port->read(2, &data); // Read data from the analog port channel 2
         // Apply filters and normalization
-        iir_filter(&data); // Apply IIR filter
+        iir_filter(&data);                                  // Apply IIR filter
         uint8_t normalized_data = data_normalization(data); // Normalize data
         return normalized_data;
     }
@@ -60,19 +60,21 @@ void iir_filter(uint32_t *input)
         // Log a warning if the input pointer is NULL
         store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DSP_IIR_ERROR);
         TRACE_WARNING("Input from dsp filter has no value");
-        *input = 0;
+        return;
     }
 
-    //Apply 1 Hz high pass filter
+    // Apply 1 Hz high pass filter
     x[0] = (float)(*input);
     float b[] = {1, -2, 1};
     float a[] = {1.992, -0.915};
     float z = 1.093;
     y[0] = (a[0] * y[1] + a[1] * y[2] +
-            b[0] * x[0] + b[1] * x[1] + b[2] * x[2]) / z;
+            b[0] * x[0] + b[1] * x[1] + b[2] * x[2]) /
+           z;
 
     *input = (uint32_t)y[0];
-    for (int i = 1; i >= 0; i--) {
+    for (int i = 1; i >= 0; i--)
+    {
         x[i + 1] = x[i];
         y[i + 1] = y[i];
     }
@@ -91,10 +93,10 @@ uint8_t data_normalization(uint32_t input)
     }
 
     // Normalize the input data
-    uint8_t normalized_data = (uint8_t)(((input - MIN_INPUT_VALUE) * 
-                                          (NORMALIZED_MAX - NORMALIZED_MIN) + 
-                                          (MAX_INPUT_VALUE - 1) / 2) / (MAX_INPUT_VALUE - MIN_INPUT_VALUE));
-    
+    uint8_t normalized_data = (uint8_t)(((input - MIN_INPUT_VALUE) *
+                                             (NORMALIZED_MAX - NORMALIZED_MIN) +
+                                         (MAX_INPUT_VALUE - 1) / 2) /
+                                        (MAX_INPUT_VALUE - MIN_INPUT_VALUE));
+
     return normalized_data;
 }
-
