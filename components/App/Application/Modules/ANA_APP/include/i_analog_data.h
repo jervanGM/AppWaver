@@ -16,7 +16,7 @@ typedef enum{
     ANA_TASK_SM_INIT_FAIL,
     ANA_MINOR_FAULT,
     ANA_MAYOR_FAULT
-}ETaskStatus_t;
+}EAnaTaskStatus_t;
 
 typedef struct {
     STime_t start_time;
@@ -31,13 +31,13 @@ typedef struct {
 
 typedef struct {
     uint8_t ID;
-    ETaskStatus_t status;
+    EAnaTaskStatus_t status;
     uint32_t delay;
     uint32_t LastWakeTime;
-} STaskInfo_t;
+} SAnaTaskInfo_t;
 
 typedef struct{
-    STaskInfo_t _task_info;
+    SAnaTaskInfo_t _task_info;
     SDataBuffer_t _plant_buff;
     SBufferTime_t _buff_time;
 }SAnalogSensMsg_t;

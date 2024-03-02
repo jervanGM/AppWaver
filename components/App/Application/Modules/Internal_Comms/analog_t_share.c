@@ -5,14 +5,14 @@
 
 static SAnalogSensMsg_t _msg = {0};
 
-void set_task_analog_info(STaskInfo_t task_info)
+void set_task_analog_info(SAnaTaskInfo_t task_info)
 {
     mutex_lock(ANALOG_M_ID);
-        memcpy(&_msg._task_info, &task_info, sizeof(STaskInfo_t));
+        memcpy(&_msg._task_info, &task_info, sizeof(SAnaTaskInfo_t));
     mutex_unlock(ANALOG_M_ID);
 }
 
-void set_task_analog_status(ETaskStatus_t status)
+void set_task_analog_status(EAnaTaskStatus_t status)
 {
     mutex_lock(ANALOG_M_ID);
         _msg._task_info.status = status;

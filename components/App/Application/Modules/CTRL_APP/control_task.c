@@ -6,7 +6,7 @@
 
 void task_control(void *pvParameters)
 {   
-  STaskInfo_t task_info;
+  SAnaTaskInfo_t task_info;
   task_info.delay = *(uint32_t *)pvParameters;
   /* Infinite loop */
   for(;;)
@@ -27,7 +27,7 @@ void task_control(void *pvParameters)
   }
 }
 
-void task_control_init(STaskInfo_t *task_info,void *pvParams) 
+void task_control_init(SAnaTaskInfo_t *task_info,void *pvParams) 
 {
 }
 

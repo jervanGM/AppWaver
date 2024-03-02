@@ -13,8 +13,8 @@ void tearDown(void)
 
 // Test function for verifying the setting and reading of task information.
 void test_set_and_read_task_analog_info(void) {
-    STaskInfo_t task_info_sent = { .ID = 1, .status = ANA_TASK_OK }; // Sample task info to be sent
-    STaskInfo_t task_info_received; // Variable to store received task info
+    SAnaTaskInfo_t task_info_sent = { .ID = 1, .status = ANA_TASK_OK }; // Sample task info to be sent
+    SAnaTaskInfo_t task_info_received; // Variable to store received task info
     SAnalogSensMsg_t _msg;
     // Set the task information
     set_task_analog_info(task_info_sent);
@@ -50,8 +50,8 @@ void test_send_and_read_analog_controller_data(void) {
 
 // Test function for verifying the setting and reading of task status.
 void test_set_and_read_task_analog_status(void) {
-    ETaskStatus_t status_sent = ANA_MAYOR_FAULT; // Sample task status to be sent
-    ETaskStatus_t status_received; // Variable to store received task status
+    EAnaTaskStatus_t status_sent = ANA_MAYOR_FAULT; // Sample task status to be sent
+    EAnaTaskStatus_t status_received; // Variable to store received task status
     SAnalogSensMsg_t _msg;
     // Set the task status
     set_task_analog_status(status_sent);
