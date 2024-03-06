@@ -2,6 +2,7 @@
 #define WIRELESS_TASK_H_
 
 #include "i_wireless_data.h"
+
 /**
  * @brief Task function responsible for managing the wireless task.
  * 

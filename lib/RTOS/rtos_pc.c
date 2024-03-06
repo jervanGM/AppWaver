@@ -2,7 +2,7 @@
 #include "assert_panic.h"
 
 
-ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,int period,unsigned int priority)
+ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,const uint32_t stack_deph,int period,unsigned int priority)
 {
 
 }

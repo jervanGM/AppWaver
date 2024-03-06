@@ -7,10 +7,10 @@
 
 SemaphoreHandle_t xMutex[MAX_MUTEX];
 
-ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,int period,unsigned int priority)
+ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,const uint32_t stack_deph,int period,unsigned int priority)
 {
     BaseType_t xtask_error = pdFAIL;
-    xtask_error = xTaskCreate(task_func, task_name, 4096,(void *)&period,priority, NULL);
+    xtask_error = xTaskCreate(task_func, task_name, stack_deph,(void *)&period,priority, NULL);
     if(xtask_error == pdPASS) return TASK_OK;
     else if(xtask_error == pdFAIL) return TASK_MEM_ERR;
     else return TASK_UNKNOWN_ERR;

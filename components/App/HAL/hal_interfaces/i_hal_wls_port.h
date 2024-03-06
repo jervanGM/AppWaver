@@ -12,6 +12,10 @@
 typedef struct {
     void (*init)  (void); /**< Function pointer to initialize the wireless port. */
     void (*reset) (void); /**< Function pointer to reset the wireless port. */
+    void (*get_mac) (uint8_t *mac);
+    void (*system_abort) (const char *msg);
+    void (*connect) (void);
+    void (*disconnect) (void);
     void (*send) (uint8_t channel, uint32_t data); /**< Function pointer to send data to the wireless port. */
     void (*receive)  (uint8_t channel, uint32_t *data); /**< Function pointer to receive data from the wireless port. */
 } IWlsPort;

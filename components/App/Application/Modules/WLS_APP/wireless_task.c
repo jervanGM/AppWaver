@@ -8,13 +8,14 @@
 #include "rtos.h"
 #include "safe_memory.h"
 
-/*Main analog sensors task function*/
+/*Main wireless communication task function*/
 void task_wireless(void *pvParameters)
 {   
     // Initialize task information
     SWlsTaskInfo_t task_info;
     task_wireless_init(&task_info,pvParameters);
-
+    init();
+    anjay_main();
     /* Infinite loop */
     for(;;)
     {
@@ -39,4 +40,5 @@ void task_wireless_init(SWlsTaskInfo_t *task_info,void *pvParams)
     // Set task status
     task_info->status = WLS_TASK_OK;
 }
+
 
