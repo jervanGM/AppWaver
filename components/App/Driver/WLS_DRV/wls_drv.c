@@ -62,7 +62,7 @@ static const char *s_ipv6_addr_types[] = { "ESP_IP6_ADDR_IS_UNKNOWN",
                                            "ESP_IP6_ADDR_IS_IPV4_MAPPED_IPV6" };
 #endif // CONFIG_ANJAY_WIFI_CONNECT_IPV6
 
-static const char *TAG = "anjay_connect";
+static const char *TAG = "wireless_connect";
 
 static void disconnect(void);
 static void deinit(void);
@@ -152,8 +152,13 @@ static void on_wifi_connect(void *esp_netif,
 #define WIFI_PASS "esp_network"
 
 static esp_err_t connect() {
-    strcpy((char*)wifi_config.sta.ssid, WIFI_SSID);
-    strcpy((char*)wifi_config.sta.password, WIFI_PASS);
+    snprintf((char *) wifi_config.sta.ssid,
+                 sizeof(wifi_config.sta.ssid), "%s",
+                 CONFIG_ANJAY_WIFI_SSID);
+    snprintf((char *) wifi_config.sta.password,
+                 sizeof(wifi_config.sta.password), "%s",
+                 CONFIG_ANJAY_WIFI_PASSWORD);
+    wifi_config.sta.scan_method = WIFI_ALL_CHANNEL_SCAN;
 
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT,
                                                WIFI_EVENT_STA_DISCONNECTED,
@@ -240,7 +245,7 @@ static void deinit(void)
 
 void wifi_initialize(void) 
 {
-
+    ESP_LOGI(TAG, "Wifi initialization");
     ESP_ERROR_CHECK(nvs_flash_init());
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());

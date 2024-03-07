@@ -14,15 +14,21 @@ void task_wireless(void *pvParameters)
     // Initialize task information
     SWlsTaskInfo_t task_info;
     task_wireless_init(&task_info,pvParameters);
-    init();
-    anjay_main();
+    //anjay_main();
     /* Infinite loop */
+    bool inite = false;
     for(;;)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
         // Run analog state machine
-
+        if(!inite)
+        {
+            init();
+            inite = true;
+        }
+        anjay_main();
+        
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);
     }
