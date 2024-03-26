@@ -17,14 +17,16 @@
 #pragma once
 
 #include <stdbool.h>
-
+#include "i_wireless_data.h"
 #include <anjay/anjay.h>
+#include <anjay/lwm2m_send.h>
 
 /*************************************************************/
-const anjay_dm_object_def_t **custom_object_create(void);
+const anjay_dm_object_def_t **plant_data_object_create(void);
 void custom_object_release(const anjay_dm_object_def_t **def);
 void custom_object_update(anjay_t *anjay,const anjay_dm_object_def_t *const *def);
-void custom_object_send(anjay_t *anjay, const anjay_dm_object_def_t **def);
+void plant_object_value_update(uint8_t plant_data,const anjay_dm_object_def_t *const *def);
+void plant_object_send(anjay_send_batch_builder_t *builder,anjay_t *anjay, const anjay_dm_object_def_t **def);
 /**************************************************************/
 
 const anjay_dm_object_def_t **device_object_create(void);

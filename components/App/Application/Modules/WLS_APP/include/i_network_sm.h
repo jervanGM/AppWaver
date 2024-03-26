@@ -5,31 +5,33 @@
 // #define SM_TRUE 1
 // #define SM_FALSE 0
 
-// typedef enum{
-//     ANA_INIT,
-//     ANA_READY,
-//     ANA_OPERATIONAL,
-//     ANA_BREAKDOWN,
-//     ANA_UNKNOWN
-// }ETaskState_t;
+typedef enum{
+    WLS_INIT,
+    WLS_READY,
+    WLS_OPERATIONAL,
+    WLS_UPDATE,
+    WLS_BREAKDOWN,
+    WLS_UNKNOWN
+}EWlsTaskState_t;
 
-// typedef enum{
-//     STATE_IDLE,
-//     STATE_NEXT,
-//     STATE_PREV,
-//     STATE_FAULT
-// }EStateEvent_t;
+typedef enum{
+    WLS_STATE_IDLE,
+    WLS_STATE_NEXT,
+    WLS_STATE_PREV,
+    WLS_STATE_FAULT,
+    WLS_STATE_UPGRADE
+}EWlsStateEvent_t;
 
-// typedef struct {
-//     void            (*handle_execute)  (void);
-//     void            (*handle_transition) (void);
-// } IAnaSmStateFunc;
+typedef struct {
+    void            (*handle_execute)  (void);
+    void            (*handle_transition) (void);
+} IWlsSmStateFunc;
 
-// typedef struct {
-//     ETaskState_t sm_state;
-//     ETaskState_t sm_prev_state;
-//     IAnaSmStateFunc state_func[ANA_UNKNOWN];
-//     EStateEvent_t st_event;
-// } SAnaSmStates;
+typedef struct {
+    EWlsTaskState_t sm_state;
+    EWlsTaskState_t sm_prev_state;
+    IWlsSmStateFunc state_func[WLS_UNKNOWN];
+    EWlsStateEvent_t st_event;
+} SWlsSmStates;
 
 #endif /* I_NETWORK_SM_H_ */

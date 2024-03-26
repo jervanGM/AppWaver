@@ -26,84 +26,9 @@
 #include "../utilities/default_config.h"
 #include "../utilities/utils.h"
 #include "objects.h"
+#include "OMA_id.h"
 
 #define SUPPORTED_BINDING_MODES "UQ"
-
-/**
- * Manufacturer: R, Single, Optional
- * type: string, range: N/A, unit: N/A
- * Human readable manufacturer name
- */
-#define RID_MANUFACTURER 0
-
-/**
- * Model Number: R, Single, Optional
- * type: string, range: N/A, unit: N/A
- * A model identifier (manufacturer specified string)
- */
-#define RID_MODEL_NUMBER 1
-
-/**
- * Serial Number: R, Single, Optional
- * type: string, range: N/A, unit: N/A
- * Serial Number
- */
-#define RID_SERIAL_NUMBER 2
-
-/**
- * Firmware Version: R, Single, Optional
- * type: string, range: N/A, unit: N/A
- * Current firmware version of the Device.The Firmware Management
- * function could rely on this resource.
- */
-#define RID_FIRMWARE_VERSION 3
-
-/**
- * Reboot: E, Single, Mandatory
- * type: N/A, range: N/A, unit: N/A
- * Reboot the LwM2M Device to restore the Device from unexpected firmware
- * failure.
- */
-#define RID_REBOOT 4
-
-/**
- * Error Code: R, Multiple, Mandatory
- * type: integer, range: 0..8, unit: N/A
- * 0=No error 1=Low battery power 2=External power supply off 3=GPS
- * module failure 4=Low received signal strength 5=Out of memory 6=SMS
- * failure 7=IP connectivity failure 8=Peripheral malfunction  When the
- * single Device Object Instance is initiated, there is only one error
- * code Resource Instance whose value is equal to 0 that means no error.
- * When the first error happens, the LwM2M Client changes error code
- * Resource Instance to any non-zero value to indicate the error type.
- * When any other error happens, a new error code Resource Instance is
- * created. When an error associated with a Resource Instance is no
- * longer present, that Resource Instance is deleted. When the single
- * existing error is no longer present, the LwM2M Client returns to the
- * original no error state where Instance 0 has value 0. This error code
- * Resource MAY be observed by the LwM2M Server. How to deal with LwM2M
- * Client’s error report depends on the policy of the LwM2M Server.
- */
-#define RID_ERROR_CODE 11
-
-/**
- * Supported Binding and Modes: R, Single, Mandatory
- * type: string, range: N/A, unit: N/A
- * Indicates which bindings and modes are supported in the LwM2M Client.
- * The possible values are those listed in the LwM2M Core Specification.
- */
-#define RID_SUPPORTED_BINDING_AND_MODES 16
-
-/**
- * Software Version: R, Single, Optional
- * type: string, range: N/A, unit: N/A
- * Current software version of the device (manufacturer specified
- * string). On elaborated LwM2M device, SW could be split in 2 parts: a
- * firmware one and a higher level software on top. Both pieces of
- * Software are together managed by LwM2M Firmware Update Object (Object
- * ID 5)
- */
-#define RID_SOFTWARE_VERSION 19
 
 typedef struct device_object_struct {
     const anjay_dm_object_def_t *def;

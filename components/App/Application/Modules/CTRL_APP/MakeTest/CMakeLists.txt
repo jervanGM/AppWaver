@@ -24,7 +24,6 @@ set(ROOT ../../../../../..)
 # Include source files directories
 file(GLOB TEST_SOURCES 
 ../Test/*.c
-../utilities/*.c
 ../*.c)
 
 # Create executable
@@ -32,7 +31,6 @@ add_executable(test_suite ${TEST_SOURCES})
 
 target_include_directories(test_suite PUBLIC
     ../include
-    ../utilities
     ${ROOT}/test_fwk/FFF
 )
 
@@ -44,11 +42,8 @@ file(GLOB LIB_SOURCE_FILES
     ${ROOT}/lib/Safe_Time/Test/mock/*.c
     ${ROOT}/lib/Panic/assert_panic_impl_pc.c
     ${ROOT}/lib/RTOS/rtos_pc.c
-    ${ROOT}/components/App/HAL/hal_ports/*.c
-    ${ROOT}/components/App/HAL/hal_ports/Test/mock/*.c
-    ${ROOT}/components/App/Application/Modules/Internal_Comms/wireless_t_share.c
+    ${ROOT}/components/App/Application/Modules/Internal_Comms/*.c
     ${ROOT}/lib/test_lib/*.c
-    ${ROOT}/third_party/lwM2M/Anjay-esp-idf/deps/anjay/*.c
 )
 
 # Add library directories
@@ -63,16 +58,13 @@ target_include_directories(lib PUBLIC
     ${ROOT}/lib/Safe_Time/Test/include
     ${ROOT}/lib/Panic/include
     ${ROOT}/lib/RTOS/include
-    ${ROOT}/components/App/HAL/hal_ports/include
-    ${ROOT}/components/App/HAL/hal_interfaces
-    ${ROOT}/components/App/HAL/hal_ports/Test/include
-    ${ROOT}/componnets/App/HAL/hal_ports/Test/include
     ${ROOT}/lib/test_lib
     ${ROOT}/components/App/Application/Modules/Internal_Comms/include
+    ${ROOT}/components/App/Application/Modules/ANA_APP/include
+    ${ROOT}/components/App/Application/Modules/WLS_APP/include
     ../include
 )
 
-find_package(anjay REQUIRED)
 # Link sources with libraries
 target_link_libraries(test_suite lib)
 

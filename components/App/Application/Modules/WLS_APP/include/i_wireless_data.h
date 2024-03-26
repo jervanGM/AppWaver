@@ -3,12 +3,20 @@
 #include <stdint.h>
 #include "safe_timer.h"
 
-#define BUFFER_SIZE 128
-#define WIRELESS_ERROR_SLOT 1
+#define WIRELESS_ERROR_SLOT 2
 #define HAL_WLS_CONFIG_ERROR -127
-#define WLS_DSP_IIR_ERROR -19
-#define WLS_DSP_NORMALIZE_ERROR -18
-#define WLS_DRV_BUFFER_EMPTY -17
+#define WLS_ANJAY_LOOP_ERROR -126
+#define WLS_ANJAY_OBJ_CREATE_ERROR -125
+#define WLS_ANJAY_CORE_INSTALL_ERROR -124
+
+#define WLS_DEVICE_OBJ_INIT_ERROR -18
+#define WLS_PLANT_OBJ_INIT_ERROR -17
+#define WLS_ANJAY_SERVER_CONFIG_ERROR -16
+
+#define FOTA_ERROR_SLOT 3
+#define HAL_OTA_CONFIG_ERROR -127
+
+#define DATA_BUFFER_SIZE 128
 
 typedef enum{
     WLS_TASK_OK,
@@ -18,11 +26,96 @@ typedef enum{
     WLS_MAYOR_FAULT
 }EWlsTaskStatus_t;
 
+typedef enum{
+    WLS_CMD_REBOOT
+}EWlsCmd_t;
+
+//Wireless to control task interfaces
 typedef struct {
     uint8_t ID;
     EWlsTaskStatus_t status;
     uint32_t delay;
     uint32_t LastWakeTime;
 } SWlsTaskInfo_t;
+
+typedef struct{
+    EWlsCmd_t _cmd;
+    bool _force;
+}SWlsCommand_t;
+
+typedef struct{
+    SWlsTaskInfo_t _task_info;
+    SWlsCommand_t _command;
+}SWlsCtrlSensMsg_t;
+
+//Control to wireless task interface
+
+typedef enum {
+    SYS_BUFFER_MODE
+} ESysMode_t;
+
+typedef enum {
+    E_PW_NORMAL
+} EPowerMode_t;
+
+typedef enum {
+    E_SEV_AV
+} EErrorSeverity_t;
+
+typedef enum {
+    E_ANA_TASK
+} EErrorOrigin_t;
+
+typedef struct {
+    uint16_t code;
+    EErrorSeverity_t severity;
+    EErrorOrigin_t origin;
+} SErrorInfo_t;
+
+typedef struct {
+    char sd_sts[30];
+    char gpio_sts[30];
+    char acc_sts[30];
+    char temp_moist_sts[30];
+    char solar_sts[30];
+    char plant_sts[30];
+    char soil_sts[30];
+    char main_timer_sts[30];
+    char power_sts[30];
+    char controller_sts[30];
+    char device_sts[30];
+} SSystemStatus_t;
+
+typedef struct {
+    uint8_t light;
+    uint8_t soil_moist;
+} SEnvData_t;
+
+typedef struct {
+    EPowerMode_t prev_pw_mode;
+    EPowerMode_t currnt_pw_mode;
+} SPowerData_t;
+
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+    uint8_t z;
+    bool it1;
+    bool it2;
+} SAxisData_t;
+
+typedef struct{
+    SErrorInfo_t _alarm;
+    SSystemStatus_t _status;
+    uint8_t _plant_signal[DATA_BUFFER_SIZE];
+    SEnvData_t _env_data;
+    SPowerData_t _power_data;
+    SAxisData_t _axis_buff[DATA_BUFFER_SIZE];
+    ESysMode_t _current_mode;
+    ESysMode_t _previous_mode;
+    STime_t _system_time;
+}SCtrlWlsSensMsg_t;
+
+
 
 #endif /* I_WIRELESS_DATA_H_ */

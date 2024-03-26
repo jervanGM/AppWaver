@@ -2,14 +2,11 @@
 #include "SERIES_ID.h"
 #include "PERIF_DEFS.h"
 #include "CONF_DEFS.h"
-#include <stdio.h>
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-
-#include <freertos/FreeRTOS.h>
-#include <freertos/semphr.h>
 
 #include <esp_err.h>
 #include <esp_event.h>
@@ -47,7 +44,7 @@ static wifi_config_t wifi_config;
 
 #define MAX_WAITING_TIME_FOR_IP 15000 // in ms
 
-static SemaphoreHandle_t s_semph_get_ip_addrs;
+static bool ip_obtained = false;
 static esp_netif_t *s_anjay_esp_netif = NULL;
 
 #ifdef CONFIG_ANJAY_WIFI_CONNECT_IPV6
@@ -97,7 +94,7 @@ static void on_got_ip(void *arg,
     ESP_LOGI(TAG, "Got IPv4 event: Interface \"%s\" address: " IPSTR,
              esp_netif_get_desc(event->esp_netif), IP2STR(&event->ip_info.ip));
     memcpy(&s_ip_addr, &event->ip_info.ip, sizeof(s_ip_addr));
-    xSemaphoreGive(s_semph_get_ip_addrs);
+    ip_obtained = true;
 }
 
 #ifdef CONFIG_ANJAY_WIFI_CONNECT_IPV6
@@ -119,7 +116,7 @@ static void on_got_ipv6(void *arg,
              s_ipv6_addr_types[ipv6_type]);
     if (ipv6_type == ANJAY_CONNECT_PREFERRED_IPV6_TYPE) {
         memcpy(&s_ipv6_addr, &event->ip6_info.ip, sizeof(s_ipv6_addr));
-        xSemaphoreGive(s_semph_get_ip_addrs);
+        ip_obtained = true;
     }
 }
 
@@ -147,9 +144,6 @@ static void on_wifi_connect(void *esp_netif,
 }
 
 #endif // CONFIG_ANJAY_WIFI_CONNECT_IPV6
-
-#define WIFI_SSID "esp_net"
-#define WIFI_PASS "esp_network"
 
 static esp_err_t connect() {
     snprintf((char *) wifi_config.sta.ssid,
@@ -182,13 +176,18 @@ static esp_err_t connect() {
 
     ESP_ERROR_CHECK(esp_register_shutdown_handler(&stop));
     ESP_LOGI(TAG, "Waiting for IP(s)");
-    for (int i = 0; i < NO_OF_IP_ADDRESSES_TO_WAIT_FOR; ++i) {
-        if (xSemaphoreTake(s_semph_get_ip_addrs,
-                           pdMS_TO_TICKS(MAX_WAITING_TIME_FOR_IP))
-                == pdFALSE) {
-            wifi_disconnect();
-            return ESP_FAIL;
-        }
+    // Obtener el tiempo actual en milisegundos
+    uint32_t start_time = esp_log_timestamp();
+
+    // Esperar hasta que se obtenga la dirección IP o se agote el tiempo de espera
+    while (!ip_obtained && (esp_log_timestamp() - start_time < MAX_WAITING_TIME_FOR_IP)) {
+        // Aquí puedes realizar otras tareas si es necesario
+    }
+
+    // Verificar si se ha obtenido la dirección IP o se ha agotado el tiempo de espera
+    if (!ip_obtained) {
+        ESP_LOGE(TAG, "Failed to obtain IP address within the timeout period");
+        return ESP_FAIL;
     }
     // iterate over active interfaces, and print out IPs of "our" netifs
     esp_netif_t *netif = NULL;
@@ -266,9 +265,6 @@ void wifi_initialize(void)
     s_anjay_esp_netif = esp_netif_create_wifi(WIFI_IF_STA, &esp_netif_config);
     free(desc);
     esp_wifi_set_default_wifi_sta_handlers();
-
-    /* create semaphore if at least one interface is active */
-    s_semph_get_ip_addrs = xSemaphoreCreateCounting(NO_OF_IP_ADDRESSES_TO_WAIT_FOR, 0);
 }
 
 void wifi_connect() {
@@ -276,20 +272,11 @@ void wifi_connect() {
 }
 
 void wifi_disconnect(void) {
-    if (s_semph_get_ip_addrs == NULL) {
-        return;// ESP_ERR_INVALID_STATE;
-    }
     disconnect();
     ESP_ERROR_CHECK(esp_unregister_shutdown_handler(&stop));
 }
 
 void wifi_deinitialize(void) {
-    if (s_semph_get_ip_addrs == NULL) {
-        return;// ESP_ERR_INVALID_STATE;
-    }
-    vSemaphoreDelete(s_semph_get_ip_addrs);
-    s_semph_get_ip_addrs = NULL;
-
     deinit();
     ESP_ERROR_CHECK(esp_unregister_shutdown_handler(&stop));
 }

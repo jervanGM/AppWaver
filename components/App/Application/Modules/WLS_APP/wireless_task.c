@@ -7,6 +7,7 @@
 #include "safe_trace.h"
 #include "rtos.h"
 #include "safe_memory.h"
+#include "objects.h"
 
 /*Main wireless communication task function*/
 void task_wireless(void *pvParameters)
@@ -14,21 +15,26 @@ void task_wireless(void *pvParameters)
     // Initialize task information
     SWlsTaskInfo_t task_info;
     task_wireless_init(&task_info,pvParameters);
-    //anjay_main();
+
+    // Initialize network state machine
+    task_info.status = network_sm_init(on_wls_init,
+                                      on_wls_ready,
+                                      on_wls_execute,
+                                      on_wls_update,
+                                      on_wls_breakdown);
+
+    // Verify initialization success
+    ASSERT_PANIC(task_info.status == WLS_TASK_OK, 
+              "Analog task state machine has not been initialized correctly");
+    set_task_wireless_info(task_info);
+  
     /* Infinite loop */
-    bool inite = false;
     for(;;)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
         // Run analog state machine
-        if(!inite)
-        {
-            init();
-            inite = true;
-        }
-        anjay_main();
-        
+        network_sm_run();
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);
     }
@@ -38,7 +44,7 @@ void task_wireless(void *pvParameters)
 void task_wireless_init(SWlsTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
-    task_info->ID = 0;
+    task_info->ID = 2;
     // Set task delay
     task_info->delay = *(uint32_t *)pvParams;
     // Initialize last wake time
@@ -47,4 +53,113 @@ void task_wireless_init(SWlsTaskInfo_t *task_info,void *pvParams)
     task_info->status = WLS_TASK_OK;
 }
 
+/*Init state execute function*/
+void on_wls_init()
+{
+    // Initialize network components
+    network_init();
+    network_app_init();
+    // Check for faults or software update
+    if(network_check_fota())
+    {
+        network_sm_set_st_event(WLS_STATE_UPGRADE);
+    }
+    else if(network_app_check_faults() != WLS_TASK_OK)
+    {
+        // Set state machine event to fault
+        network_sm_set_st_event(WLS_STATE_FAULT);
+    }
+    else
+    {
+        // Set state machine event to next
+        network_sm_set_st_event(WLS_STATE_NEXT);
+    }
+}
+
+/*Ready state execute function*/
+void on_wls_ready()
+{
+    network_connect();
+    // Check for faults or software update
+    if(network_check_fota())
+    {
+        network_sm_set_st_event(WLS_STATE_UPGRADE);
+    }
+    else if(network_app_check_faults() != WLS_TASK_OK)
+    {
+        // Set state machine event to fault
+        network_sm_set_st_event(WLS_STATE_FAULT);
+    }
+    else
+    {
+        // Set state machine event to next
+        network_sm_set_st_event(WLS_STATE_NEXT);
+    }
+}
+
+/*Operational state execute function*/
+void on_wls_execute()
+{
+    network_run();
+    SCtrlWlsSensMsg_t msg;
+    controller_wireless_read(&msg);
+    update_app_data(msg);
+    update_wireless_data(
+        get_serialized_plant_data()
+    );
+    // Check for faults or software update
+    if(network_check_fota())
+    {
+        network_sm_set_st_event(WLS_STATE_UPGRADE);
+    }
+    else if(network_app_check_faults() != WLS_TASK_OK)
+    {
+        // Set state machine event to fault
+        network_sm_set_st_event(WLS_STATE_FAULT);
+    }
+    else
+    {
+        // Set state machine event to next
+        network_sm_set_st_event(WLS_STATE_NEXT);
+    }
+}
+
+/*Update state execute function*/
+void on_wls_update()
+{
+    network_deinit();
+    network_fota_reboot();
+}
+
+/*Breakdown state execute function*/
+void on_wls_breakdown()
+{
+    // Fault reason
+    EWlsTaskStatus_t fault_reason = WLS_TASK_OK;
+    fault_reason = network_app_check_faults();
+    //Clean the error memory
+    store_error_in_slot(WIRELESS_ERROR_SLOT,0);
+    switch (fault_reason)
+    {
+    case WLS_MINOR_FAULT:
+        // Log minor fault
+        TRACE_WARNING("A minor fault has been produced on wireless comunication task");
+        // Set state machine event to previous
+        network_sm_set_st_event(WLS_STATE_PREV);
+        break;
+    
+    case WLS_MAYOR_FAULT:
+        // Log major fault
+        TRACE_ERROR("A mayor fault has been produced on wireless comunication task");
+        network_deinit();
+        // Set state machine event to next
+        network_sm_set_st_event(WLS_STATE_NEXT);
+        break;
+    default:
+        // Assert if unknown fault reason
+        ASSERT_PANIC(false,"Unknown fault reason has been produced on wireless comunication task");    
+        break;
+    }
+    set_task_wireless_status(fault_reason);
+}
 

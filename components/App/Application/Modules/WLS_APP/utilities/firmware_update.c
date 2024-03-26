@@ -19,11 +19,13 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include "safe_trace.h"
+#include "safe_memory.h"
 
 #include <anjay/anjay.h>
 #include <anjay/fw_update.h>
 
 #include "firmware_update.h"
+#include "i_wireless_data.h"
 #include "ota_port.h"
 #include "sdkconfig.h"
 
@@ -40,13 +42,34 @@ static int fw_stream_open(void *user_ptr,
     (void) package_etag;
 
     const IOtaPort *port = hal_ota_get_port();
-    return port->init();
+    if (port != NULL)
+    {
+        return port->init();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on initialization");
+    }
+    return -1;
 }
 
 static int fw_stream_write(void *user_ptr, const void *data, size_t length) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
-    int8_t result = port->write(data,length);
+    int8_t result = 0;
+    if (port != NULL)
+    {
+        result = port->write(data,length);
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on stream write");
+    }
+    
     if(result)
     {
         return ANJAY_FW_UPDATE_ERR_UNSUPPORTED_PACKAGE_TYPE;
@@ -57,7 +80,18 @@ static int fw_stream_write(void *user_ptr, const void *data, size_t length) {
 static int fw_stream_finish(void *user_ptr) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
-    int8_t result = port->finish();
+    int8_t result = 0;
+    if (port != NULL)
+    {
+        result = port->finish();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on stream finish");
+    }
+    
     if(result)
     {
         return ANJAY_FW_UPDATE_ERR_INTEGRITY_FAILURE;
@@ -68,22 +102,37 @@ static int fw_stream_finish(void *user_ptr) {
 static void fw_reset(void *user_ptr) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
-    port->reset();
+    if (port != NULL)
+    {
+        port->reset();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on reset");
+    }
+    
 }
 
 static int fw_perform_upgrade(void *user_ptr) {
     (void) user_ptr;
-
+    int result = 0;
     const IOtaPort *port = hal_ota_get_port();
-    int result = port->upgrade();
+    if (port != NULL)
+    {
+        result = port->upgrade();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on upgrade");
+    }
 
     if (result) 
     {
         return ANJAY_FW_UPDATE_ERR_INTEGRITY_FAILURE;
-    }
-
-    if (anjay_event_loop_interrupt(fw_state.anjay)) {
-        return -1;
     }
 
     atomic_store(&fw_state.update_requested, true);
@@ -101,10 +150,19 @@ static const anjay_fw_update_handlers_t HANDLERS = {
 int fw_update_install(anjay_t *anjay) {
     anjay_fw_update_initial_state_t state = { 0 };
     const IOtaPort *port = hal_ota_get_port();
-
-    if (!port->update_install()) {
-        state.result = ANJAY_FW_UPDATE_INITIAL_SUCCESS;
+    if (port != NULL)
+    {
+        if (!port->update_install()) {
+            state.result = ANJAY_FW_UPDATE_INITIAL_SUCCESS;
+        }
     }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on install");
+    }
+
 
     // make sure this module is installed for single Anjay instance only
     assert(!fw_state.anjay);
@@ -120,5 +178,14 @@ bool fw_update_requested(void) {
 void fw_update_reboot(void) {
     TRACE_INFO("Rebooting to perform a firmware upgrade...");
     const IOtaPort *port = hal_ota_get_port();
-    port->update_reboot();
+    if (port != NULL)
+    {
+        port->update_reboot();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(FOTA_ERROR_SLOT, HAL_OTA_CONFIG_ERROR);
+        TRACE_ERROR("FOTA HAL port has not been configured correctly on reboot");
+    }
 }

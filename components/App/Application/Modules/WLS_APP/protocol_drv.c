@@ -13,11 +13,13 @@
 #include <anjay/core.h>
 #include <anjay/security.h>
 #include <anjay/server.h>
+#include <anjay/lwm2m_send.h>
 
 #include "wls_port.h"
 #include "default_config.h"
 #include "firmware_update.h"
 #include "objects/objects.h"
+#include "utils.h"
 #include "sdkconfig.h"
 
 #ifdef CONFIG_ANJAY_SECURITY_MODE_CERTIFICATES
@@ -42,7 +44,7 @@ static char SERVER_URI[ANJAY_MAX_PK_OR_IDENTITY_SIZE];
 static char ENDPOINT_NAME[ANJAY_MAX_PK_OR_IDENTITY_SIZE];
 
 static const anjay_dm_object_def_t **DEVICE_OBJ;
-static const anjay_dm_object_def_t **TIME_CONTROL_OBJ;
+static const anjay_dm_object_def_t **PLANT_DATA_OBJ;
 
 static anjay_t *anjay;
 static avs_sched_handle_t sensors_job_handle;
@@ -101,7 +103,7 @@ static int setup_server_object(anjay_t *anjay) {
         // Server Short ID
         .ssid = 1,
         // Client will send Update message often than every 60 seconds
-        .lifetime = 60,
+        .lifetime = 30,
         // Disable Default Minimum Period resource
         .default_min_period = -1,
         // Disable Default Maximum Period resource
@@ -126,24 +128,13 @@ static void update_objects_job(avs_sched_t *sched, const void *anjay_ptr) {
     anjay_t *anjay = *(anjay_t *const *) anjay_ptr;
 
     device_object_update(anjay, DEVICE_OBJ);
-    custom_object_update(anjay, TIME_CONTROL_OBJ);
+    custom_object_update(anjay, PLANT_DATA_OBJ);
 
     AVS_SCHED_DELAYED(sched, &sensors_job_handle,
-                      avs_time_duration_from_scalar(1, AVS_TIME_S),
+                      avs_time_duration_from_scalar(100, AVS_TIME_MS),
                       &update_objects_job, &anjay, sizeof(anjay));
 }
 
-// Periodically issues a Send message with application type and current time
-static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
-    anjay_t *anjay = *(anjay_t *const *) anjay_ptr;
-
-    custom_object_send(anjay, TIME_CONTROL_OBJ);
-
-    // Schedule run of the same function after 10 seconds
-    AVS_SCHED_DELAYED(sched, NULL,
-                      avs_time_duration_from_scalar(1, AVS_TIME_S), send_job,
-                      &anjay, sizeof(anjay));
-}
 
 static void update_connection_status_job(avs_sched_t *sched,
                                          const void *anjay_ptr) {
@@ -165,6 +156,45 @@ static void update_connection_status_job(avs_sched_t *sched,
                       update_connection_status_job, &anjay, sizeof(anjay));
 }
 
+static void read_anjay_config(void)
+{
+    TRACE_INFO("Getting server credentials... ");
+    device_id_t id;
+    get_device_id(id.value);
+    snprintf(ENDPOINT_NAME, sizeof(ENDPOINT_NAME), "%s%s",
+             CONFIG_ANJAY_CLIENT_ENDPOINT_NAME,id.value);
+    if ((strstr(ENDPOINT_NAME, CONFIG_ANJAY_CLIENT_ENDPOINT_NAME) == NULL) ||
+        (strstr(ENDPOINT_NAME, id.value) == NULL))
+    {
+        TRACE_ERROR("Endpoint name has not been configurated correctly");
+        store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_ANJAY_SERVER_CONFIG_ERROR);
+        return;
+    }
+    snprintf(SERVER_URI, sizeof(SERVER_URI), "%s",
+             CONFIG_ANJAY_CLIENT_SERVER_URI);
+    if (strcmp(SERVER_URI, CONFIG_ANJAY_CLIENT_SERVER_URI))
+    {
+        TRACE_ERROR("Server URI has not been configurated correctly");
+        store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_ANJAY_SERVER_CONFIG_ERROR);
+        return;
+    }
+#ifdef CONFIG_ANJAY_SECURITY_MODE_PSK
+    snprintf(PSK, sizeof(PSK), "%s", CONFIG_ANJAY_CLIENT_PSK_KEY);
+    if (strcmp(PSK, CONFIG_ANJAY_CLIENT_PSK_KEY))
+    {
+        TRACE_ERROR("Server psk key has not been configurated correctly");
+        store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_ANJAY_SERVER_CONFIG_ERROR);
+        return;
+    }
+    snprintf(IDENTITY, sizeof(IDENTITY), "%s", ENDPOINT_NAME);
+    if (strcmp(IDENTITY, ENDPOINT_NAME))
+    {
+        TRACE_ERROR("Client psk identity has not been configurated correctly");
+        store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_ANJAY_SERVER_CONFIG_ERROR);
+    }
+#endif // CONFIG_ANJAY_SECURITY_MODE_PSK
+}
+
 static void anjay_init(void) {
     const anjay_configuration_t CONFIG = {
         .endpoint_name = ENDPOINT_NAME,
@@ -179,60 +209,151 @@ static void anjay_init(void) {
     anjay = anjay_new(&CONFIG);
     if (!anjay) {
         TRACE_ERROR("Could not create Anjay object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_ANJAY_OBJ_CREATE_ERROR  );
         return;
     }
-
     // Install Attribute storage and setup necessary objects
     if (setup_security_object(anjay) || setup_server_object(anjay)
             || fw_update_install(anjay)) {
         TRACE_ERROR("Failed to install core objects");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_ANJAY_CORE_INSTALL_ERROR);
         return;
     }
 
     if (!(DEVICE_OBJ = device_object_create())
             || anjay_register_object(anjay, DEVICE_OBJ)) {
         TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_DEVICE_OBJ_INIT_ERROR);
+    }
+
+    if (!(PLANT_DATA_OBJ = plant_data_object_create())
+            || anjay_register_object(anjay, PLANT_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_PLANT_OBJ_INIT_ERROR);
+    }
+
+}
+void update_wireless_data(uint8_t plant_val)
+{
+    plant_object_value_update(plant_val,PLANT_DATA_OBJ);
+}
+
+static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
+    anjay_t *anjay = *(anjay_t *const *) anjay_ptr;
+    const anjay_ssid_t server_ssid = 1;
+
+    // Allocate new batch builder.
+    anjay_send_batch_builder_t *builder = anjay_send_batch_builder_new();
+
+    if (!builder) {
+        TRACE_ERROR("Failed to allocate batch builder");
         return;
     }
 
-    if ((TIME_CONTROL_OBJ = custom_object_create())) {
-        anjay_register_object(anjay, TIME_CONTROL_OBJ);
+    int res = 0;
+
+    plant_object_send(builder,anjay, PLANT_DATA_OBJ);
+
+    // After adding all values, compile our batch for sending.
+    anjay_send_batch_t *batch = anjay_send_batch_builder_compile(&builder);
+
+    if (!batch) {
+        anjay_send_batch_builder_cleanup(&builder);
+        TRACE_ERROR("Batch compile failed");
+        return;
     }
+
+    // Schedule our send to be run on next `anjay_sched_run()` call.
+    res = anjay_send(anjay, server_ssid, batch, NULL, NULL);
+
+    if (res) {
+        TRACE_ERROR("Failed to send, result:", TO_STRING(res));
+    }
+
+    // After scheduling, we can release our batch.
+    anjay_send_batch_release(&batch);
+
+    // Schedule run of the same function after 10 seconds
+    AVS_SCHED_DELAYED(sched, NULL,
+                      avs_time_duration_from_scalar(1, AVS_TIME_S), send_job,
+                      &anjay, sizeof(anjay));
+}
+
+void network_init(void) {
+    const IWlsPort *port = hal_wls_get_port();
+    if (port != NULL)
+    {
+        port->init(); // Call the initialization function of the wireless port
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
+        TRACE_ERROR("Wireless communication HAL port has not been configured correctly on init");
+    }
+    anjay_init();
 
 }
 
-void anjay_main() {
+void network_connect(void)
+{
+    const IWlsPort *port = hal_wls_get_port();
 
+    if (port != NULL)
+    {
+        port->connect();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
+        TRACE_ERROR("Wireless communication HAL port has not been configured correctly on connection");
+    }
+    
     update_connection_status_job(anjay_get_scheduler(anjay), &anjay);
     update_objects_job(anjay_get_scheduler(anjay), &anjay);
     send_job(anjay_get_scheduler(anjay), &anjay);
+    TRACE_INFO("Connecting endpoint",ENDPOINT_NAME,"to server",SERVER_URI);
+}
 
-    anjay_event_loop_run(anjay, avs_time_duration_from_scalar(1, AVS_TIME_S));
+void network_run() {
 
+    if(anjay_serve_any(anjay, avs_time_duration_from_scalar(1, AVS_TIME_S)))
+    {
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_ANJAY_LOOP_ERROR);
+        TRACE_ERROR("A failure was handle by middleware");
+    }
+
+    anjay_sched_run(anjay);
+}
+
+void network_deinit()
+{
+    const IWlsPort *port = hal_wls_get_port();
+
+    if (port != NULL)
+    {
+        port->disconnect();
+        port->reset();
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
+        TRACE_ERROR("Wireless communication HAL port has not been configured correctly on network deinitialization");
+    }
     avs_sched_del(&sensors_job_handle);
     avs_sched_del(&connection_status_job_handle);
     anjay_delete(anjay);
-
-    if (fw_update_requested()) {
-        fw_update_reboot();
-    }
 }
 
-static void read_anjay_config(void) {
-    TRACE_INFO("Getting server credentials... ");
-    snprintf(ENDPOINT_NAME, sizeof(ENDPOINT_NAME), "%s",
-                 CONFIG_ANJAY_CLIENT_ENDPOINT_NAME);
-    snprintf(SERVER_URI, sizeof(SERVER_URI), "%s",
-                 CONFIG_ANJAY_CLIENT_SERVER_URI);
-    #ifdef CONFIG_ANJAY_SECURITY_MODE_PSK
-    snprintf(PSK, sizeof(PSK), "%s", CONFIG_ANJAY_CLIENT_PSK_KEY);
-    snprintf(IDENTITY, sizeof(IDENTITY), "%s",CONFIG_ANJAY_CLIENT_PSK_IDENTITY);
-    #endif // CONFIG_ANJAY_SECURITY_MODE_PSK
+void network_fota_reboot()
+{
+    fw_update_reboot();
 }
 
-void init(void) {
-    const IWlsPort *port = hal_wls_get_port();
-    port->init();
-    port->connect();
-    anjay_init();
+bool network_check_fota()
+{
+    return fw_update_requested();
 }
+
