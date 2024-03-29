@@ -7,10 +7,15 @@
 #define MINOR_FAULT_THRESHOLD -1
 #define MAYOR_FAULT_THESHOLD -20
 
+#define DATA_BUFFER_SIZE 128
+#define SIGNAL_THRESHOLD 4500
+
 /**
  * @brief Initializes the control application.
  */
 void control_app_init();
+
+void control_app_process_plant_data(uint32_t *data_in,uint32_t *data_out,size_t buf_size,bool ready);
 
 /**
  * @brief Checks for faults in the control application.

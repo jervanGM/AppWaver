@@ -9,7 +9,7 @@
 #include "control_app.h"
 #include "control_diag.h"
 #include "safe_memory.h"
-#include <string.h>
+
 
 void task_control(void *pvParameters)
 {   
@@ -81,31 +81,36 @@ void on_ctrl_ready()
 
 void on_ctrl_execute()
 {
-    SAnalogSensMsg_t msg;
+    SAnalogSensMsg_t ana_msg;
+    SWlsCtrlSensMsg_t wls_msg;
     SErrorInfo_t alarm;
     SSystemStatus_t status;
     SEnvData_t env_data;
     SPowerData_t power_data;
     SAxisData_t axix_buf[DATA_BUFFER_SIZE];
-    static uint8_t plant_data[DATA_BUFFER_SIZE];
-    analog_controller_read(&msg);
-    if(msg._plant_buff.size>0 && msg._plant_buff.ready)
+    static uint32_t plant_data[DATA_BUFFER_SIZE] = {0};
+    analog_controller_read(&ana_msg);
+    wireless_controller_read(&wls_msg);
+    if(wls_msg._task_info.status == WLS_MAYOR_FAULT)
     {
-      memcpy(plant_data,msg._plant_buff.data,DATA_BUFFER_SIZE*sizeof(uint8_t));
-      // for(uint16_t i = 0;i<msg._plant_buff.size;i++)
-      // {
-      //   TRACE_INFO("PLANT INFO:", TO_STRING(msg._plant_buff.data[i]));
-      // }
-      // TRACE_INFO("CONTROL START TIME:", TO_STRING(msg._buff_time.start_time.sec));
-      // TRACE_INFO("CONTROL END TIME:", TO_STRING(msg._buff_time.end_time.sec));
+        TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR FUERTE");
     }
-    // else
-    // {
-    //   memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint8_t));
-    // }
+    else if(wls_msg._task_info.status == WLS_MINOR_FAULT)
+    {
+        TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR DEBIL");
+    }
+    else
+    {
+
+    }
+    
+
+    control_app_process_plant_data(ana_msg._plant_buff.data,plant_data,
+                                ana_msg._plant_buff.size,ana_msg._plant_buff.ready);
 
     controller_wireless_send(alarm,status,plant_data,env_data,power_data,
                             axix_buf,SYS_BUFFER_MODE,SYS_BUFFER_MODE,get_system_time());
+
     if(control_app_check_faults() != CTRL_TASK_OK)
     {
         // Set state machine event to fault
@@ -127,14 +132,14 @@ void on_ctrl_breakdown()
     store_error_in_slot(CONTROL_ERROR_SLOT,0);
     switch (fault_reason)
     {
-    case WLS_MINOR_FAULT:
+    case CTRL_MINOR_FAULT:
         // Log minor fault
         TRACE_WARNING("A minor fault has been produced on controller task");
         // Set state machine event to previous
         control_sm_set_st_event(CTRL_STATE_PREV);
         break;
     
-    case WLS_MAYOR_FAULT:
+    case CTRL_MAYOR_FAULT:
         // Log major fault
         ASSERT_PANIC(false,"A mayor fault reason has been produced on controller task, reboot application");   
         break;

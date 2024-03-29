@@ -66,6 +66,7 @@ target_include_directories(lib PUBLIC
     ${ROOT}/componnets/App/HAL/hal_ports/Test/include
     ${ROOT}/lib/test_lib
     ${ROOT}/components/App/Application/Modules/Internal_Comms/include
+    ${ROOT}/components/App/Application/Modules/WLS_APP/include
     ../include
 )
 

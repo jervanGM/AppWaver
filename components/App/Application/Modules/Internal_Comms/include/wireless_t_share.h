@@ -18,7 +18,7 @@ void wireless_controller_read(SWlsCtrlSensMsg_t *msg);
 void controller_wireless_send(
     SErrorInfo_t alarm,
     SSystemStatus_t status,
-    uint8_t *plant_signal,
+    uint32_t *plant_signal,
     SEnvData_t env_data,
     SPowerData_t power_data,
     SAxisData_t *axis_buff,

@@ -5,6 +5,8 @@
 #include "wireless_task.h"
 #include <stdio.h>
 
+#include "wdt_cfg.h"
+
 
 void systemConfig()
 {
@@ -32,4 +34,5 @@ void openThreadInit()
 
 void hwInit()
 {
+    set_wdt_disable();
 }

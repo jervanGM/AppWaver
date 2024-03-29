@@ -3,14 +3,15 @@
 #include "ota_drv.h"
 
 /* Declarations of static functions */
-static void wls_port_init(void);    // Function to initialize the wireless port
-static void wls_port_reset(void);   // Function to reset the wireless port
-static void wls_port_get_mac(uint8_t *mac);
+static int8_t wls_port_init(void);    // Function to initialize the wireless port
+static int8_t wls_port_reset(void);   // Function to reset the wireless port
+static int8_t wls_port_get_mac(uint8_t *mac);
 static void wls_system_abort(const char *msg);
-static void wls_connect();
-static void wls_disconnect();
+static int8_t wls_connect();
+static int8_t wls_disconnect();
 static void wls_port_receive(uint8_t channel, uint32_t *data);   // Function to read data from the wireless port
 static void wls_port_send(uint8_t channel, uint32_t data);   // Function to write data to the wireless port
+static int32_t get_wifi_event();
 
 /* Definition of the wireless port interface */
 static const IWlsPort wls_port_interface = {
@@ -19,26 +20,27 @@ static const IWlsPort wls_port_interface = {
     .get_mac = wls_port_get_mac,  // Reset function pointer
     .system_abort = wls_system_abort,
     .connect = wls_connect,
+    .get_wifi_event = get_wifi_event,
     .disconnect = wls_disconnect,
     .receive = wls_port_receive,    // Read function pointer
     .send = wls_port_send   // Write function pointer
 };
 
 /* Function to initialize the wireless port */
-static void wls_port_init(void)
+static int8_t wls_port_init(void)
 {
-    wifi_initialize();
+    return wifi_initialize();
 }
 
 /* Function to reset the wireless port */
-static void wls_port_reset(void)
+static int8_t wls_port_reset(void)
 {
-    wifi_deinitialize();
+    return wifi_deinitialize();
 }
 
-static void wls_port_get_mac(uint8_t *mac)
+static int8_t wls_port_get_mac(uint8_t *mac)
 {
-    mac_get_default(mac);
+    return mac_get_default(mac);
 }
 
 static void wls_system_abort(const char *msg)
@@ -46,14 +48,19 @@ static void wls_system_abort(const char *msg)
     wireless_system_abort(msg);
 }
 
-static void wls_connect()
+static int8_t wls_connect()
 {
-    wifi_connect();
+    return wifi_connect();
 }
 
-static void wls_disconnect()
+static int8_t wls_disconnect()
 {
-    wifi_disconnect();
+    return wifi_disconnect();
+}
+
+static int32_t get_wifi_event()
+{
+    return get_last_wifi_event_id();
 }
 /* Function to read data from the wireless port */
 static void wls_port_receive(uint8_t channel, uint32_t *data)

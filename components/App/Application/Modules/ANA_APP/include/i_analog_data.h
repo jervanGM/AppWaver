@@ -24,7 +24,7 @@ typedef struct {
 } SBufferTime_t;
 
 typedef struct {
-    uint8_t data[BUFFER_SIZE];
+    uint32_t data[BUFFER_SIZE];
     size_t size;
     bool ready;
 } SDataBuffer_t;

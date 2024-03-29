@@ -165,7 +165,11 @@ int fw_update_install(anjay_t *anjay) {
 
 
     // make sure this module is installed for single Anjay instance only
-    assert(!fw_state.anjay);
+    if(fw_state.anjay)
+    {
+        store_error_in_slot(FOTA_ERROR_SLOT,OTA_NOT_CONFIGURED);
+        TRACE_ERROR("FOTA anjay instance has not been installed correctly");
+    }
     fw_state.anjay = anjay;
 
     return anjay_fw_update_install(anjay, &HANDLERS, NULL, &state);

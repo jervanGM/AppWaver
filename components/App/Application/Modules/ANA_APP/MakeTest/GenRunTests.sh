@@ -1,4 +1,4 @@
-#!/bin/bash
+components/App/Application/Modules/ANA_APP/MakeTest/GenRunTests.sh#!/bin/bash
 
 # Limpiar el archivo test_report.txt al inicio del script
 > test_report.txt

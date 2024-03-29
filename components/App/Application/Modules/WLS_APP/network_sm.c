@@ -180,6 +180,10 @@ static void breakdown_transition()
         wls_state_sm.sm_state = wls_state_sm.sm_prev_state;
         wls_state_sm.st_event = WLS_STATE_IDLE; 
         break;
+    case WLS_STATE_RECONNECT:
+        wls_state_sm.sm_state = WLS_READY;
+        wls_state_sm.st_event = WLS_STATE_IDLE; 
+        break;  
     default:
         wls_state_sm.sm_state = WLS_BREAKDOWN;
         wls_state_sm.st_event = WLS_STATE_IDLE; 

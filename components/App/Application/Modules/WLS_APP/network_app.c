@@ -3,24 +3,24 @@
 #include "firmware_update.h"
 
 static uint8_t size;
-static uint8_t plant_data[DATA_BUFFER_SIZE];
+static uint32_t plant_data[DATA_BUFFER_SIZE];
 /* Initializes the network application */
 void network_app_init()
 {
     size = 0;
-    memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint8_t));
+    memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint32_t));
 }
 
 void update_app_data(SCtrlWlsSensMsg_t msg)
 {
     if(size == DATA_BUFFER_SIZE)
     {
-        memcpy(plant_data, msg._plant_signal, DATA_BUFFER_SIZE * sizeof(uint8_t));
+        memcpy(plant_data, msg._plant_signal, DATA_BUFFER_SIZE * sizeof(uint32_t));
         size = 0;
     }
 }
 
-uint8_t get_serialized_plant_data()
+uint32_t get_serialized_plant_data()
 {
     return plant_data[size++];
 }
@@ -28,20 +28,27 @@ uint8_t get_serialized_plant_data()
 /* Checks for faults in the network application */
 EWlsTaskStatus_t network_app_check_faults()
 {
-    int8_t error = 0;
-
+    int8_t wls_error = 0;
+    int8_t ota_error = 0;
     // Read the error from the specified error slot
-    error = read_error_from_slot(WIRELESS_ERROR_SLOT);
+    wls_error = read_error_from_slot(WIRELESS_ERROR_SLOT);
+    ota_error = read_error_from_slot(FOTA_ERROR_SLOT);
+
     // Determine the task status based on the error value
-    if ((error < MINOR_FAULT_THRESHOLD) && (error > MAYOR_FAULT_THESHOLD))
+    if (((wls_error < MINOR_FAULT_THRESHOLD) && (wls_error > MAYOR_FAULT_THESHOLD)) ||
+        ((ota_error < MINOR_FAULT_THRESHOLD) && (ota_error > MAYOR_FAULT_THESHOLD)))
     {
         // Return ANA_MINOR_FAULT if the error falls within the defined range
         return WLS_MINOR_FAULT;
     }
-    else if (error < MAYOR_FAULT_THESHOLD)
+    else if ((wls_error < MAYOR_FAULT_THESHOLD) || (ota_error < MAYOR_FAULT_THESHOLD) )
     {
         // Return ANA_MAYOR_FAULT if the error is less than MAYOR_FAULT_THRESHOLD
         return WLS_MAYOR_FAULT;
+    }
+    else if(wls_error == WLS_DRV_RECONNECT_ERROR)
+    {
+        return WLS_TASK_RECONNECT_FAULT;
     }
     else
     {

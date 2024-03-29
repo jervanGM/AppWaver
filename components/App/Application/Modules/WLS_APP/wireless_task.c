@@ -74,6 +74,7 @@ void on_wls_init()
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
     }
+    set_task_wireless_status(WLS_TASK_OK);
 }
 
 /*Ready state execute function*/
@@ -95,6 +96,7 @@ void on_wls_ready()
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
     }
+    set_task_wireless_status(WLS_TASK_OK);
 }
 
 /*Operational state execute function*/
@@ -122,6 +124,7 @@ void on_wls_execute()
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
     }
+    set_task_wireless_status(WLS_TASK_OK);
 }
 
 /*Update state execute function*/
@@ -147,7 +150,10 @@ void on_wls_breakdown()
         // Set state machine event to previous
         network_sm_set_st_event(WLS_STATE_PREV);
         break;
-    
+    case WLS_TASK_RECONNECT_FAULT:
+        network_disconnect();
+        network_sm_set_st_event(WLS_STATE_RECONNECT);
+        break;
     case WLS_MAYOR_FAULT:
         // Log major fault
         TRACE_ERROR("A mayor fault has been produced on wireless comunication task");

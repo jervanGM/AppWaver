@@ -13,7 +13,7 @@
 void network_app_init();
 
 void update_app_data(SCtrlWlsSensMsg_t msg);
-uint8_t get_serialized_plant_data();
+uint32_t get_serialized_plant_data();
 
 /**
  * @brief Checks for faults in the network application.

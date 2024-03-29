@@ -18,11 +18,13 @@ void network_connect(void);
 
 void network_deinit(void);
 
+void network_disconnect(void);
+
 void network_fota_reboot(void);
 
 bool network_check_fota(void);
 
-void update_wireless_data(uint8_t plant_val);
+void update_wireless_data(uint32_t plant_val);
 
 
 #endif /* PROTOCOL_DRV_H_ */

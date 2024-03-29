@@ -24,7 +24,7 @@ void dsp_init_port()
 }
 
 /* Retrieves data from the DSP module */
-uint8_t get_dsp_data()
+uint32_t get_dsp_data()
 {
     uint32_t data;
     // Get data from the analog port
@@ -36,8 +36,7 @@ uint8_t get_dsp_data()
         port->read(2, &data); // Read data from the analog port channel 2
         // Apply filters and normalization
         iir_filter(&data);                                  // Apply IIR filter
-        uint8_t normalized_data = data_normalization(data); // Normalize data
-        return normalized_data;
+        return data;
     }
     else
     {
@@ -78,25 +77,4 @@ void iir_filter(uint32_t *input)
         x[i + 1] = x[i];
         y[i + 1] = y[i];
     }
-}
-
-/* Normalizes input data */
-uint8_t data_normalization(uint32_t input)
-{
-    // Check if the input value exceeds the threshold
-    if (input > MAX_INPUT_VALUE)
-    {
-        // Log a warning if the input value exceeds the threshold
-        store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DSP_NORMALIZE_ERROR);
-        TRACE_WARNING("Input from DSP normalization is higher than the established threshold");
-        input = MAX_INPUT_VALUE;
-    }
-
-    // Normalize the input data
-    uint8_t normalized_data = (uint8_t)(((input - MIN_INPUT_VALUE) *
-                                             (NORMALIZED_MAX - NORMALIZED_MIN) +
-                                         (MAX_INPUT_VALUE - 1) / 2) /
-                                        (MAX_INPUT_VALUE - MIN_INPUT_VALUE));
-
-    return normalized_data;
 }

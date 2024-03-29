@@ -191,6 +191,7 @@ static void read_anjay_config(void)
     {
         TRACE_ERROR("Client psk identity has not been configurated correctly");
         store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_ANJAY_SERVER_CONFIG_ERROR);
+        return; 
     }
 #endif // CONFIG_ANJAY_SECURITY_MODE_PSK
 }
@@ -224,16 +225,18 @@ static void anjay_init(void) {
             || anjay_register_object(anjay, DEVICE_OBJ)) {
         TRACE_ERROR("Could not register Device object");
         store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_DEVICE_OBJ_INIT_ERROR);
+        return; 
     }
 
     if (!(PLANT_DATA_OBJ = plant_data_object_create())
             || anjay_register_object(anjay, PLANT_DATA_OBJ)) {
         TRACE_ERROR("Could not register Device object");
         store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_PLANT_OBJ_INIT_ERROR);
+        return; 
     }
 
 }
-void update_wireless_data(uint8_t plant_val)
+void update_wireless_data(uint32_t plant_val)
 {
     plant_object_value_update(plant_val,PLANT_DATA_OBJ);
 }
@@ -250,7 +253,7 @@ static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
         return;
     }
 
-    int res = 0;
+    int32_t res = 0;
 
     plant_object_send(builder,anjay, PLANT_DATA_OBJ);
 
@@ -264,7 +267,7 @@ static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
     }
 
     // Schedule our send to be run on next `anjay_sched_run()` call.
-    res = anjay_send(anjay, server_ssid, batch, NULL, NULL);
+    res = (int32_t)anjay_send(anjay, server_ssid, batch, NULL, NULL);
 
     if (res) {
         TRACE_ERROR("Failed to send, result:", TO_STRING(res));
@@ -283,15 +286,25 @@ void network_init(void) {
     const IWlsPort *port = hal_wls_get_port();
     if (port != NULL)
     {
-        port->init(); // Call the initialization function of the wireless port
+        if(port->init() != WLS_DRV_OK)
+        {
+            store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_DRV_INIT_ERROR);
+            TRACE_ERROR("A wireless communication task error has been produced during initialization");
+            return; 
+        }
+        else
+        {
+            //TBD
+        }
     }
     else
     {
         // Log an error if the wireless port is not properly configured
         store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
         TRACE_ERROR("Wireless communication HAL port has not been configured correctly on init");
+        return; 
     }
-    anjay_init();
+    
 
 }
 
@@ -301,7 +314,16 @@ void network_connect(void)
 
     if (port != NULL)
     {
-        port->connect();
+        if(port->connect() != WLS_DRV_OK)
+        {
+            store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_DRV_CONNECT_ERROR);
+            TRACE_ERROR("A wireless communication task error has been produced during connection");
+            return; 
+        }
+        else
+        {
+            //TBD
+        }
     }
     else
     {
@@ -309,7 +331,7 @@ void network_connect(void)
         store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
         TRACE_ERROR("Wireless communication HAL port has not been configured correctly on connection");
     }
-    
+    anjay_init();
     update_connection_status_job(anjay_get_scheduler(anjay), &anjay);
     update_objects_job(anjay_get_scheduler(anjay), &anjay);
     send_job(anjay_get_scheduler(anjay), &anjay);
@@ -318,23 +340,82 @@ void network_connect(void)
 
 void network_run() {
 
+    const IWlsPort *port = hal_wls_get_port();
+
+    if (port != NULL)
+    {
+        if(port->get_wifi_event() == WLS_RECONNECT_EVENT)
+        {
+          store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_DRV_RECONNECT_ERROR);
+          TRACE_ERROR("Wireless communication task is trying to reconnect, check connections and credentials");
+          return;           
+        }
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
+        TRACE_ERROR("Wireless communication HAL port has not been configured correctly on network deinitialization");
+        return; 
+    }
+
     if(anjay_serve_any(anjay, avs_time_duration_from_scalar(1, AVS_TIME_S)))
     {
         store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_ANJAY_LOOP_ERROR);
         TRACE_ERROR("A failure was handle by middleware");
+        return; 
     }
-
+    if(anjay_all_connections_failed(anjay))
+    {
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_DRV_CONNECT_ERROR);
+        TRACE_ERROR("Connection failure with server");
+        return; 
+    }
     anjay_sched_run(anjay);
 }
 
 void network_deinit()
 {
     const IWlsPort *port = hal_wls_get_port();
+    network_disconnect();
+    if (port != NULL)
+    {
+        if(port->reset() != WLS_DRV_OK)
+        {
+            store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_DRV_RESET_ERROR);
+            TRACE_ERROR("A wireless communication task error has been produced during reset");
+            return;
+        }
+        else
+        {
+            //TBD
+        }
+    }
+    else
+    {
+        // Log an error if the wireless port is not properly configured
+        store_error_in_slot(WIRELESS_ERROR_SLOT, HAL_WLS_CONFIG_ERROR);
+        TRACE_ERROR("Wireless communication HAL port has not been configured correctly on network deinitialization");
+    }
+
+}
+
+void network_disconnect()
+{
+    const IWlsPort *port = hal_wls_get_port();
 
     if (port != NULL)
     {
-        port->disconnect();
-        port->reset();
+        if(port->disconnect() != WLS_DRV_OK)
+        {
+            store_error_in_slot(WIRELESS_ERROR_SLOT, WLS_DRV_DISCONNECT_ERROR);
+            TRACE_ERROR("A wireless communication task error has been produced during disconnection");
+            return;
+        }
+        else
+        {
+            //TBD
+        }
     }
     else
     {

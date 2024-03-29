@@ -80,12 +80,14 @@ static void stop(void) {
 }
 
 static esp_ip4_addr_t s_ip_addr;
+static int32_t last_wifi_event_id;
 
 static void on_got_ip(void *arg,
                       esp_event_base_t event_base,
                       int32_t event_id,
                       void *event_data) {
     ip_event_got_ip_t *event = (ip_event_got_ip_t *) event_data;
+    last_wifi_event_id = event_id;
     if (!is_our_netif(TAG, event->esp_netif)) {
         ESP_LOGW(TAG, "Got IPv4 from another interface \"%s\": ignored",
                  esp_netif_get_desc(event->esp_netif));
@@ -104,6 +106,7 @@ static void on_got_ipv6(void *arg,
                         int32_t event_id,
                         void *event_data) {
     ip_event_got_ip6_t *event = (ip_event_got_ip6_t *) event_data;
+    last_wifi_event_id = event_id;
     if (!is_our_netif(TAG, event->esp_netif)) {
         ESP_LOGW(TAG, "Got IPv6 from another netif: ignored");
         return;
@@ -127,6 +130,7 @@ static void on_wifi_disconnect(void *arg,
                                int32_t event_id,
                                void *event_data) {
     ESP_LOGI(TAG, "Wi-Fi disconnected, trying to reconnect...");
+    last_wifi_event_id = event_id;
     esp_err_t err = esp_wifi_connect();
     if (err == ESP_ERR_WIFI_NOT_STARTED) {
         return;
@@ -140,10 +144,15 @@ static void on_wifi_connect(void *esp_netif,
                             esp_event_base_t event_base,
                             int32_t event_id,
                             void *event_data) {
+    last_wifi_event_id = event_id;
     esp_netif_create_ip6_linklocal(esp_netif);
 }
 
 #endif // CONFIG_ANJAY_WIFI_CONNECT_IPV6
+
+int32_t get_last_wifi_event_id() {
+    return last_wifi_event_id;
+}
 
 static esp_err_t connect() {
     snprintf((char *) wifi_config.sta.ssid,
@@ -174,7 +183,7 @@ static esp_err_t connect() {
     ESP_ERROR_CHECK(esp_wifi_start());
     esp_wifi_connect();
 
-    ESP_ERROR_CHECK(esp_register_shutdown_handler(&stop));
+    //ESP_ERROR_CHECK(esp_register_shutdown_handler(&stop));
     ESP_LOGI(TAG, "Waiting for IP(s)");
     // Obtener el tiempo actual en milisegundos
     uint32_t start_time = esp_log_timestamp();
@@ -242,17 +251,22 @@ static void deinit(void)
     s_anjay_esp_netif = NULL;
 }
 
-void wifi_initialize(void) 
+int8_t wifi_initialize(void) 
 {
     ESP_LOGI(TAG, "Wifi initialization");
-    ESP_ERROR_CHECK(nvs_flash_init());
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-
+    if((nvs_flash_init() != ESP_OK) ||
+       (esp_netif_init() != ESP_OK) ||
+       (esp_event_loop_create_default() != ESP_OK)){
+        ESP_LOGI(TAG, "Pasa aqui el problema");
+        return -1;
+    }
     char *desc;
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+    if(esp_wifi_init(&cfg) != ESP_OK){
+        ESP_LOGI(TAG, "Pasa en wifi init el problema");
+        return -1;
+    }
 
     esp_netif_inherent_config_t esp_netif_config =
             ESP_NETIF_INHERENT_DEFAULT_WIFI_STA();
@@ -265,25 +279,42 @@ void wifi_initialize(void)
     s_anjay_esp_netif = esp_netif_create_wifi(WIFI_IF_STA, &esp_netif_config);
     free(desc);
     esp_wifi_set_default_wifi_sta_handlers();
+    return 0;
 }
 
-void wifi_connect() {
-    ESP_ERROR_CHECK(connect());
+int8_t wifi_connect() {
+    if(connect() != ESP_OK)
+    {
+        return -1;
+    }
+    return 0;
 }
 
-void wifi_disconnect(void) {
+int8_t wifi_disconnect(void) {
     disconnect();
-    ESP_ERROR_CHECK(esp_unregister_shutdown_handler(&stop));
+    if(esp_unregister_shutdown_handler(&stop) != ESP_OK)
+    {
+        return -1;
+    }
+    return 0;
 }
 
-void wifi_deinitialize(void) {
+int8_t wifi_deinitialize(void) {
     deinit();
-    ESP_ERROR_CHECK(esp_unregister_shutdown_handler(&stop));
+    if(esp_unregister_shutdown_handler(&stop) != ESP_OK)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 
-void mac_get_default(uint8_t *mac) {
-    ESP_ERROR_CHECK(esp_efuse_mac_get_default(mac));
+int8_t mac_get_default(uint8_t *mac) {
+    if(esp_efuse_mac_get_default(mac) != ESP_OK)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 void wireless_system_abort(const char *msg)

@@ -1,10 +1,51 @@
 #include "control_app.h"
 #include "safe_memory.h"
+#include "libmfcc.h"
+#include <string.h>
 
 /* Initializes the analog application */
 void control_app_init()
 {
     // Empty implementation as no initialization is currently required.
+}
+
+static bool plant_data_is_valid(uint32_t *signal, int length) {
+    uint32_t msv = 0.0;
+
+    // Calcula la suma de los cuadrados de los valores absolutos de las muestras
+    for (int i = 0; i < length; i++) {
+        msv += signal[i] * signal[i];
+    }
+
+    // Divide por el número total de muestras para obtener el MSV
+    msv /= length;
+    //TRACE_DEBUG("SIGNAL ENERGY:", TO_STRING(msv));
+    if(msv > SIGNAL_THRESHOLD)
+    {
+        return true;
+    }
+    return false;
+}
+
+void control_app_process_plant_data(uint32_t *data_in,uint32_t *data_out,size_t buf_size,bool ready)
+{
+    if(buf_size >0 && ready == true)
+    {
+        if(plant_data_is_valid(data_in,buf_size))
+        {
+            memcpy(data_out,data_in,buf_size*sizeof(uint32_t));
+
+        }
+        else
+        {
+            memset(data_out, 0, buf_size * sizeof(uint32_t));
+        }
+        // for(uint16_t i = 0;i<buf_size;i++)
+        // {
+        //     TRACE_INFO("PLANT INFO:", TO_STRING(data_in[i]));
+        // }
+        
+    }
 }
 
 /* Checks for faults in the analog application */
