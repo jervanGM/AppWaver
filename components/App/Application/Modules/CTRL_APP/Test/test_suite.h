@@ -52,8 +52,8 @@ extern void tearDown(void);
 /**
  * @brief Run the test suites.
  *
- * This function runs the test suites by calling `dsp_test_suite()`,`ana_drv_test_suite()`
- * ,`ana_sm_test_suite()`,`ana_app_test_suite()`,`ana_task_test_suite()`.
+ * This function runs the test suites by calling `dsp_test_suite()`,`CTRL_drv_test_suite()`
+ * ,`CTRL_sm_test_suite()`,`CTRL_app_test_suite()`,`CTRL_task_test_suite()`.
  */
 static inline void run_test_suites()
 {

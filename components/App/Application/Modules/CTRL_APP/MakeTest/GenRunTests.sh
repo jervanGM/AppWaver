@@ -1,7 +1,11 @@
-components/App/Application/Modules/ANA_APP/MakeTest/GenRunTests.sh#!/bin/bash
+components/App/Application/Modules/CTRL_APP/MakeTest/GenRunTests.sh#!/bin/bash
 
 # Limpiar el archivo test_report.txt al inicio del script
 > test_report.txt
+
+# Ejecutar cmake para configurar el proyecto con FFF_ENABLE encendido (on)
+cmake -B build -DFFF_ENABLE=0
+cmake -B build -DDISABLE_TRACES=0
 
 # Verificar si la configuración de cmake fue exitosa
 if [ $? -eq 0 ]; then
@@ -28,6 +32,7 @@ if [ $? -eq 0 ]; then
 else
     echo "Error: La configuración de cmake falló."
 fi
+
 
 
 

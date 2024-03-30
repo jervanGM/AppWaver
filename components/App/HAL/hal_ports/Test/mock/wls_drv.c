@@ -5,26 +5,26 @@
 #include <stdint.h>
 #include <string.h>
 
-void wifi_initialize(void) 
+int8_t wifi_initialize(void) 
 {
-
+    return 0;
 }
 
-void wifi_connect() {
-
+int8_t wifi_connect() {
+    return 0;
 }
 
-void wifi_disconnect(void) {
-
+int8_t wifi_disconnect(void) {
+    return 0;
 }
 
-void wifi_deinitialize(void) {
-
+int8_t wifi_deinitialize(void) {
+    return 0;
 }
 
 
-void mac_get_default(uint8_t *mac) {
-
+int8_t mac_get_default(uint8_t *mac) {
+    return 0;
 }
 
 void wireless_system_abort(const char *msg)

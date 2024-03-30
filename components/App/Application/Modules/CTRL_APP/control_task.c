@@ -1,6 +1,7 @@
 #include "control_task.h"
 #include "analog_t_share.h"
 #include "wireless_t_share.h"
+#include "btn_t_share.h"
 #include "assert_panic.h"
 #include "safe_trace.h"
 #include "safe_timer.h"
@@ -83,6 +84,7 @@ void on_ctrl_execute()
 {
     SAnalogSensMsg_t ana_msg;
     SWlsCtrlSensMsg_t wls_msg;
+    SBtnMsg_t btn_msg;
     SErrorInfo_t alarm;
     SSystemStatus_t status;
     SEnvData_t env_data;
@@ -91,19 +93,20 @@ void on_ctrl_execute()
     static uint32_t plant_data[DATA_BUFFER_SIZE] = {0};
     analog_controller_read(&ana_msg);
     wireless_controller_read(&wls_msg);
-    if(wls_msg._task_info.status == WLS_MAYOR_FAULT)
-    {
-        TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR FUERTE");
-    }
-    else if(wls_msg._task_info.status == WLS_MINOR_FAULT)
-    {
-        TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR DEBIL");
-    }
-    else
-    {
-
-    }
+    button_controller_read(&btn_msg);
     
+    // if(wls_msg._task_info.status == WLS_MAYOR_FAULT)
+    // {
+    //     TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR FUERTE");
+    // }
+    // else if(wls_msg._task_info.status == WLS_MINOR_FAULT)
+    // {
+    //     TRACE_DEBUG ("ESTO VIENE DE LA TAREA WLS CON ERROR DEBIL");
+    // }
+    // else
+    // {
+
+    // }
 
     control_app_process_plant_data(ana_msg._plant_buff.data,plant_data,
                                 ana_msg._plant_buff.size,ana_msg._plant_buff.ready);

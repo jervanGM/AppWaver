@@ -1,6 +1,5 @@
 #include "control_app.h"
 #include "safe_memory.h"
-#include "libmfcc.h"
 #include <string.h>
 
 /* Initializes the analog application */
