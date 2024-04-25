@@ -234,13 +234,13 @@ void test_controller_app_process_plant_data_random_sim_low()
 
   for (int i = 0; i < plant_size; i++) {
       if (!assigned_positions[i]) { // Si la posición no ha sido asignada
-          plant_data_in[i] = rand() % 100; // Valor aleatorio entre 0 y 255
+          plant_data_in[i] = rand() % 50; // Valor aleatorio entre 0 y 255
       }
   }
 
   control_app_process_plant_data(plant_data_in,plant_data_out,plant_size,true);
 
-  TEST_ASSERT_EQUAL_UINT32_ARRAY(plant_data_cmp,plant_data_out,plant_size);
+  TEST_ASSERT_EQUAL(memcmp(plant_data_cmp,plant_data_out,128* sizeof(uint32_t)), 0);
 }
 
 void ctrl_app_test_suite()

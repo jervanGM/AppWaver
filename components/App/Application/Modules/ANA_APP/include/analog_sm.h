@@ -41,7 +41,7 @@ void analog_sm_run();
  * 
  * @return Current state of the state machine.
  */
-ETaskState_t analog_sm_get_state();
+EAnaTaskState_t analog_sm_get_state();
 
 /**
  * @brief Sets the state machine event.

@@ -257,14 +257,12 @@ int8_t wifi_initialize(void)
     if((nvs_flash_init() != ESP_OK) ||
        (esp_netif_init() != ESP_OK) ||
        (esp_event_loop_create_default() != ESP_OK)){
-        ESP_LOGI(TAG, "Pasa aqui el problema");
         return -1;
     }
     char *desc;
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     if(esp_wifi_init(&cfg) != ESP_OK){
-        ESP_LOGI(TAG, "Pasa en wifi init el problema");
         return -1;
     }
 

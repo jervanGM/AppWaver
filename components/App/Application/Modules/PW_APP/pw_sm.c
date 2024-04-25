@@ -15,7 +15,7 @@ static void init_transition();
  * This function defines the state transitions for the ready state
  * based on the event triggered.
  */
-static void ready_transition();
+static void full_power_sts_transition();
 
 /**
  * @brief Transition function for the operational state.
@@ -23,7 +23,9 @@ static void ready_transition();
  * This function defines the state transitions for the operational state
  * based on the event triggered.
  */
-static void operational_transition();
+static void low_power_sts_transition();
+
+static void power_off_sts_transition();
 
 /**
  * @brief Transition function for the breakdown state.
@@ -39,14 +41,15 @@ SPwSmStates pw_state_sm;
 /* Initializes the analog state machine with the provided transition functions for each state */
 EPwTaskStatus_t pw_sm_init(
     void (*init_func)(void), 
-    void (*ready_func)(void), 
-    void (*operational_func)(void), 
+    void (*full_pw_func)(void), 
+    void (*low_pw_func)(void), 
+    void (*power_off_func)(void), 
     void (*breakdown_func)(void)
 )
 {
     /* Verify if any of the function pointers is null */
-    if (init_func == NULL || ready_func == NULL || 
-        operational_func == NULL || breakdown_func == NULL) {
+    if (init_func == NULL || full_pw_func == NULL || 
+        low_pw_func == NULL || power_off_func == NULL || breakdown_func == NULL) {
         TRACE_ERROR("Any execute state function is null or not valid");
         return PW_TASK_SM_INIT_FAIL; // Return failure if any function pointer is null
     }
@@ -54,11 +57,14 @@ EPwTaskStatus_t pw_sm_init(
     pw_state_sm.state_func[PW_INIT].handle_execute = init_func;
     pw_state_sm.state_func[PW_INIT].handle_transition = init_transition;
 
-    pw_state_sm.state_func[PW_READY].handle_execute = ready_func;
-    pw_state_sm.state_func[PW_READY].handle_transition = ready_transition;
+    pw_state_sm.state_func[PW_FULL].handle_execute = full_pw_func;
+    pw_state_sm.state_func[PW_FULL].handle_transition = full_power_sts_transition;
 
-    pw_state_sm.state_func[PW_OPERATIONAL].handle_execute = operational_func;
-    pw_state_sm.state_func[PW_OPERATIONAL].handle_transition = operational_transition;
+    pw_state_sm.state_func[PW_LOW].handle_execute = low_pw_func;
+    pw_state_sm.state_func[PW_LOW].handle_transition = low_power_sts_transition;
+
+    pw_state_sm.state_func[PW_OFF].handle_execute = power_off_func;
+    pw_state_sm.state_func[PW_OFF].handle_transition = power_off_sts_transition;
 
     pw_state_sm.state_func[PW_BREAKDOWN].handle_execute = breakdown_func;
     pw_state_sm.state_func[PW_BREAKDOWN].handle_transition = breakdown_transition;
@@ -98,7 +104,7 @@ static void init_transition()
     switch (pw_state_sm.st_event)
     {
     case PW_STATE_NEXT:
-        pw_state_sm.sm_state = PW_READY;
+        pw_state_sm.sm_state = PW_FULL;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     case PW_STATE_FAULT:
@@ -114,12 +120,12 @@ static void init_transition()
 }
 
 /* Transition function for the ready state */
-static void ready_transition()
+static void full_power_sts_transition()
 {
     switch (pw_state_sm.st_event)
     {
     case PW_STATE_NEXT:
-        pw_state_sm.sm_state = PW_OPERATIONAL;
+        pw_state_sm.sm_state = PW_LOW;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     case PW_STATE_FAULT:
@@ -127,15 +133,46 @@ static void ready_transition()
         pw_state_sm.sm_state = PW_BREAKDOWN;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
+    case PW_STATE_OFF:
+        pw_state_sm.sm_prev_state = pw_state_sm.sm_state;
+        pw_state_sm.sm_state = PW_OFF;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
     default:
-        pw_state_sm.sm_state = PW_READY;
+        pw_state_sm.sm_state = PW_FULL;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     }
 }
 
 /* Transition function for the operational state */
-static void operational_transition()
+static void low_power_sts_transition()
+{
+    switch (pw_state_sm.st_event)
+    {
+    case PW_STATE_NEXT:
+        pw_state_sm.sm_state = PW_FULL;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
+    case PW_STATE_FAULT:
+        pw_state_sm.sm_prev_state = pw_state_sm.sm_state;
+        pw_state_sm.sm_state = PW_BREAKDOWN;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
+    case PW_STATE_OFF:
+        pw_state_sm.sm_prev_state = pw_state_sm.sm_state;
+        pw_state_sm.sm_state = PW_OFF;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
+    default:
+        pw_state_sm.sm_state = PW_LOW;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
+    }
+}
+
+/* Transition function for the operational state */
+static void power_off_sts_transition()
 {
     switch (pw_state_sm.st_event)
     {
@@ -145,7 +182,7 @@ static void operational_transition()
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     default:
-        pw_state_sm.sm_state = PW_OPERATIONAL;
+        pw_state_sm.sm_state = PW_OFF;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     }
@@ -162,6 +199,10 @@ static void breakdown_transition()
         break;
     case PW_STATE_PREV:
         pw_state_sm.sm_state = pw_state_sm.sm_prev_state;
+        pw_state_sm.st_event = PW_STATE_IDLE; 
+        break;
+    case PW_STATE_OFF:
+        pw_state_sm.sm_state = PW_OFF;
         pw_state_sm.st_event = PW_STATE_IDLE; 
         break;
     default:

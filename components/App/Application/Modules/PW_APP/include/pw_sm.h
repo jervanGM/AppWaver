@@ -20,11 +20,11 @@
  * 
  * @return Status of the initialization process.
  */
-EPwTaskStatus_t pw_sm_init
-(
+EPwTaskStatus_t pw_sm_init(
     void (*init_func)(void), 
-    void (*ready_func)(void), 
-    void (*operational_func)(void), 
+    void (*full_pw_func)(void), 
+    void (*low_pw_func)(void), 
+    void (*power_off_func)(void), 
     void (*breakdown_func)(void)
 );
 

@@ -8,10 +8,11 @@
 SemaphoreHandle_t xMutex[MAX_MUTEX];
 TaskHandle_t xTaskHandle[MAX_TASK_HANDLE];
 
-ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,const uint32_t stack_deph,int period,unsigned int priority)
+ETaskCfgError_t create_task(TaskFunction_t task_func,const char *const task_name,const uint32_t stack_deph,int period,unsigned int priority,uint8_t handle_id)
 {
+    ASSERT_PANIC(handle_id <= MAX_TASK_HANDLE, "Array index out of bounds");
     BaseType_t xtask_error = pdFAIL;
-    xtask_error = xTaskCreate(task_func, task_name, stack_deph,(void *)&period,priority, NULL);
+    xtask_error = xTaskCreate(task_func, task_name, stack_deph,(void *)&period,priority, &xTaskHandle[handle_id]);
     if(xtask_error == pdPASS) return TASK_OK;
     else if(xtask_error == pdFAIL) return TASK_MEM_ERR;
     else return TASK_UNKNOWN_ERR;
@@ -25,6 +26,23 @@ ETaskCfgError_t create_sporadic_task(TaskFunction_t task_func,const char *const 
     if(xtask_error == pdPASS) return TASK_OK;
     else if(xtask_error == pdFAIL) return TASK_MEM_ERR;
     else return TASK_UNKNOWN_ERR;
+}
+
+void suspend_task(uint8_t handle_id)
+{
+    ASSERT_PANIC(handle_id <= MAX_TASK_HANDLE, "Array index out of bounds");
+    vTaskSuspend(xTaskHandle[handle_id]);
+}
+
+void resume_task(uint8_t handle_id)
+{
+    ASSERT_PANIC(handle_id <= MAX_TASK_HANDLE, "Array index out of bounds");
+    vTaskResume(xTaskHandle[handle_id]);
+}
+
+ETaskState_t get_task_rtos_state(uint8_t handle_id)
+{
+    return (ETaskState_t)eTaskGetState(xTaskHandle[handle_id]);
 }
 
 void task_wait_for_event()
@@ -65,6 +83,12 @@ void task_delay_until(uint32_t *PreviousWakeTime, uint32_t ms_delay)
 {   
     TickType_t delay = pdMS_TO_TICKS(ms_delay);
     vTaskDelayUntil( PreviousWakeTime, delay);
+}
+
+void task_delay(uint32_t ms_delay)
+{
+    TickType_t delay = pdMS_TO_TICKS(ms_delay);
+    vTaskDelay(delay);
 }
 
 void mutex_create()

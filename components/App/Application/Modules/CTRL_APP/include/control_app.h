@@ -8,7 +8,7 @@
 #define MAYOR_FAULT_THESHOLD -20
 
 #define DATA_BUFFER_SIZE 128
-#define SIGNAL_THRESHOLD 4500
+#define SIGNAL_THRESHOLD 200
 
 /**
  * @brief Initializes the control application.

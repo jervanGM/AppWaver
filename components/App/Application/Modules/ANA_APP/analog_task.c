@@ -42,7 +42,7 @@ void task_analog(void *pvParameters)
 void task_analog_init(SAnaTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
-    task_info->ID = 0;
+    task_info->ID = ANA_HANDLER_ID;
     // Set task delay
     task_info->delay = *(uint32_t *)pvParams;
     // Initialize last wake time

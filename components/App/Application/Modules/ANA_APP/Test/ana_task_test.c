@@ -27,7 +27,7 @@ void test_ana_task_init_fatal_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute state machine once and verify transition to ANA_BREAKDOWN
@@ -53,7 +53,7 @@ void test_ana_task_breakdown_ready_fatal_error() {
     task_info.status = analog_sm_init(dummy_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Set next state event and execute state machine until it transitions to ANA_BREAKDOWN
@@ -83,7 +83,7 @@ void test_ana_task_breakdown_operational_fatal_error() {
     task_info.status = analog_sm_init(dummy_init, dummy_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Set next state event and execute state machine until it transitions to ANA_OPERATIONAL
@@ -134,7 +134,7 @@ void test_ana_task_normal_execution() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -169,7 +169,7 @@ void test_ana_task_breakdown_ready_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -202,7 +202,7 @@ void test_ana_task_breakdown_operational_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -243,7 +243,7 @@ void test_ana_task_breakdown_unknown_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.

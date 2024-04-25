@@ -37,7 +37,7 @@ void test_analog_sm_init_to_operational_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -70,7 +70,7 @@ void test_analog_sm_init_to_breakdown_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -97,7 +97,7 @@ void test_analog_sm_ready_to_breakdown_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -130,7 +130,7 @@ void test_analog_sm_operational_to_breakdown_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -169,7 +169,7 @@ void test_analog_sm_breakdown_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -196,7 +196,7 @@ void test_analog_sm_init_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -217,7 +217,7 @@ void test_analog_sm_ready_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
@@ -244,7 +244,7 @@ void test_analog_sm_operational_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EAnaTaskStatus_t result = analog_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(result, ANA_TASK_OK);
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 

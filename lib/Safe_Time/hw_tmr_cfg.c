@@ -54,12 +54,12 @@ static ETimerCfgError_t hw_timer_restart_internal(STimer_t *timer)
 
 static bool hw_timer_is_expired_internal(STimer_t *timer)
 {
-    c_int64_t time_delta = (timer->rtc_timer.start_time - esp_timer_get_time());
-    if (time_delta >= timer->period)
+    c_int64_t time_delta = (esp_timer_get_time() - timer->rtc_timer.start_time );
+    if (time_delta >= (timer->period*MS_TO_US))
     {
         if (timer->type == PERIODIC)
         {
-            hw_timer_restart_internal(timer);
+            hw_timer_init_internal(timer);
         }
         else if (timer->type == UNIQUE)
         {

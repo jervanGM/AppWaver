@@ -12,7 +12,7 @@
  */
 void network_app_init();
 
-void update_app_data(SCtrlWlsSensMsg_t msg);
+void update_app_data(SCtrlWlsMsg_t msg);
 uint32_t get_serialized_plant_data();
 
 /**

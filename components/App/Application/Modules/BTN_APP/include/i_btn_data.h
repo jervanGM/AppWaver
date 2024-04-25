@@ -4,6 +4,7 @@
 #include "safe_timer.h"
 
 #define BUTTON_ERROR_SLOT 4
+#define HAL_BTN_CONFIG_ERROR -127
 
 #define BUTTON_PIN 21
 

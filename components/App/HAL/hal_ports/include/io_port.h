@@ -4,6 +4,9 @@
 
 #include "i_hal_io_port.h"
 
+#define STS_ON 1
+#define STS_OFF 0
+
 /**
  * @brief Gets the analog port.
  * 

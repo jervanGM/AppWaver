@@ -6,6 +6,7 @@
 #include "timer_types.h"
 
 #define SYS_TIME_DIV 1000000 //uSeconds to Seconds
+#define MS_TO_US 1000
 
 c_int64_t get_hw_system_time(void);
 

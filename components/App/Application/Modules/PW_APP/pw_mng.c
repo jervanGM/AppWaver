@@ -1,24 +1,60 @@
 #include "pw_mng.h"
 #include "io_port.h"
+#include "wls_port.h"
 #include "safe_trace.h"
 #include "safe_memory.h"
+
+static const IIOPort *port;
+
+static const IWlsPort *wls_port;
 
 /* Initializes the power module */
 void pw_init()
 {
     // Retrieve the IO port interface
-    const IIOPort *port = hal_io_get_port();
+    port = hal_io_get_port();
+    wls_port = hal_wls_get_port();
 
     // Check if the port interface is valid
-    if (port != NULL)
+    if ((port != NULL) && (wls_port != NULL))
     {
         port->init(POWER_OFF_PIN,IO_OUTPUT,false);
-        port->write(POWER_OFF_PIN,0);
+        port->write(POWER_OFF_PIN,STS_OFF);
     }
     else
     {
         // Log an error if the analog port is not properly configured
         store_error_in_slot(POWER_ERROR_SLOT, HAL_PW_CONFIG_ERROR);
-        TRACE_ERROR("Analog sensor HAL port has not been configured correctly on init");
+        TRACE_ERROR("Power IO HAL port has not been configured correctly on init");
     }
 }
+
+void execute_low_power_mode()
+{
+
+}
+
+void execute_full_power_mode()
+{
+
+}
+
+
+void set_main_power_off()
+{
+    TRACE_WARNING("El sistema se apagará por completo");
+    port->write(POWER_OFF_PIN,STS_ON);
+}
+
+void set_wifi_power(EWifiActSts_t wifi_pw)
+{
+    if(wifi_pw == PW_WIFI_OFF)
+    {
+        wls_port->disconnect();
+    }
+    else
+    {
+
+    }
+}
+

@@ -11,7 +11,7 @@ void network_app_init()
     memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint32_t));
 }
 
-void update_app_data(SCtrlWlsSensMsg_t msg)
+void update_app_data(SCtrlWlsMsg_t msg)
 {
     if(size == DATA_BUFFER_SIZE)
     {

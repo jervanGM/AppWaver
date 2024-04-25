@@ -19,24 +19,19 @@ void task_power(void *pvParameters);
  */
 void task_pw_init(SPwTaskInfo_t *task_info,void *pvParams);
 
-/**
- * @brief Function executed when the analog state machine is in the initialization state.
- */
+/*Init state execute function*/
 void on_pw_init();
 
-/**
- * @brief Function executed when the analog state machine is in the ready state.
- */
-void on_pw_ready();
+/*Ready state execute function*/
+void on_pw_full();
 
-/**
- * @brief Function executed when the analog state machine is in the execute state.
- */
-void on_pw_execute();
+/*Operational state execute function*/
+void on_pw_low();
 
-/**
- * @brief Function executed when the analog state machine is in the breakdown state.
- */
+/*Operational state execute function*/
+void on_pw_off();
+
+/*Breakdown state execute function*/
 void on_pw_breakdown();
 
 

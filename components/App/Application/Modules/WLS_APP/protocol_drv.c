@@ -367,7 +367,7 @@ void network_run() {
     }
     if(anjay_all_connections_failed(anjay))
     {
-        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_DRV_CONNECT_ERROR);
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_DRV_CONNECT_ERROR); 
         TRACE_ERROR("Connection failure with server");
         return; 
     }

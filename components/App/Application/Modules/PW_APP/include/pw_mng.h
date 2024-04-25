@@ -7,4 +7,12 @@
 
 void pw_init();
 
+void execute_low_power_mode();
+
+void execute_full_power_mode();
+
+void set_main_power_off();
+
+void set_wifi_power(EWifiActSts_t wifi_pw);
+
 #endif /* PW_MNG_H_ */

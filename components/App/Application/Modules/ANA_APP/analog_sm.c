@@ -81,7 +81,7 @@ void analog_sm_run()
 }
 
 /* Retrieves the current state of the analog state machine */
-ETaskState_t analog_sm_get_state()
+EAnaTaskState_t analog_sm_get_state()
 {
     return state_sm.sm_state;
 }

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "i_wireless_data.h"
+#include "common_t_data.h"
 
 #define WLS_CTRL_M_ID 2
 #define CTRL_WLS_M_ID 3
@@ -13,7 +14,7 @@ void set_task_wireless_status(EWlsTaskStatus_t status);
 
 void wireless_controller_send(SWlsCommand_t command);
 
-void wireless_controller_read(SWlsCtrlSensMsg_t *msg);
+void wireless_controller_read(SWlsCtrlMsg_t *msg);
 
 void controller_wireless_send(
     SErrorInfo_t alarm,
@@ -26,6 +27,6 @@ void controller_wireless_send(
     ESysMode_t previous_mode,
     STime_t system_time);
 
-void controller_wireless_read(SCtrlWlsSensMsg_t *msg);
+void controller_wireless_read(SCtrlWlsMsg_t *msg);
 
 #endif /* WIRELESS_T_SHARE_H_ */

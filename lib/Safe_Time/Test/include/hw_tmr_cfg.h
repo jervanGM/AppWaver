@@ -7,6 +7,7 @@
 #include <stdbool.h>
 
 #define SYS_TIME_DIV 1000000 //uSeconds to Seconds
+#define MS_TO_US 1000
 
 void set_stop_system_time();
 

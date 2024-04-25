@@ -1,0 +1,46 @@
+[ERROR]: [ External memory HAL port has not been configured correctly on init ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:148:test_handle_port_error:PASS
+
+-----------------------
+1 Tests 0 Failures 0 Ignored 
+OK
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:151:test_mem_drv_init_error:PASS
+Opening file .\sdcard/device_info.txt
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:152:test_mem_drv_init_create_dir_error:PASS
+Opening file .\sdcard/device_info.txt
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:153:test_mem_drv_init_create_file_error:PASS
+Opening file .\sdcard/device_info.txt
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:154:test_mem_drv_init_file:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:155:test_mem_drv_create_wav_file_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:156:test_mem_drv_write_wav_file_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:157:test_mem_drv_deinit_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:181:test_mem_app_check_mayor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:182:test_mem_app_check_minor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:183:test_mem_app_check_no_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:184:test_mem_app_check_lower_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:185:test_mem_app_check_upper_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:186:test_mem_app_check_lower_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:187:test_mem_app_check_upper_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:188:test_mem_app_process_not_init_wav_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:189:test_mem_app_process_wav_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:190:test_process_data_to_wav_null_pointer:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:191:test_mem_app_process_same_wav_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:185:test_mem_sm_init_valid_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:186:test_mem_sm_init_null_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:187:test_mem_sm_init_to_operational_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:188:test_mem_sm_init_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:189:test_mem_sm_operational_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:190:test_mem_sm_breakdown_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:191:test_mem_sm_init_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:192:test_mem_sm_operational_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:81:test_mem_task_init:PASS
+Opening file .\sdcard/device_info.txt
+Opening file .\sdcard/wave_data/4/00-00-0000_00-00-00.wav
+Data has been appended to the file
+Opening file .\sdcard/wave_data/4/00-00-0000_00-00-00.wav
+Data has been appended to the file
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/MEM_APP/Test/test_suite.c:82:test_mem_task_normal_execution:PASS
+
+-----------------------
+28 Tests 0 Failures 0 Ignored 
+OK

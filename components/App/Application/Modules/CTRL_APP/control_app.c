@@ -18,7 +18,6 @@ static bool plant_data_is_valid(uint32_t *signal, int length) {
 
     // Divide por el número total de muestras para obtener el MSV
     msv /= length;
-    //TRACE_DEBUG("SIGNAL ENERGY:", TO_STRING(msv));
     if(msv > SIGNAL_THRESHOLD)
     {
         return true;

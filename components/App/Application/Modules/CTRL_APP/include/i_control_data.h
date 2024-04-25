@@ -4,6 +4,7 @@
 #include "safe_timer.h"
 
 #define CONTROL_ERROR_SLOT 4
+#define CONTROL_HANDLER_ID 1
 
 typedef enum{
     CTRL_TASK_OK,
@@ -12,6 +13,13 @@ typedef enum{
     CTRL_MINOR_FAULT,
     CTRL_MAYOR_FAULT
 }ECtrlTaskStatus_t;
+
+typedef enum{
+    CTRL_TASK_WLS,
+    CTRL_TASK_MEM,
+    CTRL_TASK_BOTH,
+    CTRL_TASK_NONE
+}ECtrlTaskAct_t;
 
 typedef struct {
     uint8_t ID;

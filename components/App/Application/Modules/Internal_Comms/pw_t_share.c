@@ -30,12 +30,14 @@ void pw_ctrl_read(SPwCtrlMsg_t *msg)
 void ctrl_pw_send( ESensSwSts_t sens_sw_sts,
                    EMainSwSts_t main_sw_sts,
                    ESoilActSts_t soil_act_sts,
+                   EWifiActSts_t wifi_act_sts,
                    EPwMode_t pw_mode)
 {
     mutex_lock(CTRL_PW_M_ID);
         memcpy(&_ctrl_msg._sens_sw_sts, &sens_sw_sts, sizeof(ESensSwSts_t));
         memcpy(&_ctrl_msg._main_sw_sts, &main_sw_sts, sizeof(EMainSwSts_t));
         memcpy(&_ctrl_msg._soil_act_sts, &soil_act_sts, sizeof(ESoilActSts_t));
+        memcpy(&_ctrl_msg._wifi_act_sts, &wifi_act_sts, sizeof(EWifiActSts_t));
         memcpy(&_ctrl_msg._pw_mode, &pw_mode, sizeof(EPwMode_t));
     mutex_unlock(CTRL_PW_M_ID);
 }

@@ -1,0 +1,21 @@
+[ERROR]: [ Indicator IO HAL port has not been configured correctly on init ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:61:test_handle_port_error:PASS
+
+-----------------------
+1 Tests 0 Failures 0 Ignored 
+OK
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:64:test_indicator_init:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:65:test_indicator_set_state_fix_on:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:66:test_indicator_set_state_fix_off:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:61:test_ind_app_check_mayor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:62:test_ind_app_check_minor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:63:test_ind_app_check_no_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:64:test_ind_app_check_lower_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:65:test_ind_app_check_upper_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:66:test_ind_app_check_lower_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:67:test_ind_app_check_upper_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/IND_APP/Test/test_suite.c:36:test_ind_task_init:PASS
+
+-----------------------
+11 Tests 0 Failures 0 Ignored 
+OK

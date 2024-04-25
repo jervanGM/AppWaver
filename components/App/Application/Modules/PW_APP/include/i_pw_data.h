@@ -4,6 +4,9 @@
 #include "safe_timer.h"
 
 #define POWER_ERROR_SLOT 8
+#define POWER_HANDLER_ID 5
+
+#define POWER_OFF_TIME 1000
 
 #define POWER_OFF_PIN 20
 
@@ -33,8 +36,13 @@ typedef enum{
 }ESoilActSts_t;
 
 typedef enum{
-    PW_FULL,
-    PW_LOW
+    PW_WIFI_ON,
+    PW_WIFI_OFF
+}EWifiActSts_t;
+
+typedef enum{
+    PW_MODE_FULL,
+    PW_MODE_LOW
 }EPwMode_t;
 
 typedef struct {
@@ -52,6 +60,7 @@ typedef struct{
     ESensSwSts_t _sens_sw_sts;
     EMainSwSts_t _main_sw_sts;
     ESoilActSts_t _soil_act_sts;
+    EWifiActSts_t _wifi_act_sts;
     EPwMode_t _pw_mode;
 }SCtrlPwMsg_t;
 

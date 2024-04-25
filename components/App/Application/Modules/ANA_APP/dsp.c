@@ -35,7 +35,7 @@ uint32_t get_dsp_data()
     {
         port->read(2, &data); // Read data from the analog port channel 2
         // Apply filters and normalization
-        iir_filter(&data);                                  // Apply IIR filter
+        iir_filter(&data); // Apply IIR filter
         return data;
     }
     else

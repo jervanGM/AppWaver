@@ -11,5 +11,6 @@ idf_component_register(SRCS ${internal_comms}
                                     "../BTN_APP/include"
                                     "../IND_APP/include"
                                     "../PW_APP/include"
+                                    "../MEM_APP/include"
                        REQUIRES RTOS Safe_Time Safe_Trace)
 

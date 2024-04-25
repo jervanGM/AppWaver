@@ -16,6 +16,7 @@ void pw_ctrl_read(SPwCtrlMsg_t *msg);
 void ctrl_pw_send( ESensSwSts_t sens_sw_sts,
                    EMainSwSts_t main_sw_sts,
                    ESoilActSts_t soil_act_sts,
+                   EWifiActSts_t wifi_act_sts,
                    EPwMode_t pw_mode);
 
 void ctrl_pw_read(SCtrlPwMsg_t *msg);

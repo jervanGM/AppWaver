@@ -44,7 +44,7 @@ void task_wireless(void *pvParameters)
 void task_wireless_init(SWlsTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
-    task_info->ID = 2;
+    task_info->ID = WIRELESS_HANDLER_ID;
     // Set task delay
     task_info->delay = *(uint32_t *)pvParams;
     // Initialize last wake time
@@ -73,8 +73,9 @@ void on_wls_init()
     {
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
+        set_task_wireless_status(WLS_TASK_OK);
     }
-    set_task_wireless_status(WLS_TASK_OK);
+    
 }
 
 /*Ready state execute function*/
@@ -95,15 +96,16 @@ void on_wls_ready()
     {
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
+        set_task_wireless_status(WLS_TASK_OK);
     }
-    set_task_wireless_status(WLS_TASK_OK);
+    
 }
 
 /*Operational state execute function*/
 void on_wls_execute()
 {
     network_run();
-    SCtrlWlsSensMsg_t msg;
+    SCtrlWlsMsg_t msg;
     controller_wireless_read(&msg);
     update_app_data(msg);
     update_wireless_data(
@@ -123,8 +125,9 @@ void on_wls_execute()
     {
         // Set state machine event to next
         network_sm_set_st_event(WLS_STATE_NEXT);
+        set_task_wireless_status(WLS_TASK_OK);
     }
-    set_task_wireless_status(WLS_TASK_OK);
+    
 }
 
 /*Update state execute function*/

@@ -17,8 +17,9 @@ void task_power(void *pvParameters)
 
     // Initialize analog state machine
     task_info.status = pw_sm_init(on_pw_init,
-                                      on_pw_ready,
-                                      on_pw_execute,
+                                      on_pw_full,
+                                      on_pw_low,
+                                      on_pw_off,
                                       on_pw_breakdown);
 
     // Verify initialization success
@@ -42,7 +43,7 @@ void task_power(void *pvParameters)
 void task_pw_init(SPwTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
-    task_info->ID = 5;
+    task_info->ID = POWER_HANDLER_ID;
     // Set task delay
     task_info->delay = *(uint32_t *)pvParams;
     // Initialize last wake time
@@ -71,24 +72,66 @@ void on_pw_init()
 }
 
 /*Ready state execute function*/
-void on_pw_ready()
+void on_pw_full()
 {
+    SCtrlPwMsg_t msg;
+    ctrl_pw_read(&msg);
+    execute_full_power_mode();
+    set_wifi_power(msg._wifi_act_sts);
     // Check for faults
     if(power_app_check_faults() != PW_TASK_OK)
     {
         // Set state machine event to fault
         pw_sm_set_st_event(PW_STATE_FAULT);
     }
-    else
+    else if(msg._pw_mode == PW_MODE_LOW)
     {
         // Set state machine event to next
         pw_sm_set_st_event(PW_STATE_NEXT);
+    }
+    else if(msg._main_sw_sts == PW_MAIN_OFF)
+    {
+        pw_sm_set_st_event(PW_STATE_OFF);
+    }
+    else
+    {
+        pw_sm_set_st_event(PW_STATE_IDLE);
     }
 }
 
 /*Operational state execute function*/
-void on_pw_execute()
+void on_pw_low()
 {
+    SCtrlPwMsg_t msg;
+    ctrl_pw_read(&msg);
+    execute_low_power_mode();
+    // Check for faults
+    if(power_app_check_faults() != PW_TASK_OK)
+    {
+        // Set state machine event to fault
+        pw_sm_set_st_event(PW_STATE_FAULT);
+    }
+    else if(msg._pw_mode == PW_MODE_FULL)
+    {
+        // Set state machine event to next
+        pw_sm_set_st_event(PW_STATE_NEXT);
+    }
+    else if(msg._main_sw_sts == PW_MAIN_OFF)
+    {
+        pw_sm_set_st_event(PW_STATE_OFF);
+    }
+    else
+    {
+        pw_sm_set_st_event(PW_STATE_IDLE);
+    }
+}
+
+/*Operational state execute function*/
+void on_pw_off()
+{
+    set_main_power_off();
+    set_wifi_power(PW_WIFI_OFF);
+    task_delay(POWER_OFF_TIME);
     // Check for faults
     if(power_app_check_faults() != PW_TASK_OK)
     {
@@ -97,8 +140,8 @@ void on_pw_execute()
     }
     else
     {
-        // Set state machine event to next
-        pw_sm_set_st_event(PW_STATE_NEXT);
+        // Set state machine same state
+        pw_sm_set_st_event(PW_STATE_IDLE);
     }
 }
 
@@ -106,6 +149,8 @@ void on_pw_execute()
 void on_pw_breakdown()
 {
     // Fault reason
+    SCtrlPwMsg_t msg;
+    ctrl_pw_read(&msg);
     EPwTaskStatus_t fault_reason = PW_TASK_OK;
     fault_reason = power_app_check_faults();
     //Clean the error memory
@@ -131,4 +176,8 @@ void on_pw_breakdown()
         break;
     }
     set_task_power_status(fault_reason);
+    if(msg._main_sw_sts == PW_MAIN_OFF)
+    {
+        pw_sm_set_st_event(PW_STATE_OFF);
+    }
 }

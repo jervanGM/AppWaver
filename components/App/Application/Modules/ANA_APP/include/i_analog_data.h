@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include "safe_timer.h"
 
+#define ANA_HANDLER_ID 0
+
 #define BUFFER_SIZE 128
 #define ANALOGIC_ERROR_SLOT 0
 #define HAL_ANA_CONFIG_ERROR -127

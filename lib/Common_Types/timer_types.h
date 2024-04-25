@@ -12,6 +12,24 @@
 #define DAY_DIV 30
 #define MONTH_DIV 12
 
+#define T_1_MS 1
+#define T_5_MS 5
+#define T_10_MS 10
+#define T_50_MS 50
+#define T_100_MS 100
+#define T_200_MS 200
+#define T_500_MS 500
+#define T_1_S 1000
+#define T_2_S 2000
+#define T_4_S 4000
+#define T_5_S 5000
+#define T_10_S 10000
+#define T_15_S 15000
+#define T_30_S 30000
+#define T_1_MIN 60000
+#define T_2_MIN 120000
+#define T_5_MIN 300000
+
 typedef enum{
     UNIQUE,
     PERIODIC

@@ -1,5 +1,6 @@
 #include "sw_tmr_cfg.h"
 
+static void timerCallback(TimerHandle_t xTimer);
 
 c_int64_t get_sw_system_time(void)
 {
@@ -15,10 +16,11 @@ ETimerCfgError_t sw_timer_init(STimer_t *timer)
     }
 
     timer->rtos_timer.handler = xTimerCreate(timer->id,
-                                             timer->period * configTICK_RATE_HZ,
+                                             pdMS_TO_TICKS(timer->period),
                                              (timer->type == PERIODIC) ? pdTRUE : pdFALSE,
                                              NULL,
                                              timerCallback);
+                                             
     if (timer->rtos_timer.handler == NULL)
     {
         return TMR_MEM_ERR;
@@ -28,7 +30,7 @@ ETimerCfgError_t sw_timer_init(STimer_t *timer)
     {
         return TMR_BAD_STATE_ERR;
     }
-    timer->rtos_timer.start_time = (c_int64_t)xTimerGetExpiryTime(timer->rtos_timer.handler);
+    timer->rtos_timer.start_time = (c_uint32_t)xTaskGetTickCount();
 
     return TMR_OK;
 }
@@ -40,7 +42,7 @@ ETimerCfgError_t sw_timer_restart(STimer_t *timer)
         return TMR_BAD_STATE_ERR;
     }
 
-    if (xTimerChangePeriod(timer->rtos_timer.handler, timer->period * configTICK_RATE_HZ, portMAX_DELAY) != pdPASS)
+    if (xTimerChangePeriod(timer->rtos_timer.handler, pdMS_TO_TICKS(timer->period), portMAX_DELAY) != pdPASS)
     {
         return TMR_UNKNOWN_ERR;
     }
@@ -50,16 +52,23 @@ ETimerCfgError_t sw_timer_restart(STimer_t *timer)
 
 bool sw_timer_is_on(STimer_t *timer)
 {
-    return (xTimerIsTimerActive(timer->rtos_timer.handler) == pdTRUE);
+    if(timer->rtos_timer.handler != NULL)
+    {
+        return (xTimerIsTimerActive(timer->rtos_timer.handler) == pdTRUE);
+    }
+    else
+    {
+        return false;
+    }
+    
 }
 
 bool sw_timer_is_expired(STimer_t *timer)
 {
     c_uint32_t current_time = (c_uint32_t)xTaskGetTickCount();
-    if (timer->rtos_timer.start_time < current_time)
+    if ((current_time - timer->rtos_timer.start_time) >= pdMS_TO_TICKS(timer->period))
     {
-        if (current_time != portMAX_DELAY)
-            timer->rtos_timer.start_time = current_time;
+        timer->rtos_timer.start_time = current_time;
         return true;
     }
     return false;

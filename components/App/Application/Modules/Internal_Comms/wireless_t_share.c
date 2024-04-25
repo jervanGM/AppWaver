@@ -3,8 +3,8 @@
 #include <string.h>
 #include "safe_trace.h"
 
-static SWlsCtrlSensMsg_t _wls_msg = {0};
-static SCtrlWlsSensMsg_t _ctrl_msg = {0};
+static SWlsCtrlMsg_t _wls_msg = {0};
+static SCtrlWlsMsg_t _ctrl_msg = {0};
 
 
 void set_task_wireless_info(SWlsTaskInfo_t task_info)
@@ -28,10 +28,10 @@ void wireless_controller_send(SWlsCommand_t command)
     mutex_unlock(WLS_CTRL_M_ID);
 }
 
-void wireless_controller_read(SWlsCtrlSensMsg_t *msg)
+void wireless_controller_read(SWlsCtrlMsg_t *msg)
 {
     mutex_lock(WLS_CTRL_M_ID);
-        memcpy(msg, &_wls_msg, sizeof(SWlsCtrlSensMsg_t));
+        memcpy(msg, &_wls_msg, sizeof(SWlsCtrlMsg_t));
     mutex_unlock(WLS_CTRL_M_ID);
 }
 
@@ -59,9 +59,9 @@ void controller_wireless_send(
         mutex_unlock(CTRL_WLS_M_ID);
     }
 
-void controller_wireless_read(SCtrlWlsSensMsg_t *msg)
+void controller_wireless_read(SCtrlWlsMsg_t *msg)
 {
     mutex_lock(CTRL_WLS_M_ID);
-        memcpy(msg, &_ctrl_msg, sizeof(SCtrlWlsSensMsg_t));
+        memcpy(msg, &_ctrl_msg, sizeof(SCtrlWlsMsg_t));
     mutex_unlock(CTRL_WLS_M_ID);
 }

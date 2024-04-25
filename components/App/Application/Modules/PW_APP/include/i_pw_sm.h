@@ -7,8 +7,9 @@
 
 typedef enum{
     PW_INIT,
-    PW_READY,
-    PW_OPERATIONAL,
+    PW_FULL,
+    PW_LOW,
+    PW_OFF,
     PW_BREAKDOWN,
     PW_UNKNOWN
 }EPwTaskState_t;
@@ -17,6 +18,7 @@ typedef enum{
     PW_STATE_IDLE,
     PW_STATE_NEXT,
     PW_STATE_PREV,
+    PW_STATE_OFF,
     PW_STATE_FAULT
 }EPwStateEvent_t;
 

@@ -50,6 +50,32 @@ STime_t encode_time_to_date(c_int64_t time)
     return date;
 }
 
+int64_t encode_date_to_time(STime_t date)
+{
+    int64_t time = 0;
+
+    // Convertir años a meses y sumarlos
+    time += date.year * MONTH_DIV;
+
+    // Convertir meses a días y sumarlos
+    time += date.month * DAY_DIV;
+
+    // Sumar días
+    time += date.day;
+
+    // Convertir horas a segundos y sumarlos
+    time *= HOUR_DIV * MIN_DIV * SEC_DIV;
+    time += date.hour * MIN_DIV * SEC_DIV;
+
+    // Convertir minutos a segundos y sumarlos
+    time += date.min * SEC_DIV;
+
+    // Sumar segundos
+    time += date.sec;
+
+    return time;
+}
+
 ETimerCfgError_t safe_timer_init(STimer_t *timer)
 {
     timer->redundant_timer_active = false;
@@ -70,7 +96,7 @@ ETimerCfgError_t safe_timer_init(STimer_t *timer)
 }
 
 ETimerCfgError_t safe_timer_restart(STimer_t *timer)
-{
+{   
     if (!timer->redundant_timer_active)
     {
         return sw_timer_restart(timer);
@@ -82,7 +108,7 @@ ETimerCfgError_t safe_timer_restart(STimer_t *timer)
 }
 
 bool safe_timer_is_on(STimer_t *timer)
-{
+{   
     if (!timer->redundant_timer_active)
     {
         return sw_timer_is_on(timer);
@@ -94,7 +120,7 @@ bool safe_timer_is_on(STimer_t *timer)
 }
 
 bool safe_timer_is_expired(STimer_t *timer)
-{
+{   
     if (!timer->redundant_timer_active)
     {
         return sw_timer_is_expired(timer);

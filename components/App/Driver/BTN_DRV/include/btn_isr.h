@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <esp_attr.h>
 
-#define BTN_HANDLER_ID 0
+#define BTN_HANDLER_ID 3
 
 void IRAM_ATTR button_it(void *arg);
 
