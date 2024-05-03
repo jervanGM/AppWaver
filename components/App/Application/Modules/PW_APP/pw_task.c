@@ -93,6 +93,10 @@ void on_pw_full()
     {
         pw_sm_set_st_event(PW_STATE_OFF);
     }
+    else if(msg._main_sw_sts == PW_MAIN_RESET)
+    {
+        set_main_power_reset();
+    }
     else
     {
         pw_sm_set_st_event(PW_STATE_IDLE);

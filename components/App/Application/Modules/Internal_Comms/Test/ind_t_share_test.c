@@ -1,7 +1,6 @@
 #include "ind_t_share_test.h"
 #include "ind_t_share.h"
 #include "safe_timer.h"
-#include <windows.h>
 
 // Test function for verifying the setting and reading of task information.
 void test_set_and_read_task_indicator_info(void) {

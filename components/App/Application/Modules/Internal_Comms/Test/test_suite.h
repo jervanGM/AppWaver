@@ -34,6 +34,12 @@ extern void ind_t_share_test_suite();
  */
 extern void mem_t_share_test_suite();
 
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void srl_t_share_test_suite();
 
 /**
  * @brief Run the test suite.
@@ -77,6 +83,7 @@ static inline void run_test_suites()
     mem_t_share_test_suite();
     pw_t_share_test_suite();
     wls_t_share_test_suite();
+    srl_t_share_test_suite();
 }
 
 /**

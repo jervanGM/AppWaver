@@ -27,7 +27,8 @@ typedef enum{
 
 typedef enum{
     PW_MAIN_ON,
-    PW_MAIN_OFF
+    PW_MAIN_OFF,
+    PW_MAIN_RESET
 }EMainSwSts_t;
 
 typedef enum{
