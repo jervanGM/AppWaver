@@ -2,10 +2,6 @@
 #include "adc_cfg.h"
 #include "adc_drv.h"
 
-#include "ana_port.h"
-#include "adc_cfg.h"
-#include "adc_drv.h"
-
 /* Declarations of static functions */
 static void ana_port_init(void);    // Function to initialize the analog port
 static void ana_port_reset(void);   // Function to reset the analog port

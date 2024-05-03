@@ -22,7 +22,7 @@ void analog_app_init();
  * 
  * @return The task status indicating the severity of faults.
  */
-ETaskStatus_t analog_app_check_faults();
+EAnaTaskStatus_t analog_app_check_faults();
 
 
 #endif /* ANALOG_APP_H_ */

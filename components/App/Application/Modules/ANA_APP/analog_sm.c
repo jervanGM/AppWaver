@@ -37,7 +37,7 @@ static void breakdown_transition();
 SAnaSmStates state_sm;
 
 /* Initializes the analog state machine with the provided transition functions for each state */
-ETaskStatus_t analog_sm_init(
+EAnaTaskStatus_t analog_sm_init(
     void (*init_func)(void), 
     void (*ready_func)(void), 
     void (*operational_func)(void), 
@@ -81,7 +81,7 @@ void analog_sm_run()
 }
 
 /* Retrieves the current state of the analog state machine */
-ETaskState_t analog_sm_get_state()
+EAnaTaskState_t analog_sm_get_state()
 {
     return state_sm.sm_state;
 }

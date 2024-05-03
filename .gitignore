@@ -14,3 +14,17 @@ lib/Safe_Time/MakeTest/build/*
 lib/Safe_Mem/MakeTest/build/*
 components/App/HAL/hal_ports/MakeTest/build/*
 components/App/Application/Modules/ANA_APP/MakeTest/build/*
+components/App/Application/Modules/CTRL_APP/MakeTest/test_report.txt
+components/App/Application/Modules/CTRL_APP/MakeTest/build
+components/App/Application/Modules/WLS_APP/MakeTest/test_report.txt
+components/App/Application/Modules/WLS_APP/MakeTest/build
+components/App/Application/Modules/WLS_APP/MakeTest/build
+components/App/Application/Modules/CTRL_APP/MakeTest/build
+components/App/Application/Modules/BTN_APP/MakeTest/build
+components/App/Application/Modules/IND_APP/MakeTest/build
+components/App/Application/Modules/Internal_Comms/MakeTest/build
+components/App/Application/Modules/MEM_APP/MakeTest/build
+components/App/Application/Modules/PW_APP/MakeTest/build
+components/App/Application/Modules/Internal_Comms/MakeTest/test_report.txt
+components/App/Application/Modules/Internal_Comms/MakeTest/build
+components/App/Application/Modules/SRL_APP/MakeTest/build

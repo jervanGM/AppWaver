@@ -11,7 +11,7 @@ void analog_init()
 }
 
 /* Adds a value to the data buffer */
-void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint8_t value) {
+void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint32_t value) {
     // Check if the buffer and time pointers are valid
     if (buffer == NULL || time == NULL) {
         // Log an error if the pointers are null
@@ -53,7 +53,7 @@ void get_data_buffer(SDataBuffer_t *data_buffer, SBufferTime_t *data_time) {
         clear_data_buffer(data_buffer);
     }
 
-    uint8_t data = get_dsp_data();
+    uint32_t data = get_dsp_data();
 
     // Add data to the buffer
     add_to_buffer(data_buffer, data_time, data);

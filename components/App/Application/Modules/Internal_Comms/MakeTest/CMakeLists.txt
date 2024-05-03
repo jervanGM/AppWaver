@@ -20,6 +20,12 @@ add_executable(test_suite ${TEST_SOURCES})
 target_include_directories(test_suite PUBLIC
     ../include
     ../../ANA_APP/include
+    ../../BTN_APP/include
+    ../../PW_APP/include
+    ../../IND_APP/include
+    ../../WLS_APP/include
+    ../../MEM_APP/include
+    ../../SRL_APP/include
 )
 
 # Add library directories

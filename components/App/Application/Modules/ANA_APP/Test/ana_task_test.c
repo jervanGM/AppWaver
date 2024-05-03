@@ -19,7 +19,7 @@ void tearDown(void)
 // Test the initialization of the analog task with a fatal error in initialization function.
 void test_ana_task_init_fatal_error() {
     // Initialize task info and delay
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -27,7 +27,7 @@ void test_ana_task_init_fatal_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute state machine once and verify transition to ANA_BREAKDOWN
@@ -44,7 +44,7 @@ void test_ana_task_init_fatal_error() {
 // Test the breakdown of the analog task with a fatal error in the ready function.
 void test_ana_task_breakdown_ready_fatal_error() {
     // Initialize task info and delay
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -53,7 +53,7 @@ void test_ana_task_breakdown_ready_fatal_error() {
     task_info.status = analog_sm_init(dummy_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Set next state event and execute state machine until it transitions to ANA_BREAKDOWN
@@ -73,7 +73,7 @@ void test_ana_task_breakdown_ready_fatal_error() {
 // Test the breakdown of the analog task with a fatal error in the operational function.
 void test_ana_task_breakdown_operational_fatal_error() {
     // Initialize task info and delay
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -83,7 +83,7 @@ void test_ana_task_breakdown_operational_fatal_error() {
     task_info.status = analog_sm_init(dummy_init, dummy_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Set next state event and execute state machine until it transitions to ANA_OPERATIONAL
@@ -112,7 +112,7 @@ void test_ana_task_breakdown_operational_fatal_error() {
 // Test the initialization of the analog task.
 void test_ana_task_init() {
     // Initialize the task information structure and delay.
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -126,7 +126,7 @@ void test_ana_task_init() {
 // Test the normal execution of the analog task.
 void test_ana_task_normal_execution() {
     // Initialize the task information structure and delay.
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -134,7 +134,7 @@ void test_ana_task_normal_execution() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -161,7 +161,7 @@ void test_ana_task_normal_execution() {
 // Test error detection when the analog task is in the ANA_READY state.
 void test_ana_task_breakdown_ready_error() {
     // Initialize the task information structure and delay.
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -169,7 +169,7 @@ void test_ana_task_breakdown_ready_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -194,7 +194,7 @@ void test_ana_task_breakdown_ready_error() {
 // Test error detection when the analog task is in the ANA_OPERATIONAL state.
 void test_ana_task_breakdown_operational_error() {
     // Initialize the task information structure and delay.
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -202,7 +202,7 @@ void test_ana_task_breakdown_operational_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.
@@ -235,7 +235,7 @@ void test_ana_task_breakdown_operational_error() {
 // Test error detection of an unknown error and execution of panic handling.
 void test_ana_task_breakdown_unknown_error() {
     // Initialize the task information structure and delay.
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
     
@@ -243,7 +243,7 @@ void test_ana_task_breakdown_unknown_error() {
     task_info.status = analog_sm_init(on_ana_init, on_ana_ready, on_ana_execute, on_ana_breakdown);
     
     // Verify that the initial state is ANA_INIT.
-    ETaskState_t state = analog_sm_get_state();
+    EAnaTaskState_t state = analog_sm_get_state();
     TEST_ASSERT_EQUAL(state, ANA_INIT);
 
     // Execute the state machine and verify the transition to ANA_READY.

@@ -20,7 +20,7 @@
  * 
  * @return Status of the initialization process.
  */
-ETaskStatus_t analog_sm_init
+EAnaTaskStatus_t analog_sm_init
 (
     void (*init_func)(void), 
     void (*ready_func)(void), 
@@ -41,7 +41,7 @@ void analog_sm_run();
  * 
  * @return Current state of the state machine.
  */
-ETaskState_t analog_sm_get_state();
+EAnaTaskState_t analog_sm_get_state();
 
 /**
  * @brief Sets the state machine event.

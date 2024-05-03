@@ -1,14 +1,24 @@
 #include "hw_tmr_cfg.h"
-#include <Windows.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
-bool stop_hw_timer = false;
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <sys/time.h>
+#include <unistd.h>
+#endif
+
+#ifdef _WIN32
+static bool stop_hw_timer = false;
+#else
+static volatile bool stop_hw_timer = false;
+#endif
 
 c_int64_t get_hw_system_time(void)
 {
-    if(!stop_hw_timer)
+#ifdef _WIN32
+    if (!stop_hw_timer)
     {
         FILETIME ft;
         GetSystemTimeAsFileTime(&ft);
@@ -22,10 +32,25 @@ c_int64_t get_hw_system_time(void)
     }
     else
     {
-        static c_int64_t time = 0;
-        return time ++;
+        static int64_t time = 0;
+        return time++;
     }
+#else
+    if (!stop_hw_timer)
+    {
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
 
+        // Convertir timeval a un valor de 64 bits en microsegundos
+        int64_t microseconds = tv.tv_sec * 1000000LL + tv.tv_usec;
+        return microseconds;
+    }
+    else
+    {
+        static int64_t time = 0;
+        return time++;
+    }
+#endif
 }
 
 void set_stop_system_time()
@@ -67,7 +92,6 @@ static ETimerCfgError_t hw_timer_init_internal(STimer_t *timer)
 {
     return TMR_OK;
 }
-
 
 static ETimerCfgError_t hw_timer_restart_internal(STimer_t *timer)
 {

@@ -22,7 +22,7 @@ void analog_init();
  * @param time Pointer to the buffer time structure.
  * @param value Value to be added to the buffer.
  */
-void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint8_t value);
+void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint32_t value);
 
 /**
  * @brief Retrieves data from the data buffer.

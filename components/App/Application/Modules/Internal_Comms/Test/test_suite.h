@@ -13,6 +13,47 @@
  */
 extern void ana_t_share_test_suite();
 
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void btn_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void ind_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void mem_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void srl_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void pw_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void wls_t_share_test_suite();
 
 /**
  * @brief Set up function.
@@ -37,6 +78,12 @@ extern void tearDown(void);
 static inline void run_test_suites()
 {
     ana_t_share_test_suite();
+    btn_t_share_test_suite();
+    ind_t_share_test_suite();
+    mem_t_share_test_suite();
+    pw_t_share_test_suite();
+    wls_t_share_test_suite();
+    srl_t_share_test_suite();
 }
 
 /**

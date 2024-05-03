@@ -12,7 +12,7 @@
 void task_analog(void *pvParameters)
 {   
     // Initialize task information
-    STaskInfo_t task_info;
+    SAnaTaskInfo_t task_info;
     task_analog_init(&task_info,pvParameters);
 
     // Initialize analog state machine
@@ -39,10 +39,10 @@ void task_analog(void *pvParameters)
 }
 
 /*Init task function*/
-void task_analog_init(STaskInfo_t *task_info,void *pvParams) 
+void task_analog_init(SAnaTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
-    task_info->ID = 0;
+    task_info->ID = ANA_HANDLER_ID;
     // Set task delay
     task_info->delay = *(uint32_t *)pvParams;
     // Initialize last wake time
@@ -122,7 +122,7 @@ void on_ana_execute()
 void on_ana_breakdown()
 {
     // Fault reason
-    ETaskStatus_t fault_reason = ANA_TASK_OK;
+    EAnaTaskStatus_t fault_reason = ANA_TASK_OK;
     fault_reason = analog_app_check_faults();
     //Clean the error memory
     store_error_in_slot(ANALOGIC_ERROR_SLOT,0);

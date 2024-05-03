@@ -6,5 +6,5 @@ FILE(GLOB_RECURSE hw_config *.c)
 idf_component_register(SRCS ${hw_config}
                        INCLUDE_DIRS "include"
                                     "../../../../../lib/Common"
-                        REQUIRES esp_adc)
+                        REQUIRES esp_adc driver)
 

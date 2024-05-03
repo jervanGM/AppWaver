@@ -11,7 +11,7 @@ typedef enum{
     ANA_OPERATIONAL,
     ANA_BREAKDOWN,
     ANA_UNKNOWN
-}ETaskState_t;
+}EAnaTaskState_t;
 
 typedef enum{
     STATE_IDLE,
@@ -26,8 +26,8 @@ typedef struct {
 } IAnaSmStateFunc;
 
 typedef struct {
-    ETaskState_t sm_state;
-    ETaskState_t sm_prev_state;
+    EAnaTaskState_t sm_state;
+    EAnaTaskState_t sm_prev_state;
     IAnaSmStateFunc state_func[ANA_UNKNOWN];
     EStateEvent_t st_event;
 } SAnaSmStates;

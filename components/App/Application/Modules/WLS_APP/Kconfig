@@ -1,0 +1,239 @@
+# Copyright 2021-2024 AVSystem <avsystem@avsystem.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+menu "anjay-esp32-client"
+
+    choice ANJAY_CLIENT_DEVBOARD
+        prompt "Choose targeted development board"
+        default ANJAY_CLIENT_BOARD_UNKNOWN
+
+        if IDF_TARGET_ESP32
+            config ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                bool "ESP-WROVER-KIT"
+
+            config ANJAY_CLIENT_BOARD_ESP32_DEVKITC
+                bool "ESP32-DevKitC and derivatives"
+
+            config ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+                bool "M5StickC-Plus"
+        endif
+
+        config ANJAY_CLIENT_BOARD_UNKNOWN
+            bool "Unknown board - please configure manually"
+    endchoice
+
+    menu "Board options"
+        visible if ANJAY_CLIENT_BOARD_UNKNOWN
+
+        config ANJAY_CLIENT_DEVICE_MANUFACTURER
+            string "Device manufacturer"
+            default "Espressif" if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+            default "Espressif" if ANJAY_CLIENT_BOARD_ESP32_DEVKITC
+            default "M5Stack" if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default "Unknown"
+
+        config ANJAY_CLIENT_MODEL_NUMBER
+            string "Model number"
+            default "ESP-WROVER-KIT" if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+            default "ESP32-DevKitC" if ANJAY_CLIENT_BOARD_ESP32_DEVKITC
+            default "M5StickC-Plus" if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default "Unknown"
+
+        config ANJAY_CLIENT_PUSH_BUTTON
+            bool "Push button enabled"
+            default y if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+            default y if ANJAY_CLIENT_BOARD_ESP32_DEVKITC
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        config ANJAY_CLIENT_LIGHT_CONTROL
+            bool "Light control enabled"
+            default y if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        if ANJAY_CLIENT_PUSH_BUTTON
+            config ANJAY_CLIENT_PUSH_BUTTON_PIN
+                int "Push button pin"
+                default 0 if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                default 0 if ANJAY_CLIENT_BOARD_ESP32_DEVKITC
+                default 37 if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+                default 0
+        endif
+
+        config ANJAY_CLIENT_ACCELEROMETER_AVAILABLE
+            bool "Accelerometer available"
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        config ANJAY_CLIENT_GYROSCOPE_AVAILABLE
+            bool "Gyroscope available"
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        config ANJAY_CLIENT_TEMPERATURE_SENSOR_AVAILABLE
+            bool "Temperature sensor available"
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        config ANJAY_CLIENT_LCD
+            bool "LCD is mounted on board"
+            default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+            default n
+
+        menu "Light control options"
+            visible if ANJAY_CLIENT_LIGHT_CONTROL
+
+            config ANJAY_CLIENT_LIGHT_CONTROL_RED
+                bool "Enable red color"
+                default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+                default n
+
+            config ANJAY_CLIENT_LIGHT_CONTROL_GREEN
+                bool "Enable green color"
+                default y if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                default n
+
+            config ANJAY_CLIENT_LIGHT_CONTROL_BLUE
+                bool "Enable blue color"
+                default y if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                default n
+
+            config ANJAY_CLIENT_LIGHT_CONTROL_ACTIVE_LOW
+                bool "LED connection config - pin is on the cathode side"
+                default y if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+                default n
+
+            if ANJAY_CLIENT_LIGHT_CONTROL_RED
+                config ANJAY_CLIENT_LIGHT_CONTROL_RED_PIN
+                    int "Red color pin"
+                    default 10 if ANJAY_CLIENT_BOARD_M5STICKC_PLUS
+                    default 0
+            endif
+
+            if ANJAY_CLIENT_LIGHT_CONTROL_GREEN
+                config ANJAY_CLIENT_LIGHT_CONTROL_GREEN_PIN
+                    int "Green color pin"
+                    default 2 if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                    default 0
+            endif
+
+            if ANJAY_CLIENT_LIGHT_CONTROL_BLUE
+                config ANJAY_CLIENT_LIGHT_CONTROL_BLUE_PIN
+                    int "Blue color pin"
+                    default 4 if ANJAY_CLIENT_BOARD_ESP_WROVER_KIT
+                    default 0
+            endif
+        endmenu
+    endmenu
+
+    choice ANJAY_CLIENT_INTERFACE
+        prompt "Choose an interface"
+        default ANJAY_CLIENT_INTERFACE_ONBOARD_WIFI
+
+        config ANJAY_CLIENT_INTERFACE_ONBOARD_WIFI
+            bool "Onboard WiFi"
+
+        config ANJAY_CLIENT_INTERFACE_BG96_MODULE
+            bool "External BG96 module"
+            select ANJAY_ESP_IDF_WITH_BG96_SUPPORT
+    endchoice
+
+    config ANJAY_CLIENT_CELLULAR_EVENT_LOOP
+        bool
+        default y if ANJAY_CLIENT_INTERFACE_BG96_MODULE
+        default n
+
+    menu "Client options"
+        config ANJAY_CLIENT_ENDPOINT_NAME
+            string "Endpoint name"
+            default "anjay-esp32-client"
+
+        config ANJAY_CLIENT_SERVER_URI
+            string "Server URI"
+            default "coaps://eu.iot.avsystem.cloud:5684"
+
+        choice ANJAY_CLIENT_SOCKET
+            prompt "Choose socket"
+            default ANJAY_CLIENT_SOCKET_UDP
+
+            config ANJAY_CLIENT_SOCKET_UDP
+                bool "UDP"
+
+            config ANJAY_CLIENT_SOCKET_TCP
+                bool "TCP"
+        endchoice
+
+        choice ANJAY_SECURITY_MODE
+        prompt "Choose security mode"
+            default ANJAY_SECURITY_MODE_PSK
+
+            config ANJAY_SECURITY_MODE_NOSEC
+                bool "Non-secure connection"
+
+            config ANJAY_SECURITY_MODE_PSK
+                bool "PSK"
+
+            config ANJAY_SECURITY_MODE_CERTIFICATES
+                bool "Certificates"
+        endchoice
+
+        menu "PSK configuration"
+            visible if ANJAY_SECURITY_MODE_PSK
+
+            config ANJAY_CLIENT_PSK_IDENTITY
+                string "PSK identity"
+                default ANJAY_CLIENT_ENDPOINT_NAME
+
+            config ANJAY_CLIENT_PSK_KEY
+                string "PSK key"
+                default "1234"
+        endmenu
+    endmenu
+
+    if ANJAY_CLIENT_INTERFACE_ONBOARD_WIFI
+        menu "Connection configuration"
+            config ANJAY_WIFI_SSID
+                string "WiFi SSID"
+                default "myssid"
+
+            config ANJAY_WIFI_PASSWORD
+                string "WiFi Password"
+                default "mypassword"
+
+            config ANJAY_WIFI_CONNECT_IPV6
+                bool "Obtain IPv6 address"
+                default y
+
+            if ANJAY_WIFI_CONNECT_IPV6
+                choice ANJAY_WIFI_CONNECT_IPV6_PREF
+                    prompt "Preferred IPv6 Type"
+                    default ANJAY_WIFI_CONNECT_IPV6_PREF_LOCAL_LINK
+
+                    config ANJAY_WIFI_CONNECT_IPV6_PREF_LOCAL_LINK
+                        bool "Local Link Address"
+
+                    config ANJAY_WIFI_CONNECT_IPV6_PREF_GLOBAL
+                        bool "Global Address"
+
+                    config ANJAY_WIFI_CONNECT_IPV6_PREF_SITE_LOCAL
+                        bool "Site Local Address"
+
+                    config ANJAY_WIFI_CONNECT_IPV6_PREF_UNIQUE_LOCAL
+                        bool "Unique Local Link Address"
+                endchoice
+            endif
+        endmenu
+    endif
+endmenu

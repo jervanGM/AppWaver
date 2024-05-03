@@ -17,7 +17,7 @@ void task_analog(void *pvParameters);
  * @param task_info Pointer to the task information structure.
  * @param pvParams Pointer to task parameters.
  */
-void task_analog_init(STaskInfo_t *task_info,void *pvParams);
+void task_analog_init(SAnaTaskInfo_t *task_info,void *pvParams);
 
 /**
  * @brief Function executed when the analog state machine is in the initialization state.

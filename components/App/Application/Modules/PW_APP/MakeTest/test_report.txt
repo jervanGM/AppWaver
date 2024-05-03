@@ -1,0 +1,37 @@
+[ERROR]: [ Power IO HAL port has not been configured correctly on init ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:49:test_handle_port_error:PASS
+
+-----------------------
+1 Tests 0 Failures 0 Ignored 
+OK
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:52:test_power_init:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:53:test_power_off:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:61:test_pw_app_check_mayor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:62:test_pw_app_check_minor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:63:test_pw_app_check_no_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:64:test_pw_app_check_lower_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:65:test_pw_app_check_upper_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:66:test_pw_app_check_lower_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:67:test_pw_app_check_upper_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:491:test_pw_sm_init_valid_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:492:test_pw_sm_init_null_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:493:test_pw_sm_init_to_full_pw_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:494:test_pw_sm_init_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:495:test_pw_sm_full_pw_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:496:test_pw_sm_low_power_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:497:test_pw_sm_power_off_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:498:test_pw_sm_init_to_power_off_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:499:test_pw_sm_full_pw_to_power_off_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:500:test_pw_sm_low_power_to_power_off_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:501:test_pw_sm_breakdown_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:502:test_pw_sm_init_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:503:test_pw_sm_full_pw_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:504:test_pw_sm_low_pw_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:505:test_pw_sm_pw_off_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:506:test_pw_sm_full_pw_to_low_pw_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:507:test_pw_sm_low_pw_to_full_pw_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/PW_APP/Test/test_suite.c:36:test_pw_task_init:PASS
+
+-----------------------
+27 Tests 0 Failures 0 Ignored 
+OK

@@ -8,7 +8,7 @@ void analog_app_init()
 }
 
 /* Checks for faults in the analog application */
-ETaskStatus_t analog_app_check_faults()
+EAnaTaskStatus_t analog_app_check_faults()
 {
     int8_t error = 0;
 
