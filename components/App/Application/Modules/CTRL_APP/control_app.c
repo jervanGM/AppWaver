@@ -27,23 +27,23 @@ static bool plant_data_is_valid(uint32_t *signal, int length) {
 
 void control_app_process_plant_data(uint32_t *data_in,uint32_t *data_out,size_t buf_size,bool ready)
 {
-    if(buf_size >0 && ready == true)
+    static bool prev_ready = false;
+    if((buf_size>0) && (ready == true) && (ready != prev_ready))
     {
         if(plant_data_is_valid(data_in,buf_size))
         {
             memcpy(data_out,data_in,buf_size*sizeof(uint32_t));
-
         }
         else
         {
             memset(data_out, 0, buf_size * sizeof(uint32_t));
         }
-        // for(uint16_t i = 0;i<buf_size;i++)
-        // {
-        //     TRACE_INFO("PLANT INFO:", TO_STRING(data_in[i]));
-        // }
-        
+            for(uint16_t i = 0;i<buf_size;i++)
+            {
+            TRACE_INFO("PLANT INFO:", TO_STRING(data_in[i]));
+            }
     }
+    prev_ready = ready;
 }
 
 /* Checks for faults in the analog application */
