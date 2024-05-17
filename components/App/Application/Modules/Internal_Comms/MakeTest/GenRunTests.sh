@@ -11,12 +11,17 @@ if [ $? -eq 0 ]; then
     
     # Verificar si la compilación fue exitosa
     if [ $? -eq 0 ]; then
-        # Ruta al archivo test_runner.exe
-        test_runner="./build/bin/test_suite.exe"
+        # Ruta al archivo test_runner
+        test_runner="./build/bin/test_suite"
+
+        # Verificar si estamos en Windows
+        if [ -f "$test_runner.exe" ]; then
+            test_runner="$test_runner.exe"
+        fi
         
-        # Verificar si el archivo test_runner.exe existe
+        # Verificar si el archivo test_runner existe
         if [ -f "$test_runner" ]; then
-            # Ejecutar test_runner.exe y redirigir la salida a un archivo de texto
+            # Ejecutar test_runner y redirigir la salida a un archivo de texto
             echo "Ejecutando $test_runner"
             "$test_runner" > test_report.txt
         else
@@ -28,6 +33,7 @@ if [ $? -eq 0 ]; then
 else
     echo "Error: La configuración de cmake falló."
 fi
+
 
 
 

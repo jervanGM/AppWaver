@@ -5,5 +5,5 @@ FILE(GLOB_RECURSE sw_config *.c)
 
 idf_component_register(SRCS ${sw_config}
                        INCLUDE_DIRS "include"
-                       REQUIRES hal_ports ANA_APP WLS_APP CTRL_APP BTN_APP BTN_DRV IND_APP PW_APP RTOS Panic)
+                       REQUIRES hal_ports ANA_APP WLS_APP CTRL_APP BTN_APP BTN_DRV IND_APP PW_APP SRL_APP RTOS Panic)
 

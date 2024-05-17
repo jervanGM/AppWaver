@@ -5,6 +5,7 @@
 #include "btn_t_share.h"
 #include "pw_t_share.h"
 #include "ind_t_share.h"
+#include "srl_t_share.h"
 #include "assert_panic.h"
 #include "safe_trace.h"
 #include "safe_timer.h"
@@ -14,6 +15,8 @@
 #include "control_diag.h"
 #include "safe_memory.h"
 #include <string.h>
+
+extern const char *srl_cmd_list[];
 
 void task_control(void *pvParameters)
 {   
@@ -95,6 +98,8 @@ void on_ctrl_execute()
     SEnvData_t env_data;
     SPowerData_t power_data;
     SAxisData_t axix_buf[DATA_BUFFER_SIZE];
+    SSerialMsg_t srl_msg;
+
     static ECtrlTaskAct_t task_active = CTRL_TASK_WLS; 
     static EWifiActSts_t wifi_pw_sts = PW_WIFI_ON;
     static uint32_t plant_data[DATA_BUFFER_SIZE] = {0};
@@ -102,20 +107,21 @@ void on_ctrl_execute()
     analog_controller_read(&ana_msg);
     wireless_controller_read(&wls_msg);
     button_controller_read(&btn_msg);
+    serial_controller_read(&srl_msg);
     mem_ctrl_read(&mem_msg);
 
     control_app_process_plant_data(ana_msg._plant_buff.data,plant_data,
                                 ana_msg._plant_buff.size,ana_msg._plant_buff.ready);
 
-    if(btn_msg._btn_cmd == BTN_CMD_PW_OFF)
+    if((btn_msg._btn_cmd == BTN_CMD_PW_OFF) || (strcmp(srl_msg._command.cmd, srl_cmd_list[0]) == 0))
     {
         ctrl_pw_send(PW_SENS_OFF,PW_MAIN_OFF,PW_SOIL_OFF,PW_WIFI_OFF,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_OFF);
         memset(plant_data, 0, ana_msg._plant_buff.size * sizeof(uint32_t));
-        power_data.currnt_pw_mode = E_PW_OFF;
+        power_data.curnt_pw_mode = E_PW_OFF;
         
     }
-    else if(btn_msg._btn_cmd == BTN_CMD_NORMAL)
+    else if(btn_msg._btn_cmd == BTN_CMD_NORMAL || (strcmp(srl_msg._command.cmd, srl_cmd_list[1]) == 0))
     {
         ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,wifi_pw_sts,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_ON);

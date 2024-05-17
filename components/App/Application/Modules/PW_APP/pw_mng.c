@@ -42,8 +42,13 @@ void execute_full_power_mode()
 
 void set_main_power_off()
 {
-    TRACE_WARNING("El sistema se apagará por completo");
+    TRACE_WARNING("The system will shut down completely");
     port->write(POWER_OFF_PIN,STS_ON);
+}
+
+void set_main_power_reset()
+{
+    wls_port->system_abort("[PW TASK] System abort by user");
 }
 
 void set_wifi_power(EWifiActSts_t wifi_pw)

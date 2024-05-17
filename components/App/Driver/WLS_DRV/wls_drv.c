@@ -317,5 +317,6 @@ int8_t mac_get_default(uint8_t *mac) {
 
 void wireless_system_abort(const char *msg)
 {
-    esp_system_abort(msg);
+    ESP_LOGE("System abort", "%s", msg);
+    esp_restart();
 }

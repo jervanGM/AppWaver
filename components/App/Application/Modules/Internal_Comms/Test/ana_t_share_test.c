@@ -1,7 +1,17 @@
 #include "ana_t_share_test.h"
 #include "analog_t_share.h"
 #include "safe_timer.h"
+
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <sys/time.h>
+#endif
 
 void setUp(void)
 {
@@ -34,10 +44,17 @@ void test_send_and_read_analog_controller_data(void) {
     SDataBuffer_t plant_buff_received; // Variable to store received plant buffer
     SBufferTime_t buff_time_received;  // Variable to store received buffer time
     SAnalogSensMsg_t _msg;
+#ifdef _WIN32
     // Send the analog controller data
-    buff_time_sent.start_time = get_system_time();
+    buff_time_sent.start_time = GetTickCount(); // Use GetTickCount() for Windows
     Sleep(1000);
+    buff_time_sent.end_time = GetTickCount();
+#else
+    // Send the analog controller data
+    buff_time_sent.start_time = get_system_time(); // Use get_system_time() for POSIX
+    usleep(1000000); // Use usleep() for POSIX
     buff_time_sent.end_time = get_system_time();
+#endif
     analog_controller_send(plant_buff_sent, buff_time_sent);
 
     // Read the analog controller data
@@ -75,10 +92,17 @@ void test_send_and_read_analog_controller_data_large_buffers(void) {
         plant_buff_sent.data[i] = i * 1000; // Large values
     }
 
+#ifdef _WIN32
     // Send the analog controller data
-    buff_time_sent.start_time = get_system_time();
+    buff_time_sent.start_time = GetTickCount(); // Use GetTickCount() for Windows
     Sleep(1000);
+    buff_time_sent.end_time = GetTickCount();
+#else
+    // Send the analog controller data
+    buff_time_sent.start_time = get_system_time(); // Use get_system_time() for POSIX
+    usleep(1000000); // Use usleep() for POSIX
     buff_time_sent.end_time = get_system_time();
+#endif
     analog_controller_send(plant_buff_sent, buff_time_sent);
 
     // Read the analog controller data

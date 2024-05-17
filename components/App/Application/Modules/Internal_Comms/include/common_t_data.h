@@ -7,7 +7,8 @@ typedef enum {
 
 typedef enum {
     E_PW_NORMAL,
-    E_PW_OFF
+    E_PW_OFF,
+    E_PW_RESET
 } EPowerMode_t;
 
 typedef enum {
@@ -45,7 +46,7 @@ typedef struct {
 
 typedef struct {
     EPowerMode_t prev_pw_mode;
-    EPowerMode_t currnt_pw_mode;
+    EPowerMode_t curnt_pw_mode;
 } SPowerData_t;
 
 typedef struct {
