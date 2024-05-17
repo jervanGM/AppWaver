@@ -132,33 +132,21 @@ void on_srl_breakdown()
     {
     case SRL_MINOR_FAULT:
         // Log minor fault
-<<<<<<< HEAD
         TRACE_WARNING("A minor fault has been produced on serial task");
-=======
-        TRACE_WARNING("A minor fault has been produced on serialic sensors task");
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
         // Set state machine event to previous
         serial_sm_set_st_event(SRL_STATE_PREV);
         break;
     
     case SRL_MAYOR_FAULT:
         // Log major fault
-<<<<<<< HEAD
         TRACE_ERROR("A mayor fault has been produced on serial task");
-=======
-        TRACE_ERROR("A mayor fault has been produced on serialic sensors task");
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
         // Set state machine event to next
         serial_deinit();
         serial_sm_set_st_event(SRL_STATE_NEXT);
         break;
     default:
         // Assert if unknown fault reason
-<<<<<<< HEAD
         ASSERT_PANIC(false,"Unknown fault reason has been produced on serial task");    
-=======
-        ASSERT_PANIC(false,"Unknown fault reason has been produced on serialic sensors task");    
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
         break;
     }
     set_task_serial_status(fault_reason);

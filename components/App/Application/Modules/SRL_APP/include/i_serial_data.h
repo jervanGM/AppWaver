@@ -9,11 +9,7 @@
 
 #define SRL_DRV_OK 0
 
-<<<<<<< HEAD
 #define SERIAL_ERROR_SLOT 14
-=======
-#define SERIAL_ERROR_SLOT 12
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
 #define HAL_SRL_CONFIG_ERROR -127
 #define SRL_DRV_INIT_ERROR -126
 #define SRL_DRV_DEINIT_ERROR -125

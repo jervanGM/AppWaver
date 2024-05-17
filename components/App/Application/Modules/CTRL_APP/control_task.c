@@ -7,10 +7,7 @@
 #include "pw_t_share.h"
 #include "ind_t_share.h"
 #include "srl_t_share.h"
-<<<<<<< HEAD
 #include "bus_t_share.h"
-=======
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
 #include "assert_panic.h"
 #include "safe_trace.h"
 #include "safe_timer.h"
@@ -102,11 +99,7 @@ void on_ctrl_execute()
     SEnvData_t env_data = {0};
     SPowerData_t power_data = {0};
     SAxisData_t axix_buf[DATA_BUFFER_SIZE];
-<<<<<<< HEAD
     SSerialMsg_t srl_msg = {0};
-=======
-    SSerialMsg_t srl_msg;
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
 
     static ECtrlTaskAct_t task_active = CTRL_TASK_WLS; 
     static EWifiActSts_t wifi_pw_sts = PW_WIFI_ON;
@@ -128,11 +121,8 @@ void on_ctrl_execute()
     controller_bus_send(ctrl_msg._dev_id,ctrl_msg._cmd);
 #endif
 
-<<<<<<< HEAD
     control_app_process_plant_data(&ana_msg,plant_data);
 
-=======
->>>>>>> 580f3ba01581a2c652de2ce061dcf930e0026a99
     if((btn_msg._btn_cmd == BTN_CMD_PW_OFF) || (strcmp(srl_msg._command.cmd, srl_cmd_list[0]) == 0))
     {
         ctrl_pw_send(PW_SENS_OFF,PW_MAIN_OFF,PW_SOIL_OFF,PW_WIFI_OFF,PW_MODE_FULL);
