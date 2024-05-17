@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include "i_serial_data.h"
 
-#define SRL_CTRL_M_ID 13
+#define SRL_CTRL_M_ID 12
+#define CTRL_SRL_M_ID 13
 
 void set_task_serial_info(SSrlTaskInfo_t task_info);
 

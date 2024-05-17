@@ -49,7 +49,7 @@ void test_send_and_read_controller_wireless_data(void) {
     SErrorInfo_t alarm;
     SSystemStatus_t status;
     uint32_t plant_signal[128];
-    SEnvData_t env_data;
+    SAnaEnvData_t env_data;
     SPowerData_t power_data;
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode;
@@ -66,7 +66,7 @@ void test_send_and_read_controller_wireless_data(void) {
     TEST_ASSERT_EQUAL_MEMORY(&alarm, &_msg._alarm, sizeof(SErrorInfo_t));
     TEST_ASSERT_EQUAL_MEMORY(&status, &_msg._status, sizeof(SSystemStatus_t));
     TEST_ASSERT_EQUAL_MEMORY(&plant_signal, &_msg._plant_signal, sizeof(uint32_t)*128);
-    TEST_ASSERT_EQUAL_MEMORY(&env_data, &_msg._env_data, sizeof(SEnvData_t));
+    TEST_ASSERT_EQUAL_MEMORY(&env_data, &_msg._env_data, sizeof(SAnaEnvData_t));
     TEST_ASSERT_EQUAL_MEMORY(&power_data, &_msg._power_data, sizeof(SPowerData_t));
     TEST_ASSERT_EQUAL_MEMORY(&axis_buff, &_msg._axis_buff, sizeof(SAxisData_t)*128);
     TEST_ASSERT_EQUAL_MEMORY(&current_mode, &_msg._current_mode, sizeof(ESysMode_t));
@@ -80,7 +80,7 @@ void test_read_controller_wireless_data_before_sending(void) {
     SErrorInfo_t alarm = {0};
     SSystemStatus_t status = {0};
     uint32_t plant_signal[128];
-    SEnvData_t env_data = {0};
+    SAnaEnvData_t env_data = {0};
     SPowerData_t power_data = {0};
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode = {0};

@@ -8,8 +8,16 @@
 
 #define HAL_IND_CONFIG_ERROR -127
 
+#ifdef BASIC
 #define IND_LED1_PIN 10
 #define IND_UNK_PIN 255
+#endif
+
+#ifdef ADVANCED
+#define IND_LED1_PIN 17
+#define IND_UNK_PIN 255
+#endif
+
 
 typedef enum{
     IND_TASK_OK,

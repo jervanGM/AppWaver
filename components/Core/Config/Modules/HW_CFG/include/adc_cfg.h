@@ -10,6 +10,7 @@
 #include "esp_adc/adc_oneshot.h"
 #include "esp_adc/adc_cali.h"
 #include "esp_adc/adc_cali_scheme.h"
+#include "SERIES_ID.h"
 
 #define ADC_UNIT                    ADC_UNIT_1
 #define _ADC_UNIT_STR(unit)         #unit
@@ -22,7 +23,18 @@
 #define ADC_GET_CHANNEL(p_data)     ((p_data)->type2.channel)
 #define ADC_GET_DATA(p_data)        ((p_data)->type2.data)
 
+#ifdef BASIC
 #define ADC1_CHAN0          ADC_CHANNEL_2
+static adc_channel_t channel[1] = {ADC_CHANNEL_2};
+#endif
+
+#ifdef ADVANCED
+#define ADC1_CHAN0          ADC_CHANNEL_0
+#define ADC1_CHAN1          ADC_CHANNEL_1
+#define ADC1_CHAN2          ADC_CHANNEL_2
+#define ADC1_CHAN3          ADC_CHANNEL_3
+static adc_channel_t channel[4] = {ADC_CHANNEL_0,ADC_CHANNEL_1,ADC_CHANNEL_2,ADC_CHANNEL_3};
+#endif
 
 #define ADC_ATTEN           ADC_ATTEN_DB_11
 
@@ -30,7 +42,7 @@ static const char *TAG = "ADC";
 
 #define READ_LEN                    256
 
-static adc_channel_t channel[1] = {ADC_CHANNEL_2};
+
 
 static void continuous_adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle_t *out_handle);
 static bool adc_calibration_ana_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);

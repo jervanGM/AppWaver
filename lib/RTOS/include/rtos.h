@@ -27,7 +27,7 @@ void notify_to_task_from_it(uint8_t handle_id);
 
 void notify_to_task_from_it_with_value(uint8_t handle_id,uint32_t value);
 
-void task_wait_for_event();
+uint32_t task_wait_for_event();
 
 void task_delay_until(uint32_t *PreviousWakeTime, uint32_t ms_delay);
 

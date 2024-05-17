@@ -6,6 +6,14 @@ adc_continuous_handle_t handle;
 adc_cali_handle_t adc1_cali_chan0_handle;
 adc_oneshot_unit_handle_t adc1_handle;
 bool do_calibration1_chan0;
+#ifdef ADVANCED
+adc_cali_handle_t adc1_cali_chan1_handle;
+adc_cali_handle_t adc1_cali_chan2_handle;
+adc_cali_handle_t adc1_cali_chan3_handle;
+bool do_calibration1_chan1;
+bool do_calibration1_chan2;
+bool do_calibration1_chan3;
+#endif
 #ifdef ADC_DMA
 static bool IRAM_ATTR s_conv_done_cb(adc_continuous_handle_t handle, const adc_continuous_evt_data_t *edata, void *user_data)
 {
@@ -81,9 +89,19 @@ void adc_config_init()
         .atten = ADC_ATTEN,
     };
     ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN0, &config));
+#ifdef ADVANCED
+    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN1, &config));
+    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN2, &config));
+    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN3, &config));
+#endif
 
     //-------------ADC1 Calibration Init---------------//
     do_calibration1_chan0 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN0, ADC_ATTEN, &adc1_cali_chan0_handle);
+#ifdef ADVANCED
+    do_calibration1_chan1 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN1, ADC_ATTEN, &adc1_cali_chan1_handle);
+    do_calibration1_chan2 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN2, ADC_ATTEN, &adc1_cali_chan2_handle);
+    do_calibration1_chan3 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN3, ADC_ATTEN, &adc1_cali_chan3_handle);
+#endif
 
 }
 

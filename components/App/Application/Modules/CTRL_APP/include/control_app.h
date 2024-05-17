@@ -4,6 +4,14 @@
 #include <stdbool.h>
 #include "i_control_data.h"
 
+#include "analog_t_share.h"
+#include "wireless_t_share.h"
+#include "mem_t_share.h"
+#include "btn_t_share.h"
+#include "pw_t_share.h"
+#include "ind_t_share.h"
+#include "srl_t_share.h"
+#include "bus_t_share.h"
 #define MINOR_FAULT_THRESHOLD -1
 #define MAYOR_FAULT_THESHOLD -20
 
@@ -15,7 +23,7 @@
  */
 void control_app_init();
 
-void control_app_process_plant_data(uint32_t *data_in,uint32_t *data_out,size_t buf_size,bool ready);
+void control_app_process_plant_data(SAnalogSensMsg_t *data_in,uint32_t *data_out);
 
 /**
  * @brief Checks for faults in the control application.

@@ -54,7 +54,7 @@ void test_mem_task_normal_execution() {
     uint32_t data[128];
     SErrorInfo_t alarm;
     SSystemStatus_t status;
-    SEnvData_t env_data;
+    SAnaEnvData_t env_data;
     SPowerData_t power_data;
     SAxisData_t axix_buf[DATA_BUFFER_SIZE];
     end_t.sec = 13;

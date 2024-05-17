@@ -7,6 +7,8 @@
 const char *srl_cmd_list[] = {
     "system_off",
     "system_on",
+    "heater_on",
+    "heater_off",
     "system_reset", //FUNCTIONALITY TBD
     "wifi_off", //FUNCTIONALITY TBD
     "wifi_on", //FUNCTIONALITY TBD

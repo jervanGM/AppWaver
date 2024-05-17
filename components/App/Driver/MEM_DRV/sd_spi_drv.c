@@ -16,10 +16,19 @@ static sdmmc_host_t spi_host;
 
 // Pin assignments can be set in menuconfig, see "SD SPI Example Configuration" menu.
 // You can also change the pin assignments here by changing the following 4 lines.
+#ifdef BASIC
 #define PIN_NUM_MISO  5
 #define PIN_NUM_MOSI  6
 #define PIN_NUM_CLK   4
 #define PIN_NUM_CS    7
+#endif
+
+#ifdef ADVANCED
+#define PIN_NUM_MISO  20
+#define PIN_NUM_MOSI  22
+#define PIN_NUM_CLK   19
+#define PIN_NUM_CS    21
+#endif
 
 int8_t sd_spi_init(void)
 {

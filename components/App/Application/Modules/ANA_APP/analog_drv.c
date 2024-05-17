@@ -52,12 +52,55 @@ void get_data_buffer(SDataBuffer_t *data_buffer, SBufferTime_t *data_time) {
         // Clear the data buffer if it's ready
         clear_data_buffer(data_buffer);
     }
-
     uint32_t data = get_dsp_data();
-
     // Add data to the buffer
     add_to_buffer(data_buffer, data_time, data);
 }
+
+#ifdef ADVANCED
+void get_env_data(uint32_t *env_data, bool ready)
+{
+    static uint32_t sum_i_solar = 0;
+    static uint32_t sum_v_solar = 0;
+    static uint32_t sum_s_data = 0;
+    static size_t count = 0;
+
+    uint32_t i_solar, v_solar, s_data;
+    if(env_data == NULL)
+    {
+        store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ENV_DATA_EMPTY);
+        TRACE_ERROR("Environment data buffer is empty or not valid");
+        return;   
+    }
+    get_solar_data(&i_solar, &v_solar);
+    s_data = get_soil_data();
+
+    sum_i_solar += i_solar;
+    sum_v_solar += v_solar;
+    sum_s_data += s_data;
+    count++;
+
+    if (ready)
+    {
+        env_data[0] = sum_i_solar / count;
+        env_data[1] = sum_v_solar / count;
+        env_data[2] = sum_s_data / count;
+
+        // Reiniciar sumas y contador
+        sum_i_solar = 0;
+        sum_v_solar = 0;
+        sum_s_data = 0;
+        count = 0;
+    }
+    else
+    {
+        // Cuando ready es falso, se inicializan los valores del array a 0
+        env_data[0] = 0;
+        env_data[1] = 0;
+        env_data[2] = 0;
+    }
+}
+#endif
 
 /* Clears the data buffer */
 void clear_data_buffer(SDataBuffer_t *buffer) {

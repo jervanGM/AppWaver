@@ -4,16 +4,18 @@
 #include "safe_memory.h"
 #include "i_analog_data.h"
 
+static const IAnaPort *ana_port;
+
 /* Initializes the DSP port */
 void dsp_init_port()
 {
     // Retrieve the analog port interface
-    const IAnaPort *port = hal_ana_get_port();
+    ana_port = hal_ana_get_port();
 
     // Check if the port interface is valid
-    if (port != NULL)
+    if (ana_port != NULL)
     {
-        port->init(); // Call the initialization function of the analog port
+        ana_port->init(); // Call the initialization function of the analog port
     }
     else
     {
@@ -27,24 +29,20 @@ void dsp_init_port()
 uint32_t get_dsp_data()
 {
     uint32_t data;
-    // Get data from the analog port
-    const IAnaPort *port = hal_ana_get_port();
-
     // Check if the analog port interface is valid
-    if (port != NULL)
+    if (ana_port != NULL)
     {
-        port->read(2, &data); // Read data from the analog port channel 2
+        #ifdef BASIC
+        ana_port->read(2, &data); // Read data from the analog port channel 2
+        #endif
+        #ifdef ADVANCED
+        ana_port->read(0, &data); // Read data from the analog port channel 0
+        #endif
         // Apply filters and normalization
         iir_filter(&data); // Apply IIR filter
         return data;
     }
-    else
-    {
-        // Log an error if the analog port is not properly configured
-        store_error_in_slot(ANALOGIC_ERROR_SLOT, HAL_ANA_CONFIG_ERROR);
-        TRACE_ERROR("Analog sensor HAL port has not been configured correctly on read");
-        return 0;
-    }
+    return 0;
 }
 
 /* Applies an IIR filter to the input data */
@@ -78,3 +76,30 @@ void iir_filter(uint32_t *input)
         y[i + 1] = y[i];
     }
 }
+#ifdef ADVANCED
+void get_solar_data(uint32_t *i_solar, uint32_t *v_solar)
+{
+    uint32_t i_data;
+    uint32_t v_data;
+    // Check if the analog port interface is valid
+    if (ana_port != NULL)
+    {
+        ana_port->read(1, &v_data); // Read data from the analog port channel 1
+        ana_port->read(2, &i_data); // Read data from the analog port channel 1
+        *i_solar = i_data;
+        *v_solar = v_data;
+    }
+}
+
+uint32_t get_soil_data()
+{
+    uint32_t s_data;
+    // Check if the analog port interface is valid
+    if (ana_port != NULL)
+    {
+        ana_port->read(3, &s_data); // Read data from the analog port channel 1
+        return s_data;
+    }
+    return 0;
+}
+#endif

@@ -2,13 +2,28 @@
 #define I_PW_DATA_H_
 #include <stdint.h>
 #include "safe_timer.h"
+#include "SERIES_ID.h"
 
 #define POWER_ERROR_SLOT 8
 #define POWER_HANDLER_ID 5
 
 #define POWER_OFF_TIME 1000
 
+#ifdef BASIC
 #define POWER_OFF_PIN 20
+#endif
+
+#ifdef ADVANCED
+#define POWER_OFF_PIN 16
+#define SOIL_PWM_PIN 4
+#define SENS_SW_PIN 5
+
+#define SOIL_FREQ  5
+#define SOIL_DUTY 50
+#define SOIL_PWM_CHAN 0
+#endif
+
+
 
 #define HAL_PW_CONFIG_ERROR -127
 

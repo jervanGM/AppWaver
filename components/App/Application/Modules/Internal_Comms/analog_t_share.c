@@ -5,6 +5,7 @@
 
 static SAnalogSensMsg_t _msg = {0};
 
+
 void set_task_analog_info(SAnaTaskInfo_t task_info)
 {
     mutex_lock(ANALOG_M_ID);
@@ -30,10 +31,26 @@ void analog_controller_send(
     mutex_unlock(ANALOG_M_ID);
 }
 
+#ifdef ADVANCED
+void analog_controller_send_env_data(SAnaEnvData_t env_data)
+{
+    mutex_lock(ANALOG_M_ID);
+        memcpy(&_msg._env_data, &env_data, sizeof(SAnaEnvData_t));
+    mutex_unlock(ANALOG_M_ID);
+}
+#endif
+
 
 void analog_controller_read(SAnalogSensMsg_t *msg)
 {
-    mutex_lock(ANALOG_M_ID);
-        memcpy(msg, &_msg, sizeof(SAnalogSensMsg_t));
-    mutex_unlock(ANALOG_M_ID);
+
+    if(_msg._plant_buff.ready != NULL){
+        mutex_lock(ANALOG_M_ID);
+            memcpy(msg, &_msg, sizeof(SAnalogSensMsg_t));
+        mutex_unlock(ANALOG_M_ID);
+    }
+    else{
+        memset(msg, 0, sizeof(SAnalogSensMsg_t));
+    }
+    
 }
