@@ -71,6 +71,9 @@ target_include_directories(lib PUBLIC
     ${ROOT}/components/App/Application/Modules/BTN_APP/include
     ${ROOT}/components/App/Application/Modules/IND_APP/include
     ${ROOT}/components/App/Application/Modules/PW_APP/include
+    ${ROOT}/components/App/Application/Modules/BUS_APP/include
+    ${ROOT}/components/App/Application/Modules/MEM_APP/include
+    ${ROOT}/components/App/Application/Modules/SRL_APP/include
     ../include
 )
 

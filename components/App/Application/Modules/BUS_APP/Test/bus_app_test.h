@@ -8,7 +8,7 @@
  * This test sets an error value below the major fault threshold
  * and checks if the function correctly identifies it as a major fault.
  */
-void test_serial_app_check_mayor_faults(); /**< \test */
+void test_bus_app_check_mayor_faults(); /**< \test */
 
 /**
  * @brief Test case to verify the detection of a minor fault.
@@ -17,7 +17,7 @@ void test_serial_app_check_mayor_faults(); /**< \test */
  * and below the minor fault threshold and checks if the function
  * correctly identifies it as a minor fault.
  */
-void test_serial_app_check_minor_faults(); /**< \test */
+void test_bus_app_check_minor_faults(); /**< \test */
 
 /**
  * @brief Test case to verify the absence of faults.
@@ -25,7 +25,7 @@ void test_serial_app_check_minor_faults(); /**< \test */
  * This test sets an error value above the minor fault threshold
  * and checks if the function correctly identifies it as no fault.
  */
-void test_serial_app_check_no_faults(); /**< \test */
+void test_bus_app_check_no_faults(); /**< \test */
 
 /**
  * @brief Test case to verify the behavior at the lower minor fault boundary.
@@ -33,7 +33,7 @@ void test_serial_app_check_no_faults(); /**< \test */
  * This test sets an error value equal to the minor fault threshold
  * and checks if the function correctly identifies it as no fault.
  */
-void test_serial_app_check_lower_minor_fault_boundary(); /**< \test */
+void test_bus_app_check_lower_minor_fault_boundary(); /**< \test */
 
 /**
  * @brief Test case to verify the behavior at the upper minor fault boundary.
@@ -41,7 +41,7 @@ void test_serial_app_check_lower_minor_fault_boundary(); /**< \test */
  * This test sets an error value one less than the major fault threshold
  * and checks if the function correctly identifies it as a major fault.
  */
-void test_serial_app_check_upper_minor_fault_boundary(); /**< \test */
+void test_bus_app_check_upper_minor_fault_boundary(); /**< \test */
 
 /**
  * @brief Test case to verify the behavior at the lower major fault boundary.
@@ -49,7 +49,7 @@ void test_serial_app_check_upper_minor_fault_boundary(); /**< \test */
  * This test sets an error value equal to the major fault threshold
  * and checks if the function correctly identifies it as no fault.
  */
-void test_serial_app_check_lower_major_fault_boundary(); /**< \test */
+void test_bus_app_check_lower_major_fault_boundary(); /**< \test */
 
 /**
  * @brief Test case to verify the behavior at the upper major fault boundary.
@@ -57,14 +57,10 @@ void test_serial_app_check_lower_major_fault_boundary(); /**< \test */
  * This test sets an error value to the maximum possible value
  * and checks if the function correctly identifies it as no fault.
  */
-void test_serial_app_check_upper_major_fault_boundary(); /**< \test */
+void test_bus_app_check_upper_major_fault_boundary(); /**< \test */
 
-void test_serial_app_command_exist();
+void test_bus_app_process_data();
 
-void test_serial_app_command_not_exist();
-
-void test_serial_app_null_command();
-
-void test_serial_app_empty_command();
+void test_bus_app_process_data_error();
 
 #endif /* TRACE_TEST_H_ */

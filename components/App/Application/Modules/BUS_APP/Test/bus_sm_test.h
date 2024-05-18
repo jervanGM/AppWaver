@@ -41,7 +41,7 @@ void test_bus_sm_init_to_breakdown_transition(); /**< \test */
  * then triggers the state transition to breakdown, and verifies 
  * that the state is correctly set to BUS_BREAKDOWN.
  */
-void test_serial_sm_ready_to_breakdown_transition(); /**< \test */
+void test_bus_sm_ready_to_breakdown_transition(); /**< \test */
 
 /**
  * @brief Test case to verify the transition from operational to breakdown state.
@@ -50,7 +50,7 @@ void test_serial_sm_ready_to_breakdown_transition(); /**< \test */
  * then triggers the state transition to breakdown, and verifies 
  * that the state is correctly set to BUS_BREAKDOWN.
  */
-void test_serial_sm_operational_to_breakdown_transition(); /**< \test */
+void test_bus_sm_operational_to_breakdown_transition(); /**< \test */
 
 /**
  * @brief Test case to verify an unknown state transition from breakdown state.
@@ -59,7 +59,7 @@ void test_serial_sm_operational_to_breakdown_transition(); /**< \test */
  * triggers an unknown state transition, and verifies 
  * that the state remains in BUS_BREAKDOWN.
  */
-void test_serial_sm_breakdown_unknown_state_transition(); /**< \test */
+void test_bus_sm_breakdown_unknown_state_transition(); /**< \test */
 
 /**
  * @brief Test case to verify an unknown state transition from initialization state.
@@ -76,7 +76,7 @@ void test_bus_sm_init_unknown_state_transition(); /**< \test */
  * triggers an unknown state transition, and verifies 
  * that the state remains in BUS_READY.
  */
-void test_serial_sm_ready_unknown_state_transition(); /**< \test */
+void test_bus_sm_ready_unknown_state_transition(); /**< \test */
 
 /**
  * @brief Test case to verify an unknown state transition from operational state.
@@ -85,7 +85,7 @@ void test_serial_sm_ready_unknown_state_transition(); /**< \test */
  * triggers an unknown state transition, and verifies 
  * that the state remains in BUS_OPERATIONAL.
  */
-void test_serial_sm_operational_unknown_state_transition(); /**< \test */
+void test_bus_sm_operational_unknown_state_transition(); /**< \test */
 
 
 #endif /* TRACE_TEST_H_ */

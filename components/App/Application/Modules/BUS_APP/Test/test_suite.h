@@ -12,28 +12,28 @@
  *
  * This function runs all the test defined for this test suite.
  */
-extern void srl_codec_test_suite();
+extern void bus_drv_test_suite();
 
 /**
  * @brief Run the test suite.
  *
  * This function runs all the test defined for this test suite.
  */
-extern void srl_sm_test_suite();
+extern void bus_sm_test_suite();
 
 /**
  * @brief Run the test suite.
  *
  * This function runs all the test defined for this test suite.
  */
-extern void srl_app_test_suite();
+extern void bus_app_test_suite();
 
 /**
  * @brief Run the test suite.
  *
  * This function runs all the test defined for this test suite.
  */
-extern void srl_task_test_suite();
+extern void bus_task_test_suite();
 
 /**
  * @brief Set up function.
@@ -52,15 +52,15 @@ extern void tearDown(void);
 /**
  * @brief Run the test suites.
  *
- * This function runs the test suites by calling `dsp_test_suite()`,`srl_codec_test_suite()`
- * ,`srl_sm_test_suite()`,`srl_app_test_suite()`,`srl_task_test_suite()`.
+ * This function runs the test suites by calling `dsp_test_suite()`,`bus_codec_test_suite()`
+ * ,`bus_sm_test_suite()`,`bus_app_test_suite()`,`bus_task_test_suite()`.
  */
 static inline void run_test_suites()
 {
-    srl_codec_test_suite();
-    srl_sm_test_suite();
-    srl_app_test_suite();
-    srl_task_test_suite();
+    bus_drv_test_suite();
+    bus_sm_test_suite();
+    bus_app_test_suite();
+    bus_task_test_suite();
 }
 
 /**

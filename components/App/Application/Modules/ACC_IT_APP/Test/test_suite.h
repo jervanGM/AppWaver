@@ -12,7 +12,7 @@
  *
  * This function runs all the test defined for this test suite.
  */
-extern void cmd_handler_test_suite();
+extern void ev_handler_test_suite();
 
 /**
  * @brief Run the test suite.
@@ -50,7 +50,7 @@ extern void tearDown(void);
  */
 static inline void run_test_suites()
 {
-    cmd_handler_test_suite();
+    ev_handler_test_suite();
     acc_it_app_test_suite();
     acc_it_task_test_suite();
 }

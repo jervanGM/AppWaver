@@ -63,8 +63,9 @@ void process_data(uint8_t *raw_data, size_t size)
     float moisture;
     float x,y,z;
     static float sum_temp,sum_moist;
+    static bool clean_data = false;
 
-    if (raw_data == NULL) {
+    if (raw_data == NULL || size != RAW_DATA_BYTES) {
         // Log an error if the pointers are null
         store_error_in_slot(BUS_ERROR_SLOT, BUS_APP_BUFFER_EMPTY);
         TRACE_ERROR("Bus data buffer is empty or not valid");
@@ -85,19 +86,24 @@ void process_data(uint8_t *raw_data, size_t size)
 
     adc3 = ((uint16_t)raw_data[16] << 8 | raw_data[17])*ACC_ADC_CONV_FACTOR;
 
-    if (data_buffer.ready) {
+    if (clean_data) {
         // Clear the data buffer if it's ready
         clear_axis_data_buffer(data_buffer);
-        temp_data.temperature = sum_temp/BUFFER_SIZE;
-        moist_data.moist = sum_moist/BUFFER_SIZE;
-
         sum_temp = 0;
         sum_moist = 0;
+        clean_data = false;
     }
     // Add data to the buffer
     add_to_axis_buffer(x,y,z);
     sum_temp += temperature;
     sum_moist += moisture;
+
+    if (data_buffer.ready) {
+        temp_data.temperature = sum_temp/BUFFER_SIZE;
+        moist_data.moist = sum_moist/BUFFER_SIZE;
+        clean_data = true;
+    }
+
     //printf("SENSOR MSG: %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f\n", temperature, moisture,x,y,z,adc1,adc2,adc3);    
 }
 
@@ -123,22 +129,12 @@ SBufTime_t get_axis_buffer_time()
 
 STemp_t get_buffer_average_temp()
 {
-    static STemp_t prev_temp = {0};
-    if(data_buffer.ready)
-    {
-        memcpy(&prev_temp,&temp_data,sizeof(STemp_t));
-    }
-    return prev_temp;
+    return temp_data;
 }
 
 SMoist_t get_buffer_average_moist()
 {
-    static SMoist_t prev_moist = {0};
-    if(data_buffer.ready)
-    {
-        memcpy(&prev_moist,&moist_data,sizeof(SMoist_t));
-    }
-    return prev_moist;
+    return moist_data;
 }
 
 /* Checks for faults in the serial application */

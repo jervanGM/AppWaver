@@ -1,54 +1,63 @@
 [ERROR]: [ Serial HAL port has not been configured correctly on init ]
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:132:test_handle_port_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:333:test_handle_port_error:PASS
+[ERROR]: [ Bus port on devices init is not valid ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:334:test_port_dev_init_error:PASS
+[ERROR]: [ Digital bus raw data buffer is not valid ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:335:test_port_measure_data_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:336:test_port_write_temp_moist_cmd_error:PASS
 [ERROR]: [ Serial HAL port has not been configured correctly on init ]
-[ERROR]: [ A mayor fault has been produced on serialic sensors task ]
+[ERROR]: [ A mayor fault has been produced on bus task ]
 [ERROR]: [ Unexpected error on serial deinit due to port initialization error ]
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:286:test_srl_task_init_fatal_error:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:287:test_srl_task_breakdown_ready_fatal_error:PASS
-[ERROR]: [ Unexpected error on serial process command due to port initialization error ]
-[ERROR]: [ A mayor fault has been produced on serialic sensors task ]
-[ERROR]: [ Unexpected error on serial deinit due to port initialization error ]
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:288:test_srl_task_breakdown_operational_fatal_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:300:test_bus_task_init_fatal_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:301:test_bus_task_breakdown_ready_fatal_error:PASS
+[ERROR]: [ Digital bus raw data buffer is not valid ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:302:test_bus_task_breakdown_operational_fatal_error:PASS
 
 -----------------------
-4 Tests 0 Failures 0 Ignored 
+7 Tests 0 Failures 0 Ignored 
 OK
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:135:test_serial_drv_init_error:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:136:test_serial_drv_deinit_error:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:137:test_serial_drv_connection:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:138:test_serial_drv_correct_msg:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:244:test_serial_sm_init_valid_pointers:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:245:test_serial_sm_init_null_pointers:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:246:test_serial_sm_init_to_operational_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:247:test_serial_sm_init_to_breakdown_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:248:test_serial_sm_ready_to_breakdown_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:249:test_serial_sm_operational_to_breakdown_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:250:test_serial_sm_breakdown_unknown_state_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:251:test_serial_sm_init_unknown_state_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:252:test_serial_sm_ready_unknown_state_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:253:test_serial_sm_operational_unknown_state_transition:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:96:test_serial_app_check_mayor_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:97:test_serial_app_check_minor_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:98:test_serial_app_check_no_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:99:test_serial_app_check_lower_minor_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:100:test_serial_app_check_upper_minor_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:101:test_serial_app_check_lower_major_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:102:test_serial_app_check_upper_major_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:103:test_serial_app_command_exist:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:104:test_serial_app_command_not_exist:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:105:test_serial_app_null_command:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:106:test_serial_app_empty_command:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:279:test_srl_task_init:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:280:test_srl_task_normal_execution:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:281:test_srl_task_breakdown_ready_error:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:282:test_srl_task_breakdown_operational_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:339:test_bus_drv_init_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:340:test_bus_drv_deinit_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:341:test_bus_drv_dev_init:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:342:test_bus_drv_dev_init_serial_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:343:test_bus_drv_dev_init_chip_id_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:344:test_bus_drv_dev_init_write_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:345:test_bus_drv_dev_init_read_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:346:test_bus_measure_raw_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:347:test_bus_measure_raw_data_null:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:348:test_bus_measure_raw_data_write_read_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:349:test_bus_drv_temp_moist_cmd:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:350:test_bus_drv_temp_moist_cmd_write_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:234:test_bus_sm_init_valid_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:235:test_bus_sm_init_null_pointers:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:236:test_bus_sm_init_to_operational_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:237:test_bus_sm_init_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:238:test_bus_sm_ready_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:239:test_bus_sm_operational_to_breakdown_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:240:test_bus_sm_breakdown_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:241:test_bus_sm_init_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:242:test_bus_sm_ready_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:243:test_bus_sm_operational_unknown_state_transition:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:115:test_bus_app_check_mayor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:116:test_bus_app_check_minor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:117:test_bus_app_check_no_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:118:test_bus_app_check_lower_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:119:test_bus_app_check_upper_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:120:test_bus_app_check_lower_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:121:test_bus_app_check_upper_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:122:test_bus_app_process_data:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:123:test_bus_app_process_data_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:293:test_bus_task_init:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:294:test_bus_task_normal_execution:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:295:test_bus_task_breakdown_ready_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:296:test_bus_task_breakdown_operational_error:PASS
 ***********************************ASSERT PANIC EXECUTED***********************************
-PANIC INFO: Unknown fault reason has been produced on serialic sensors task
-file: /cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/serial_task.c
-line: 149
+PANIC INFO: Unknown fault reason has been produced on bus task
+file: /cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/bus_task.c
+line: 150
 ****************************************RESTARTING*****************************************
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/SRL_APP/Test/test_suite.c:283:test_srl_task_breakdown_unknown_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BUS_APP/Test/test_suite.c:297:test_bus_task_breakdown_unknown_error:PASS
 
 -----------------------
-30 Tests 0 Failures 0 Ignored 
+36 Tests 0 Failures 0 Ignored 
 OK

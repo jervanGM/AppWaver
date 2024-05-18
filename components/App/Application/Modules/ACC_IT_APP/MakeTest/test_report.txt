@@ -1,25 +1,26 @@
-[ERROR]: [ Button task IO HAL port has not been configured correctly on handle ]
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:69:test_handle_port_error:PASS
+[ERROR]: [ Serial HAL port has not been configured correctly on init ]
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:172:test_handle_port_error:PASS
 
 -----------------------
 1 Tests 0 Failures 0 Ignored 
 OK
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:192:test_btn_app_check_mayor_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:193:test_btn_app_check_minor_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:194:test_btn_app_check_no_faults:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:195:test_btn_app_check_lower_minor_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:196:test_btn_app_check_upper_minor_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:197:test_btn_app_check_lower_major_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:198:test_btn_app_check_upper_major_fault_boundary:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:199:test_btn_app_process_short_press_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:200:test_btn_app_process_long_press_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:201:test_btn_app_process_power_off_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:202:test_btn_app_process_no_pulse_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:203:test_btn_app_process_error_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:204:test_btn_app_process_unknown_cmd:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:205:test_short_and_long_press_combination:PASS
-/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/BTN_APP/Test/test_suite.c:206:test_short_press_after_long_press:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:175:test_acc_it1_handle_pulse:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:176:test_acc_it2_handle_pulse:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:177:test_acc_unk_handle_pulse:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:178:test_acc_int1_read_error:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:179:test_acc_it1_threshold_exact:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:180:test_acc_it2_threshold_exact:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:181:test_acc_combined_read_write_errors:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:182:test_acc_multiple_read_errors:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:60:test_acc_it_app_check_mayor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:61:test_acc_it_app_check_minor_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:62:test_acc_it_app_check_no_faults:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:63:test_acc_it_app_check_lower_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:64:test_acc_it_app_check_upper_minor_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:65:test_acc_it_app_check_lower_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:66:test_acc_it_app_check_upper_major_fault_boundary:PASS
+/cygdrive/c/Users/jerva/Desktop/ESPikerbox32/SW/AppWaver/components/App/Application/Modules/ACC_IT_APP/Test/test_suite.c:33:test_acc_it_task_init:PASS
 
 -----------------------
-15 Tests 0 Failures 0 Ignored 
+16 Tests 0 Failures 0 Ignored 
 OK

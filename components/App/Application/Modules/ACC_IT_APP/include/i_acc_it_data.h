@@ -4,9 +4,14 @@
 #include "safe_timer.h"
 #include "SERIES_ID.h"
 
+#define ACC_IT_DRV_OK 0
+
 #define ACC_IT_ERROR_SLOT 18
 #define HAL_ACC_IT_CONFIG_ERROR -127
 #define ACC_IT_CMD_ERROR -126
+
+#define WRITE_ERROR -19
+#define READ_ERROR -18
 
 #ifdef ADVANCED
 #define ACC_IT1_PIN 14

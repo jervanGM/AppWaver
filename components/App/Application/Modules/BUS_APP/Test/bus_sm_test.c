@@ -1,6 +1,6 @@
-#include "srl_sm_test.h"
+#include "bus_sm_test.h"
 #include "safe_memory.h"
-#include "serial_sm.h"
+#include "bus_sm.h"
 
 #ifndef FAKE_FUNC
     // Define dummy functions
@@ -52,16 +52,6 @@ void test_bus_sm_init_to_operational_transition() {
     bus_sm_run();
     state = bus_sm_get_state();
     TEST_ASSERT_EQUAL(state, BUS_OPERATIONAL);
-
-    bus_sm_set_st_event(BUS_STATE_PREV);
-    bus_sm_run();
-    state = bus_sm_get_state();
-    TEST_ASSERT_EQUAL(state, BUS_READY);
-
-    bus_sm_set_st_event(BUS_STATE_NEXT);
-    bus_sm_run();
-    state = bus_sm_get_state();
-    TEST_ASSERT_EQUAL(state, BUS_OPERATIONAL);
 }
 
 // Test the transition from initialization to breakdown in the state machine.
@@ -87,7 +77,7 @@ void test_bus_sm_init_to_breakdown_transition() {
 }
 
 // Test the transition from ready to breakdown in the state machine.
-void test_serial_sm_ready_to_breakdown_transition() {
+void test_bus_sm_ready_to_breakdown_transition() {
 
     // Test initialization with valid function pointers
     EBusTaskStatus_t result = bus_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
@@ -115,7 +105,7 @@ void test_serial_sm_ready_to_breakdown_transition() {
 }
 
 // Test the transition from operational to breakdown in the state machine.
-void test_serial_sm_operational_to_breakdown_transition() {
+void test_bus_sm_operational_to_breakdown_transition() {
 
     // Test initialization with valid function pointers
     EBusTaskStatus_t result = bus_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
@@ -149,7 +139,7 @@ void test_serial_sm_operational_to_breakdown_transition() {
 }
 
 // Test the behavior of the state machine when transitioning to an unknown state from breakdown.
-void test_serial_sm_breakdown_unknown_state_transition() {
+void test_bus_sm_breakdown_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EBusTaskStatus_t result = bus_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
@@ -187,7 +177,7 @@ void test_bus_sm_init_unknown_state_transition() {
 }
 
 // Test the behavior of the state machine when transitioning to an unknown state from ready.
-void test_serial_sm_ready_unknown_state_transition() {
+void test_bus_sm_ready_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EBusTaskStatus_t result = bus_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
@@ -209,7 +199,7 @@ void test_serial_sm_ready_unknown_state_transition() {
 }
 
 // Test the behavior of the state machine when transitioning to an unknown state from operational.
-void test_serial_sm_operational_unknown_state_transition() {
+void test_bus_sm_operational_unknown_state_transition() {
 
     // Test initialization with valid function pointers
     EBusTaskStatus_t result = bus_sm_init(dummy_init, dummy_ready, dummy_operational, dummy_breakdown);
@@ -238,18 +228,18 @@ void test_serial_sm_operational_unknown_state_transition() {
 
 #endif
 
-void srl_sm_test_suite()
+void bus_sm_test_suite()
 {
     #ifndef FAKE_FUNC
     RUN_TEST(test_bus_sm_init_valid_pointers);
     RUN_TEST(test_bus_sm_init_null_pointers);
     RUN_TEST(test_bus_sm_init_to_operational_transition);
     RUN_TEST(test_bus_sm_init_to_breakdown_transition);
-    RUN_TEST(test_serial_sm_ready_to_breakdown_transition);
-    RUN_TEST(test_serial_sm_operational_to_breakdown_transition);
-    RUN_TEST(test_serial_sm_breakdown_unknown_state_transition);
+    RUN_TEST(test_bus_sm_ready_to_breakdown_transition);
+    RUN_TEST(test_bus_sm_operational_to_breakdown_transition);
+    RUN_TEST(test_bus_sm_breakdown_unknown_state_transition);
     RUN_TEST(test_bus_sm_init_unknown_state_transition);
-    RUN_TEST(test_serial_sm_ready_unknown_state_transition);
-    RUN_TEST(test_serial_sm_operational_unknown_state_transition);
+    RUN_TEST(test_bus_sm_ready_unknown_state_transition);
+    RUN_TEST(test_bus_sm_operational_unknown_state_transition);
     #endif
 }

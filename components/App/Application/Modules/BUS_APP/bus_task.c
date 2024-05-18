@@ -24,7 +24,7 @@ void task_bus(void *pvParameters)
 
     // Verify initialization success
     ASSERT_PANIC(task_info.status == BUS_TASK_OK, 
-              "Analog task state machine has not been initialized correctly");
+              "Bus task state machine has not been initialized correctly");
     set_task_bus_info(task_info);
   
     /* Infinite loop */
@@ -133,21 +133,21 @@ void on_bus_breakdown()
     {
     case BUS_MINOR_FAULT:
         // Log minor fault
-        TRACE_WARNING("A minor fault has been produced on serial task");
+        TRACE_WARNING("A minor fault has been produced on bus task");
         // Set state machine event to previous
         bus_sm_set_st_event(BUS_STATE_PREV);
         break;
     
     case BUS_MAYOR_FAULT:
         // Log major fault
-        TRACE_ERROR("A mayor fault has been produced on serial task");
+        TRACE_ERROR("A mayor fault has been produced on bus task");
         // Set state machine event to next
         bus_deinit();
         bus_sm_set_st_event(BUS_STATE_NEXT);
         break;
     default:
         // Assert if unknown fault reason
-        ASSERT_PANIC(false,"Unknown fault reason has been produced on serial task");    
+        ASSERT_PANIC(false,"Unknown fault reason has been produced on bus task");    
         break;
     }
     set_task_bus_status(fault_reason);
