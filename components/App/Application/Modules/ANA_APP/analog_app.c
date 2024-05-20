@@ -8,10 +8,10 @@ void analog_app_init()
 }
 
 static uint8_t percentage_transform(uint32_t x, uint32_t in_min, uint32_t in_max) {
-    uint8_t percentage = (uint8_t)((x - in_min) * (100) / (in_max - in_min));
+    uint32_t percentage = (x >= in_min) ? ((x - in_min) * (100) / (in_max - in_min)) : 0;
     if(percentage > 100) percentage = 100;
     else {}
-    return percentage;
+    return (uint8_t)percentage;
 }
 
 SAnaEnvData_t process_enviromental_data(uint32_t *env_data)

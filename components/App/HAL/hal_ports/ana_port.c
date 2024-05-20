@@ -3,10 +3,10 @@
 #include "adc_drv.h"
 
 /* Declarations of static functions */
-static void ana_port_init(void);    // Function to initialize the analog port
-static void ana_port_reset(void);   // Function to reset the analog port
-static void ana_port_read(uint8_t channel, uint32_t *data);   // Function to read data from the analog port
-static void ana_port_write(uint8_t channel, uint32_t data);   // Function to write data to the analog port
+static int8_t ana_port_init(void);    // Function to initialize the analog port
+static int8_t ana_port_reset(void);   // Function to reset the analog port
+static int8_t ana_port_read(uint8_t channel, uint32_t *data);   // Function to read data from the analog port
+static int8_t ana_port_write(uint8_t channel, uint32_t data);   // Function to write data to the analog port
 
 /* Definition of the analog port interface */
 static const IAnaPort ana_port_interface = {
@@ -17,27 +17,28 @@ static const IAnaPort ana_port_interface = {
 };
 
 /* Function to initialize the analog port */
-static void ana_port_init(void)
+static int8_t ana_port_init(void)
 {
-    adc_config_init();  // Call the ADC initialization function
+    return adc_config_init();  // Call the ADC initialization function
 }
 
 /* Function to reset the analog port */
-static void ana_port_reset(void)
+static int8_t ana_port_reset(void)
 {
-    adc_config_reset();  // Call the ADC reset function
+    return adc_config_reset();  // Call the ADC reset function
 }
 
 /* Function to read data from the analog port */
-static void ana_port_read(uint8_t channel, uint32_t *data)
+static int8_t ana_port_read(uint8_t channel, uint32_t *data)
 {
-    read_adc(channel, data);  // Call the ADC read function
+    return read_adc(channel, data);  // Call the ADC read function
 }
 
 /* Function to write data to the analog port */
-static void ana_port_write(uint8_t channel, uint32_t data)
+static int8_t ana_port_write(uint8_t channel, uint32_t data)
 {
     // To be determined
+    return 0;
 }
 
 /* Function to retrieve the analog port interface */

@@ -43,14 +43,7 @@ void analog_controller_send_env_data(SAnaEnvData_t env_data)
 
 void analog_controller_read(SAnalogSensMsg_t *msg)
 {
-
-    if(_msg._plant_buff.ready != NULL){
         mutex_lock(ANALOG_M_ID);
             memcpy(msg, &_msg, sizeof(SAnalogSensMsg_t));
         mutex_unlock(ANALOG_M_ID);
-    }
-    else{
-        memset(msg, 0, sizeof(SAnalogSensMsg_t));
-    }
-    
 }

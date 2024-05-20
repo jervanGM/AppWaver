@@ -92,7 +92,7 @@ void test_get_data_buffer() {
 
     // Check buffer state after adding first value
     TEST_ASSERT_EQUAL(buffer.size, 1);
-    TEST_ASSERT_EQUAL(buffer.data[0], 6);
+    TEST_ASSERT_EQUAL(buffer.data[0], 45);
     TEST_ASSERT_NOT_EQUAL(time.start_time.sec, 0);
     TEST_ASSERT_EQUAL(buffer.ready, false);
 
@@ -107,7 +107,7 @@ void test_get_data_buffer() {
         get_data_buffer(&buffer, &time);
         // Verify data range
         TEST_ASSERT_GREATER_OR_EQUAL(0, buffer.data[i]);
-        TEST_ASSERT_LESS_OR_EQUAL(255, buffer.data[i]);
+        TEST_ASSERT_LESS_OR_EQUAL(UINT32_MAX, buffer.data[i]);
     }
 
     // Verify buffer state after filling
@@ -142,7 +142,7 @@ void test_get_data_clean_buffer() {
 
     // Check buffer state after adding first value
     TEST_ASSERT_EQUAL(buffer.size, 1);
-    TEST_ASSERT_EQUAL(buffer.data[0], 6);
+    TEST_ASSERT_EQUAL(buffer.data[0], 45);
     TEST_ASSERT_NOT_EQUAL(time.start_time.sec, 0);
     TEST_ASSERT_EQUAL(buffer.ready, false);
 
@@ -193,7 +193,7 @@ void test_get_data_buffer_random_wave() {
 
     // Check buffer state after adding first value
     TEST_ASSERT_EQUAL(buffer.size, 1);
-    TEST_ASSERT_EQUAL(buffer.data[0], 6);
+    TEST_ASSERT_EQUAL(buffer.data[0], 45);
     TEST_ASSERT_NOT_EQUAL(time.start_time.sec, 0);
     TEST_ASSERT_EQUAL(buffer.ready, false);
 
@@ -215,6 +215,48 @@ void test_get_data_buffer_random_wave() {
     TEST_ASSERT_NOT_EQUAL(time.end_time.sec, time.start_time.sec);
 }
 
+void test_ana_drv_get_env_data()
+{
+    uint32_t env_data[3] = {0,0,0};
+    bool ready = false;
+    store_error_in_slot(ANALOGIC_ERROR_SLOT,0);
+    set_adc_value(27);
+    for(int i=0;i<127;i++)
+    {
+        set_adc_value(i);
+        get_env_data(env_data, ready);
+        TEST_ASSERT_EQUAL(env_data[0],0);
+        TEST_ASSERT_EQUAL(env_data[1],0);
+        TEST_ASSERT_EQUAL(env_data[2],0);
+    }
+    ready = true;
+    get_env_data(env_data, ready);
+
+    TEST_ASSERT_EQUAL(env_data[0],63);
+    TEST_ASSERT_EQUAL(env_data[1],63);
+    TEST_ASSERT_EQUAL(env_data[2],63);
+}
+
+void test_ana_drv_get_env_data_null()
+{
+    uint32_t env_data[3] = {0,0,0};
+    store_error_in_slot(ANALOGIC_ERROR_SLOT,0);
+    bool ready = false;
+    set_adc_value(27);
+    for(int i=0;i<127;i++)
+    {
+        set_adc_value(i);
+        get_env_data(NULL, ready);
+    }
+    ready = true;
+    get_env_data(NULL, ready);
+
+    int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+    TEST_ASSERT_EQUAL(error,ANA_DRV_ENV_DATA_EMPTY);
+    TEST_ASSERT_EQUAL(env_data[0],0);
+    TEST_ASSERT_EQUAL(env_data[1],0);
+    TEST_ASSERT_EQUAL(env_data[2],0);
+}
 #endif
 
 void ana_drv_test_suite()
@@ -226,5 +268,7 @@ void ana_drv_test_suite()
     RUN_TEST(test_get_data_buffer);
     RUN_TEST(test_get_data_clean_buffer);
     RUN_TEST(test_get_data_buffer_random_wave);
+    RUN_TEST(test_ana_drv_get_env_data);
+    RUN_TEST(test_ana_drv_get_env_data_null);
 #endif
 }

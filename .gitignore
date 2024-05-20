@@ -30,3 +30,4 @@ components/App/Application/Modules/Internal_Comms/MakeTest/build
 components/App/Application/Modules/SRL_APP/MakeTest/build
 components/App/Application/Modules/ACC_IT_APP/MakeTest/build
 components/App/Application/Modules/BUS_APP/MakeTest/build
+components/App/Application/Modules/Internal_Comms/MakeTest/build/liblib.a

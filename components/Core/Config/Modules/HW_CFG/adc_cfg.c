@@ -75,24 +75,39 @@ void adc_config_init()
 #endif
 
 #ifdef ADC_CONT
-void adc_config_init()
+int8_t adc_config_init()
 {
     //-------------ADC1 Init---------------//
     adc_oneshot_unit_init_cfg_t init_config1 = {
         .unit_id = ADC_UNIT_1,
     };
-    ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc1_handle));
+    if(adc_oneshot_new_unit(&init_config1, &adc1_handle) != ESP_OK)
+    {
+        return -1;
+    }
 
     //-------------ADC1 Config---------------//
     adc_oneshot_chan_cfg_t config = {
         .bitwidth = ADC_BITWIDTH_12,
         .atten = ADC_ATTEN,
     };
-    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN0, &config));
+    if(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN0, &config) != ESP_OK)
+    {
+        return -1;
+    }
 #ifdef ADVANCED
-    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN1, &config));
-    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN2, &config));
-    ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN3, &config));
+    if(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN1, &config) != ESP_OK)
+    {
+        return -1;
+    }
+    if(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN2, &config) != ESP_OK)
+    {
+        return -1;
+    }
+    if(adc_oneshot_config_channel(adc1_handle, ADC1_CHAN3, &config) != ESP_OK)
+    {
+        return -1;
+    }
 #endif
 
     //-------------ADC1 Calibration Init---------------//
@@ -102,6 +117,7 @@ void adc_config_init()
     do_calibration1_chan2 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN2, ADC_ATTEN, &adc1_cali_chan2_handle);
     do_calibration1_chan3 = adc_calibration_ana_init(ADC_UNIT_1, ADC1_CHAN3, ADC_ATTEN, &adc1_cali_chan3_handle);
 #endif
+    return 0;
 
 }
 
@@ -171,7 +187,7 @@ static void adc_calibration_deinit(adc_cali_handle_t handle)
 }
 #endif
 
-void adc_config_reset()
+int8_t adc_config_reset()
 {
     #ifdef ADC_DMA
         //TBD
@@ -179,4 +195,5 @@ void adc_config_reset()
     #ifdef ADC_CONT
         //TBD
     #endif
+    return 0;
 }

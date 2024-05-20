@@ -1,5 +1,5 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef WLS_T_SHARE_TEST_H_
+#define WLS_T_SHARE_TEST_H_
 #include "test_suite.h"
 
 /**
@@ -46,4 +46,4 @@ void test_send_and_read_controller_wireless_data(void);
 void test_read_controller_wireless_data_before_sending(void);
 
 
-#endif /* TRACE_TEST_H_ */
+#endif /* WLS_T_SHARE_TEST_H_ */

@@ -47,7 +47,7 @@ static const char *TAG = "ADC";
 static void continuous_adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle_t *out_handle);
 static bool adc_calibration_ana_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);
 static void adc_calibration_deinit(adc_cali_handle_t handle);
-void adc_config_init();
-void adc_config_reset();
+int8_t adc_config_init();
+int8_t adc_config_reset();
 
 #endif /* ADC_CFG_H_ */

@@ -15,7 +15,12 @@ void dsp_init_port()
     // Check if the port interface is valid
     if (ana_port != NULL)
     {
-        ana_port->init(); // Call the initialization function of the analog port
+        if(ana_port->init() != ANA_DRV_OK) // Call the initialization function of the analog port
+        {   
+            store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_INIT_ERROR);
+            TRACE_ERROR("A analog sensor task error has been produced during initialization");
+            return;          
+        }
     }
     else
     {
@@ -33,14 +38,30 @@ uint32_t get_dsp_data()
     if (ana_port != NULL)
     {
         #ifdef BASIC
-        ana_port->read(2, &data); // Read data from the analog port channel 2
+        if(ana_port->read(2, &data) != ANA_DRV_OK) // Read data from the analog port channel 2
+        {   
+            store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ON_READ_ERROR);
+            TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
+            return;          
+        }
         #endif
         #ifdef ADVANCED
-        ana_port->read(0, &data); // Read data from the analog port channel 0
+        if(ana_port->read(0, &data) != ANA_DRV_OK) // Read data from the analog port channel 0
+        {   
+            store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ON_READ_ERROR);
+            TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
+            return 0;          
+        }
         #endif
         // Apply filters and normalization
         iir_filter(&data); // Apply IIR filter
         return data;
+    }
+    else
+    {
+        // Log an error if the analog port is not properly configured
+        store_error_in_slot(ANALOGIC_ERROR_SLOT, HAL_ANA_CONFIG_ERROR);
+        TRACE_ERROR("Analog sensor HAL port has not been configured correctly on init");
     }
     return 0;
 }
@@ -81,13 +102,28 @@ void get_solar_data(uint32_t *i_solar, uint32_t *v_solar)
 {
     uint32_t i_data;
     uint32_t v_data;
+    int8_t error = 0;
     // Check if the analog port interface is valid
     if (ana_port != NULL)
     {
-        ana_port->read(1, &v_data); // Read data from the analog port channel 1
-        ana_port->read(2, &i_data); // Read data from the analog port channel 1
+        error += ana_port->read(1, &v_data); // Read data from the analog port channel 1
+        error += ana_port->read(2, &i_data); // Read data from the analog port channel 1
+        if(error != ANA_DRV_OK || i_solar == NULL || v_solar == NULL)
+        {
+            store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ON_READ_ERROR);
+            TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
+            return;  
+        }
         *i_solar = i_data;
         *v_solar = v_data;
+    }
+    else
+    {
+        // Log an error if the analog port is not properly configured
+        store_error_in_slot(ANALOGIC_ERROR_SLOT, HAL_ANA_CONFIG_ERROR);
+        TRACE_ERROR("Analog sensor HAL port has not been configured correctly on init");
+        *i_solar = 0;
+        *v_solar = 0;
     }
 }
 
@@ -97,8 +133,19 @@ uint32_t get_soil_data()
     // Check if the analog port interface is valid
     if (ana_port != NULL)
     {
-        ana_port->read(3, &s_data); // Read data from the analog port channel 1
+        if(ana_port->read(3, &s_data) != ANA_DRV_OK)
+        {
+            store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ON_READ_ERROR);
+            TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
+            return 0;  
+        }
         return s_data;
+    }
+    else
+    {
+        // Log an error if the analog port is not properly configured
+        store_error_in_slot(ANALOGIC_ERROR_SLOT, HAL_ANA_CONFIG_ERROR);
+        TRACE_ERROR("Analog sensor HAL port has not been configured correctly on init");
     }
     return 0;
 }
