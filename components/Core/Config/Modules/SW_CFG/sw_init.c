@@ -35,7 +35,7 @@ void taskConfig()
     create_task(task_indicator,"Indication Task",4096,IND_T_PERIOD,IND_T_PRIOR,IND_T_HANDLER);
     // create_task(task_wireless,"Wireless Task",16384,WIRELESS_T_PERIOD,WIRELESS_T_PRIOR,WIRELESS_T_HANDLER);
     // create_task(task_ext_memory,"External Memory Task",4096,EXT_MEM_T_PERIOD,EXT_MEM_T_PRIOR,EXT_MEM_T_HANDLER);
-    //create_task(task_serial,"Serial Task",4096,SERIAL_RX_T_PERIOD,SERIAL_RX_T_PRIOR,SERIAL_RX_T_HANDLER);
+    create_task(task_serial,"Serial Task",4096,SERIAL_RX_T_PERIOD,SERIAL_RX_T_PRIOR,SERIAL_RX_T_HANDLER);
     create_sporadic_task(task_button,"Button Task", SPORADIC_BUTTON_HANDLER);
     #ifdef ADVANCED
     create_task(task_bus,"Bus Task",8192,DIGI_T_PERIOD,DIGI_T_PRIOR,DIGI_T_HANDLER);
