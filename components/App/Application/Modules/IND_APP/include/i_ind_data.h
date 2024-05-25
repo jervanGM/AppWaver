@@ -2,6 +2,7 @@
 #define I_IND_DATA_H_
 #include <stdint.h>
 #include "safe_timer.h"
+#include "CONSTANTS.h"
 
 #define INDICATOR_ERROR_SLOT 6
 #define INDICATOR_HANDLER_ID 4

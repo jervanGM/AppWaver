@@ -2,6 +2,7 @@
 #define I_SERIAL_DATA_H_
 #include <stdint.h>
 #include "safe_timer.h"
+#include "CONSTANTS.h"
 
 #define SRL_HANDLER_ID 7
 

@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "common_t_data.h"
+#include "CONSTANTS.h"
 
 #define EXT_MEM_ERROR_SLOT 10
 #define EXT_MEM_HANDLER_ID 6
@@ -16,11 +17,10 @@
 #define MEM_DRV_CREATE_FILE_ERROR -18
 #define MEM_DRV_DELETE_FILE_ERROR -17
 #define MEM_DRV_WRITE_FILE_ERROR -16
-#define MEM_DRV_PROCESS_NULL_WAV_DATA -15
+#define MEM_APP_PROCESS_NULL_WAV_DATA -15
 
 #define MEM_DRV_OK 0
 
-#define DATA_BUFFER_SIZE 128
 #define FILE_NAME_SIZE 200
 
 #define WAV_CHUNKS 16
@@ -86,10 +86,10 @@ typedef struct{
 typedef struct{
     SErrorInfo_t _alarm;
     SSystemStatus_t _status;
-    uint32_t _plant_signal[DATA_BUFFER_SIZE];
+    SPPlantData_t _plant_signal;
     SEnvData_t _env_data;
     SPowerData_t _power_data;
-    SAxisData_t _axis_buff[DATA_BUFFER_SIZE];
+    SAxisData_t _axis_buff;
     ESysMode_t _current_mode;
     ESysMode_t _previous_mode;
     STime_t _start_time;

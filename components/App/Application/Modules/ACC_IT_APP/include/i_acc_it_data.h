@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "SERIES_ID.h"
+#include "CONSTANTS.h"
 
 #define ACC_IT_DRV_OK 0
 

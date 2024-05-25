@@ -28,22 +28,24 @@ SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
 {
     SWavData wav;
     SWavHeader empty_header = {0};
-    if((data == NULL) || (memcmp(&start_t, &end_t, sizeof(STime_t)) == 0) || 
+    int64_t start_secs = encode_date_to_time(start_t);
+    int64_t end_secs = encode_date_to_time(end_t);
+    static int64_t prev_start_secs = 0;
+    static int64_t prev_end_secs = 0;
+
+    if((data == NULL) || ((end_secs-start_secs) == 0) || 
         (memcmp(&def_header, &empty_header, sizeof(SWavHeader)) == 0))
     {
-        store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_PROCESS_NULL_WAV_DATA);
+        store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_APP_PROCESS_NULL_WAV_DATA);
         TRACE_WARNING("Any of the input data to process wav files is not valid or declared");  
         memset(&wav, 0, sizeof(SWavData));
         return wav;
     }
     
-    int64_t start_secs = encode_date_to_time(start_t);
-    int64_t end_secs = encode_date_to_time(end_t);
     uint32_t average = 0;
-    static uint32_t prev_data[DATA_BUFFER_SIZE];
     
     char time_string[100];
-    if((memcmp(data, prev_data, sizeof(prev_data)) != 0) )
+    if((prev_start_secs != start_secs) && (prev_end_secs != end_secs) )
     {
         sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d.wav", start_t.year, start_t.month, start_t.day, start_t.hour, start_t.min, start_t.sec);
  
@@ -62,7 +64,6 @@ SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
 
         for (size_t i = 0; i < DATA_BUFFER_SIZE; i++)
         {
-            prev_data[i] = data[i];
             wav.data[i] = (int16_t)data[i];
         }
 
@@ -72,7 +73,8 @@ SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
     {
         wav.average = 0;
     }
-
+    prev_start_secs = start_secs;
+    prev_end_secs = end_secs;
 
     return wav;
 }

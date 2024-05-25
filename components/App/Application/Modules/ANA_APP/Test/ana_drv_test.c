@@ -100,7 +100,7 @@ void test_get_data_buffer() {
     Sleep(1000);
 
     // Collect data for BUFFER_SIZE iterations
-    for (int i = 1; i < BUFFER_SIZE; i++) {
+    for (int i = 1; i < DATA_BUFFER_SIZE; i++) {
         // Simulate new ADC data
         simulated_adc_value = rand() % UINT32_MAX;
         set_adc_value(simulated_adc_value);
@@ -112,7 +112,7 @@ void test_get_data_buffer() {
 
     // Verify buffer state after filling
     TEST_ASSERT_EQUAL(buffer.ready, true);
-    TEST_ASSERT_EQUAL(buffer.size, BUFFER_SIZE);
+    TEST_ASSERT_EQUAL(buffer.size, DATA_BUFFER_SIZE);
     TEST_ASSERT_NOT_EQUAL(time.end_time.sec, 0);
     TEST_ASSERT_NOT_EQUAL(time.end_time.sec, time.start_time.sec);
 }
@@ -150,7 +150,7 @@ void test_get_data_clean_buffer() {
     Sleep(1000);
     
     // Collect data for BUFFER_SIZE iterations
-    for (int i = 1; i < BUFFER_SIZE; i++) {
+    for (int i = 1; i < DATA_BUFFER_SIZE; i++) {
         // Simulate increasing ADC data
         simulated_adc_value++;
         set_adc_value(simulated_adc_value);
@@ -201,7 +201,7 @@ void test_get_data_buffer_random_wave() {
     Sleep(1000);
 
     // Collect data for BUFFER_SIZE iterations
-    for (int i = 1; i < BUFFER_SIZE; i++) {
+    for (int i = 1; i < DATA_BUFFER_SIZE; i++) {
         // Simulate increasing ADC data
         simulated_adc_value++;
         set_adc_value(simulated_adc_value);
@@ -210,7 +210,7 @@ void test_get_data_buffer_random_wave() {
 
     // Verify buffer state after filling
     TEST_ASSERT_EQUAL(buffer.ready, true);
-    TEST_ASSERT_EQUAL(buffer.size, BUFFER_SIZE);
+    TEST_ASSERT_EQUAL(buffer.size, DATA_BUFFER_SIZE);
     TEST_ASSERT_NOT_EQUAL(time.end_time.sec, 0);
     TEST_ASSERT_NOT_EQUAL(time.end_time.sec, time.start_time.sec);
 }

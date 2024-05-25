@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "common_t_data.h"
+#include "CONSTANTS.h"
 
 #define WIRELESS_ERROR_SLOT 2
 #define WIRELESS_HANDLER_ID 2
@@ -30,7 +31,6 @@
 #define HAL_OTA_CONFIG_ERROR -127
 #define OTA_NOT_CONFIGURED -126
 
-#define DATA_BUFFER_SIZE 128
 
 typedef enum{
     WLS_TASK_OK,
@@ -68,10 +68,10 @@ typedef struct{
 typedef struct{
     SErrorInfo_t _alarm;
     SSystemStatus_t _status;
-    uint32_t _plant_signal[DATA_BUFFER_SIZE];
+    SPPlantData_t _plant_signal;
     SEnvData_t _env_data;
     SPowerData_t _power_data;
-    SAxisData_t _axis_buff[DATA_BUFFER_SIZE];
+    SAxisData_t _axis_buff;
     ESysMode_t _current_mode;
     ESysMode_t _previous_mode;
     STime_t _system_time;

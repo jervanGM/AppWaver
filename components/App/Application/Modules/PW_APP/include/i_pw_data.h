@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "SERIES_ID.h"
+#include "CONSTANTS.h"
 
 #define POWER_ERROR_SLOT 8
 #define POWER_HANDLER_ID 5

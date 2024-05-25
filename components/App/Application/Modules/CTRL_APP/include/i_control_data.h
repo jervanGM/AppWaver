@@ -2,6 +2,7 @@
 #define I_CONTROL_DATA_H_
 #include <stdint.h>
 #include "safe_timer.h"
+#include "CONSTANTS.h"
 
 #define CONTROL_ERROR_SLOT 4
 #define CONTROL_HANDLER_ID 1

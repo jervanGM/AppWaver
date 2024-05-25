@@ -60,7 +60,7 @@ void test_bus_app_process_data()
     STemp_t temp = {0};
     SMoist_t moist = {0};
     uint8_t raw_data[RAW_DATA_BYTES] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
-    for(int i = 0;i< BUFFER_SIZE;i++)
+    for(int i = 0;i< DATA_BUFFER_SIZE;i++)
     {
         process_data(raw_data, RAW_DATA_BYTES);
     }
@@ -88,7 +88,7 @@ void test_bus_app_process_data_error()
     STemp_t temp = {0};
     SMoist_t moist = {0};
     uint8_t raw_data[RAW_DATA_BYTES] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
-    for(int i = 0;i< BUFFER_SIZE;i++)
+    for(int i = 0;i< DATA_BUFFER_SIZE;i++)
     {
         process_data(NULL, RAW_DATA_BYTES);
     }

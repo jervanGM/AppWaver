@@ -3,10 +3,10 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "SERIES_ID.h"
+#include "CONSTANTS.h"
 
 #define ANA_HANDLER_ID 0
 
-#define BUFFER_SIZE 128
 #define ANALOG_ENV_SENSORS 3
 
 #define ANALOGIC_ERROR_SLOT 0
@@ -49,7 +49,7 @@ typedef struct {
 } SBufferTime_t;
 
 typedef struct {
-    uint32_t data[BUFFER_SIZE];
+    uint32_t data[DATA_BUFFER_SIZE];
     size_t size;
     bool ready;
 } SDataBuffer_t;

@@ -16,7 +16,7 @@ const char *bus_cmd_list[] = {
 static void add_to_axis_buffer(float x,float y,float z) {
 
     // Check for buffer overflow
-    if (data_buffer.size < BUFFER_SIZE) {
+    if (data_buffer.size < DATA_BUFFER_SIZE) {
         
         // Add the value to the buffer
         data_buffer.x[data_buffer.size] = x;
@@ -29,7 +29,7 @@ static void add_to_axis_buffer(float x,float y,float z) {
         }
         
         // Check if the buffer is full
-        if (data_buffer.size >= BUFFER_SIZE) {
+        if (data_buffer.size >= DATA_BUFFER_SIZE) {
             data_buffer.ready = true;
             data_time.end_time = get_system_time();
         }
@@ -99,8 +99,8 @@ void process_data(uint8_t *raw_data, size_t size)
     sum_moist += moisture;
 
     if (data_buffer.ready) {
-        temp_data.temperature = sum_temp/BUFFER_SIZE;
-        moist_data.moist = sum_moist/BUFFER_SIZE;
+        temp_data.temperature = sum_temp/DATA_BUFFER_SIZE;
+        moist_data.moist = sum_moist/DATA_BUFFER_SIZE;
         clean_data = true;
     }
 

@@ -21,20 +21,21 @@ void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint32_t value) {
     }
 
     // Check for buffer overflow
-    if (buffer->size < BUFFER_SIZE) {
+    if (buffer->size < DATA_BUFFER_SIZE) {
         // Add the value to the buffer
-        buffer->data[buffer->size++] = value;
+        buffer->data[buffer->size] = value;
 
         // Update time if the buffer was empty
-        if (buffer->size == 1) {
+        if (buffer->size == 0) {
             time->start_time = get_system_time();
         }
 
         // Check if the buffer is full
-        if (buffer->size == BUFFER_SIZE) {
+        if (buffer->size == DATA_BUFFER_SIZE-1) {
             buffer->ready = true;
             time->end_time = get_system_time();
         }
+        buffer->size++;
     }
 }
 

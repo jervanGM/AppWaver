@@ -38,10 +38,10 @@ void wireless_controller_read(SWlsCtrlMsg_t *msg)
 void controller_wireless_send(
     SErrorInfo_t alarm,
     SSystemStatus_t status,
-    uint32_t *plant_signal,
+    SPPlantData_t plant_signal,
     SEnvData_t env_data,
     SPowerData_t power_data,
-    SAxisData_t *axis_buff,
+    SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
     STime_t system_time)
@@ -49,10 +49,10 @@ void controller_wireless_send(
         mutex_lock(CTRL_WLS_M_ID);
             memcpy(&_ctrl_msg._alarm, &alarm, sizeof(SErrorInfo_t));
             memcpy(&_ctrl_msg._status, &status, sizeof(SSystemStatus_t));
-            memcpy(_ctrl_msg._plant_signal, plant_signal,DATA_BUFFER_SIZE*sizeof(uint32_t));
+            memcpy(&_ctrl_msg._plant_signal, &plant_signal,sizeof(SPPlantData_t));
             memcpy(&_ctrl_msg._env_data, &env_data, sizeof(SEnvData_t));
             memcpy(&_ctrl_msg._power_data, &power_data, sizeof(SPowerData_t));
-            memcpy(_ctrl_msg._axis_buff, axis_buff,DATA_BUFFER_SIZE*sizeof(SAxisData_t));
+            memcpy(&_ctrl_msg._axis_buff, &axis_buff, sizeof(SAxisData_t));
             memcpy(&_ctrl_msg._current_mode, &current_mode, sizeof(ESysMode_t));
             memcpy(&_ctrl_msg._previous_mode, &previous_mode, sizeof(ESysMode_t));
             memcpy(&_ctrl_msg._system_time, &system_time, sizeof(STime_t));

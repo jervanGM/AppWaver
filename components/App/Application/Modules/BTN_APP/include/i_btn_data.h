@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "SERIES_ID.h"
+#include "CONSTANTS.h"
 
 #define BUTTON_ERROR_SLOT 12
 #define HAL_BTN_CONFIG_ERROR -127

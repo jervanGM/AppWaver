@@ -42,7 +42,7 @@ uint32_t get_dsp_data()
         {   
             store_error_in_slot(ANALOGIC_ERROR_SLOT, ANA_DRV_ON_READ_ERROR);
             TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
-            return;          
+            return 0;          
         }
         #endif
         #ifdef ADVANCED

@@ -13,15 +13,26 @@ void network_app_init()
 
 void update_app_data(SCtrlWlsMsg_t msg)
 {
-    if(size == DATA_BUFFER_SIZE)
+    int64_t start_secs = encode_date_to_time(msg._plant_signal.start_time);
+    int64_t end_secs = encode_date_to_time(msg._plant_signal.end_time);
+    static int64_t prev_start_secs = 0;
+    static int64_t prev_end_secs = 0;
+    if((prev_start_secs != start_secs) && (prev_end_secs != end_secs) )
     {
-        memcpy(plant_data, msg._plant_signal, DATA_BUFFER_SIZE * sizeof(uint32_t));
-        size = 0;
+        memcpy(plant_data, msg._plant_signal.data, DATA_BUFFER_SIZE * sizeof(uint32_t));
     }
+
+    // else
+    // {
+    //     memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint32_t));
+    // }
+    prev_start_secs = start_secs;
+    prev_end_secs = end_secs;
 }
 
 uint32_t get_serialized_plant_data()
 {
+    if(size>= DATA_BUFFER_SIZE) size = 0;
     return plant_data[size++];
 }
 

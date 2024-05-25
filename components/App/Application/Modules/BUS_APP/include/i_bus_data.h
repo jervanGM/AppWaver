@@ -3,10 +3,9 @@
 #include <stdint.h>
 #include "safe_timer.h"
 #include "dev_constants.h"
+#include "CONSTANTS.h"
 
 #define BUS_HANDLER_ID 8
-
-#define BUFFER_SIZE 128
 
 #define BUS_DRV_OK 0
 #define BUS_DRV_FAIL -1
@@ -71,9 +70,9 @@ typedef struct
 }SMoist_t;
 
 typedef struct {
-    float x[BUFFER_SIZE];
-    float y[BUFFER_SIZE];
-    float z[BUFFER_SIZE];
+    float x[DATA_BUFFER_SIZE];
+    float y[DATA_BUFFER_SIZE];
+    float z[DATA_BUFFER_SIZE];
     size_t size;
     bool ready;
 } SAxisDataBuffer_t;
