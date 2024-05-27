@@ -21,7 +21,7 @@ void test_set_and_read_task_acc_it_info(void) {
 // Test function for verifying the setting and reading of button controller data.
 void test_send_and_read_acc_it_controller_data(void) {
     EIntCmd_t int_cmd = ACT_IT1;
-    STime_t it_moment = {.sec = 1, .min = 2, .hour = 3, .day = 4, .month = 5, .year = 6};
+    int64_t it_moment = {.sec = 1, .min = 2, .hour = 3, .day = 4, .month = 5, .year = 6};
     SAccItMsg_t _msg;
     
     acc_it_controller_send(int_cmd,it_moment);
@@ -31,7 +31,7 @@ void test_send_and_read_acc_it_controller_data(void) {
 
     // Assert that the sent plant buffer and buffer time match the received plant buffer and buffer time
     TEST_ASSERT_EQUAL_MEMORY(&int_cmd, &_msg._int_cmd, sizeof(EIntCmd_t));
-    TEST_ASSERT_EQUAL_MEMORY(&it_moment, &_msg._it_moment, sizeof(STime_t));
+    TEST_ASSERT_EQUAL_MEMORY(&it_moment, &_msg._it_moment, sizeof(int64_t));
 }
 
 // Test function for verifying the setting and reading of task status.
@@ -52,7 +52,7 @@ void test_set_and_read_task_acc_it_status(void) {
 void test_read_acc_it_controller_data_before_sending(void) {
     SAccItMsg_t _msg = {0}; // Initialize _msg with zeros
     EIntCmd_t int_cmd = {0};
-    STime_t it_moment = {0};
+    int64_t it_moment = {0};
 
     // Read button controller data before sending
     acc_it_controller_read(&_msg);

@@ -55,8 +55,8 @@ typedef struct {
 } SBusTaskInfo_t;
 
 typedef struct {
-    STime_t start_time;
-    STime_t end_time;
+    int64_t start_time;
+    int64_t end_time;
 } SBufTime_t;
 
 typedef struct

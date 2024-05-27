@@ -54,9 +54,9 @@ void test_send_and_read_controller_memory_data(void) {
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode;
     ESysMode_t previous_mode;
-    STime_t start_time;
-    STime_t end_time;
-    STime_t system_time;
+    int64_t start_time;
+    int64_t end_time;
+    int64_t system_time;
     SCtrlMemMsg_t _msg;
     
     ctrl_mem_send(alarm,status,plant_signal,env_data,power_data, axis_buff,current_mode,previous_mode,start_time,end_time,system_time);
@@ -73,9 +73,9 @@ void test_send_and_read_controller_memory_data(void) {
     TEST_ASSERT_EQUAL_MEMORY(&axis_buff, &_msg._axis_buff, sizeof(SAxisData_t)*128);
     TEST_ASSERT_EQUAL_MEMORY(&current_mode, &_msg._current_mode, sizeof(ESysMode_t));
     TEST_ASSERT_EQUAL_MEMORY(&previous_mode, &_msg._previous_mode, sizeof(ESysMode_t));
-    TEST_ASSERT_EQUAL_MEMORY(&start_time, &_msg._start_time, sizeof(STime_t));
-    TEST_ASSERT_EQUAL_MEMORY(&end_time, &_msg._end_time, sizeof(STime_t));
-    TEST_ASSERT_EQUAL_MEMORY(&system_time, &_msg._system_time, sizeof(STime_t));
+    TEST_ASSERT_EQUAL_MEMORY(&start_time, &_msg._start_time, sizeof(int64_t));
+    TEST_ASSERT_EQUAL_MEMORY(&end_time, &_msg._end_time, sizeof(int64_t));
+    TEST_ASSERT_EQUAL_MEMORY(&system_time, &_msg._system_time, sizeof(int64_t));
 }
 
 // Test function for verifying the behavior when reading power controller data before sending.
@@ -89,9 +89,9 @@ void test_read_controller_memory_data_before_sending(void) {
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode = {0};
     ESysMode_t previous_mode = {0};
-    STime_t start_time = {0};
-    STime_t end_time = {0};
-    STime_t system_time = {0};
+    int64_t start_time = {0};
+    int64_t end_time = {0};
+    int64_t system_time = {0};
 
     // Read power controller data before sending
     ctrl_mem_read(&_msg);

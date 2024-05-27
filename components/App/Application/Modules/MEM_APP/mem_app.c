@@ -24,16 +24,15 @@ void mem_app_init()
     def_header.flength = def_header.dlength + sizeof(SWavHeader);
 }
 
-SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
+SWavData process_data_to_wav(uint32_t* data,int64_t start_t,int64_t end_t)
 {
     SWavData wav;
     SWavHeader empty_header = {0};
-    int64_t start_secs = encode_date_to_time(start_t);
-    int64_t end_secs = encode_date_to_time(end_t);
+    STime_t start_secs = encode_time_to_date(start_t);
     static int64_t prev_start_secs = 0;
     static int64_t prev_end_secs = 0;
 
-    if((data == NULL) || ((end_secs-start_secs) == 0) || 
+    if((data == NULL) || ((end_t-start_t) == 0) || 
         (memcmp(&def_header, &empty_header, sizeof(SWavHeader)) == 0))
     {
         store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_APP_PROCESS_NULL_WAV_DATA);
@@ -45,14 +44,14 @@ SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
     uint32_t average = 0;
     
     char time_string[100];
-    if((prev_start_secs != start_secs) && (prev_end_secs != end_secs) )
+    if((prev_start_secs != start_t) && (prev_end_secs != end_t) )
     {
-        sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d.wav", start_t.year, start_t.month, start_t.day, start_t.hour, start_t.min, start_t.sec);
+        sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d.wav", start_secs.year, start_secs.month, start_secs.day, start_secs.hour, start_secs.min, start_secs.sec);
  
         sprintf(wav.file_path, "%s/%d/%s", WAV_FOLDER, wav_subfolder, time_string);
 
         wav.header = def_header;
-        wav.header.srate = DATA_BUFFER_SIZE/(end_secs-start_secs);
+        wav.header.srate = DATA_BUFFER_SIZE/(end_t-start_t);
         wav.header.bytes_per_sec = wav.header.srate * wav.header.bits_per_samp / 8 * wav.header.num_chans;
         wav.data = (int16_t *)malloc(DATA_BUFFER_SIZE * sizeof(int16_t));
 
@@ -73,8 +72,8 @@ SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t)
     {
         wav.average = 0;
     }
-    prev_start_secs = start_secs;
-    prev_end_secs = end_secs;
+    prev_start_secs = start_t;
+    prev_end_secs = end_t;
 
     return wav;
 }

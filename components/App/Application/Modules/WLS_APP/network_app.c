@@ -11,12 +11,15 @@ void network_app_init()
     memset(plant_data, 0, DATA_BUFFER_SIZE * sizeof(uint32_t));
 }
 
-void update_app_data(SCtrlWlsMsg_t msg)
+SNetworkData_t update_app_data(SCtrlWlsMsg_t msg)
 {
-    int64_t start_secs = encode_date_to_time(msg._plant_signal.start_time);
-    int64_t end_secs = encode_date_to_time(msg._plant_signal.end_time);
+    int64_t start_secs = msg._plant_signal.start_time;
+    int64_t end_secs = msg._plant_signal.end_time;
     static int64_t prev_start_secs = 0;
     static int64_t prev_end_secs = 0;
+    SNetworkData_t network_data;
+    static uint8_t size;
+    static uint32_t plant_data[DATA_BUFFER_SIZE];
     if((prev_start_secs != start_secs) && (prev_end_secs != end_secs) )
     {
         memcpy(plant_data, msg._plant_signal.data, DATA_BUFFER_SIZE * sizeof(uint32_t));
@@ -28,12 +31,25 @@ void update_app_data(SCtrlWlsMsg_t msg)
     // }
     prev_start_secs = start_secs;
     prev_end_secs = end_secs;
-}
 
-uint32_t get_serialized_plant_data()
-{
     if(size>= DATA_BUFFER_SIZE) size = 0;
-    return plant_data[size++];
+    network_data.act_plant_data = plant_data[size];
+    network_data.plant_time_start = start_secs;
+    network_data.plant_time_end = end_secs;
+    network_data.x_act_data = msg._axis_buff.x[size];
+    network_data.y_act_data = msg._axis_buff.y[size];
+    network_data.z_act_data = msg._axis_buff.z[size];
+    network_data.axis_time_start = msg._axis_buff.start_time;
+    network_data.axis_time_end = msg._axis_buff.end_time;
+    network_data.av_light = msg._env_data.light;
+    network_data.av_air_moist = msg._env_data.air_moist;
+    network_data.av_soil_moist = msg._env_data.soil_moist;
+    network_data.av_sun = msg._env_data.sun;
+    network_data.av_temp = msg._env_data.temp;
+
+    size++;
+
+    return network_data;
 }
 
 /* Checks for faults in the network application */

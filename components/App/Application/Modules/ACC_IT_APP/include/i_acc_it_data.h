@@ -51,7 +51,7 @@ typedef struct {
 typedef struct{
     SAccItTaskInfo_t _task_info;
     EIntCmd_t _int_cmd;
-    STime_t _it_moment;
+    int64_t _it_moment;
 }SAccItMsg_t;
 
 #endif /* I_ACC_IT_DATA_H_ */

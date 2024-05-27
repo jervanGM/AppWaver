@@ -64,6 +64,9 @@ void get_env_data(uint32_t *env_data, bool ready)
     static uint32_t sum_i_solar = 0;
     static uint32_t sum_v_solar = 0;
     static uint32_t sum_s_data = 0;
+    static uint32_t prev_i_solar = 0;
+    static uint32_t prev_v_solar = 0;
+    static uint32_t prev_s_data = 0;
     static size_t count = 0;
 
     uint32_t i_solar, v_solar, s_data;
@@ -86,7 +89,9 @@ void get_env_data(uint32_t *env_data, bool ready)
         env_data[0] = sum_i_solar / count;
         env_data[1] = sum_v_solar / count;
         env_data[2] = sum_s_data / count;
-
+        prev_i_solar = env_data[0];
+        prev_v_solar = env_data[1];
+        prev_s_data = env_data[2];
         // Reiniciar sumas y contador
         sum_i_solar = 0;
         sum_v_solar = 0;
@@ -96,9 +101,9 @@ void get_env_data(uint32_t *env_data, bool ready)
     else
     {
         // Cuando ready es falso, se inicializan los valores del array a 0
-        env_data[0] = 0;
-        env_data[1] = 0;
-        env_data[2] = 0;
+        env_data[0] = prev_i_solar;
+        env_data[1] = prev_v_solar;
+        env_data[2] = prev_s_data;
     }
 }
 #endif

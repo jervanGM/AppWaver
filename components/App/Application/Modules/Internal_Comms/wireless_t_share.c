@@ -44,7 +44,7 @@ void controller_wireless_send(
     SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
-    STime_t system_time)
+    int64_t system_time)
     {
         mutex_lock(CTRL_WLS_M_ID);
             memcpy(&_ctrl_msg._alarm, &alarm, sizeof(SErrorInfo_t));
@@ -55,7 +55,7 @@ void controller_wireless_send(
             memcpy(&_ctrl_msg._axis_buff, &axis_buff, sizeof(SAxisData_t));
             memcpy(&_ctrl_msg._current_mode, &current_mode, sizeof(ESysMode_t));
             memcpy(&_ctrl_msg._previous_mode, &previous_mode, sizeof(ESysMode_t));
-            memcpy(&_ctrl_msg._system_time, &system_time, sizeof(STime_t));
+            memcpy(&_ctrl_msg._system_time, &system_time, sizeof(int64_t));
         mutex_unlock(CTRL_WLS_M_ID);
     }
 

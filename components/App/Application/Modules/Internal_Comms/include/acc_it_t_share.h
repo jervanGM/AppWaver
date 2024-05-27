@@ -10,7 +10,7 @@ void set_task_acc_it_info(SAccItTaskInfo_t task_info);
 
 void set_task_acc_it_status(EAccItTaskStatus_t status);
 
-void acc_it_controller_send(EIntCmd_t int_cmd,STime_t it_moment);
+void acc_it_controller_send(EIntCmd_t int_cmd,int64_t it_moment);
 
 void acc_it_controller_read(SAccItMsg_t *msg);
 

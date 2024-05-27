@@ -19,11 +19,11 @@ void set_task_acc_it_status(EAccItTaskStatus_t status)
     mutex_unlock(ACC_IT_M_ID);
 }
 
-void acc_it_controller_send(EIntCmd_t int_cmd,STime_t it_moment)
+void acc_it_controller_send(EIntCmd_t int_cmd,int64_t it_moment)
 {
     mutex_lock(ACC_IT_M_ID);
         memcpy(&_acc_it_msg._int_cmd, &int_cmd, sizeof(EIntCmd_t));
-        memcpy(&_acc_it_msg._it_moment, &it_moment, sizeof(STime_t));
+        memcpy(&_acc_it_msg._it_moment, &it_moment, sizeof(int64_t));
     mutex_unlock(ACC_IT_M_ID);
 }
 

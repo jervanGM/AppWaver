@@ -37,7 +37,7 @@ void ctrl_mem_send(
     SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
-    STime_t system_time)
+    int64_t system_time)
 {
     SCtrlMemMsg_t temp_msg;
 

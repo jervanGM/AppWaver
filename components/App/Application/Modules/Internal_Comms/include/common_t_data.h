@@ -60,14 +60,14 @@ typedef struct {
     float z[DATA_BUFFER_SIZE];
     bool it1;
     bool it2;
-    STime_t start_time;
-    STime_t end_time;
+    int64_t start_time;
+    int64_t end_time;
 } SAxisData_t;
 
 typedef struct {
     uint32_t data[DATA_BUFFER_SIZE];
-    STime_t start_time;
-    STime_t end_time;
+    int64_t start_time;
+    int64_t end_time;
 } SPPlantData_t;
 
 #endif /* COMMON_T_DATA_H_ */

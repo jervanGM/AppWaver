@@ -49,8 +49,8 @@ void test_mem_task_normal_execution() {
     
     // Execute the filter 256 times to stabilize it and clear any warnings.
 
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     SErrorInfo_t alarm;
     SSystemStatus_t status;

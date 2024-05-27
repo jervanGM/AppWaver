@@ -22,6 +22,10 @@
 #define WLS_DRV_GET_MAC_ERROR -15
 #define WLS_DRV_RECONNECT_ERROR -14
 #define WLS_DRV_CONNECT_ERROR -13
+#define WLS_TIME_OBJ_INIT_ERROR -12
+#define WLS_PER_OBJ_INIT_ERROR -11
+#define WLS_TEMP_OBJ_INIT_ERROR -10
+#define WLS_AIR_MOIST_OBJ_INIT_ERROR -9
 
 #define WLS_DRV_OK 0
 
@@ -74,8 +78,23 @@ typedef struct{
     SAxisData_t _axis_buff;
     ESysMode_t _current_mode;
     ESysMode_t _previous_mode;
-    STime_t _system_time;
+    int64_t _system_time;
 }SCtrlWlsMsg_t;
+typedef struct{
+    uint32_t act_plant_data;
+    int64_t plant_time_start;
+    int64_t plant_time_end;
+    float x_act_data;
+    float y_act_data;
+    float z_act_data;
+    int64_t axis_time_start;
+    int64_t axis_time_end;
+    float av_temp;
+    float av_air_moist;
+    float av_light;
+    float av_sun;
+    float av_soil_moist;
+}SNetworkData_t;
 
 
 

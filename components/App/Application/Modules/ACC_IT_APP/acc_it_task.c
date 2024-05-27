@@ -22,7 +22,7 @@ void task_acc_it(void *pvParameters)
     for (;;) {
         // Espera una notificación para activarse
         task_wait_for_event();
-        STime_t irs_time = get_system_time();
+        int64_t irs_time = get_system_time();
         EIntCmd_t it = acc_it_handle_pulse();
         acc_it_controller_send(it,irs_time);
     }

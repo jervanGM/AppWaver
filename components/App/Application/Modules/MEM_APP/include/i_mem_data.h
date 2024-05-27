@@ -92,9 +92,9 @@ typedef struct{
     SAxisData_t _axis_buff;
     ESysMode_t _current_mode;
     ESysMode_t _previous_mode;
-    STime_t _start_time;
-    STime_t _end_time;
-    STime_t _system_time;
+    int64_t _start_time;
+    int64_t _end_time;
+    int64_t _system_time;
 }SCtrlMemMsg_t;
 
 #endif /* I_MEM_DATA_H_ */
