@@ -54,7 +54,7 @@ void test_send_and_read_controller_wireless_data(void) {
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode;
     ESysMode_t previous_mode;
-    STime_t system_time;
+    int64_t system_time;
     SCtrlWlsMsg_t _msg;
     
     controller_wireless_send(alarm,status,plant_signal,env_data,power_data,axis_buff,current_mode,previous_mode,system_time);
@@ -71,7 +71,7 @@ void test_send_and_read_controller_wireless_data(void) {
     TEST_ASSERT_EQUAL_MEMORY(&axis_buff, &_msg._axis_buff, sizeof(SAxisData_t)*128);
     TEST_ASSERT_EQUAL_MEMORY(&current_mode, &_msg._current_mode, sizeof(ESysMode_t));
     TEST_ASSERT_EQUAL_MEMORY(&previous_mode, &_msg._previous_mode, sizeof(ESysMode_t));
-    TEST_ASSERT_EQUAL_MEMORY(&system_time, &_msg._system_time, sizeof(STime_t));
+    TEST_ASSERT_EQUAL_MEMORY(&system_time, &_msg._system_time, sizeof(int64_t));
 }
 
 // Test function for verifying the behavior when reading wireless controller data before sending.
@@ -85,7 +85,7 @@ void test_read_controller_wireless_data_before_sending(void) {
     SAxisData_t axis_buff[128];
     ESysMode_t current_mode = {0};
     ESysMode_t previous_mode = {0};
-    STime_t system_time = {0};
+    int64_t system_time = {0};
 
     // Read wireless controller data before sending
     controller_wireless_read(&_msg);

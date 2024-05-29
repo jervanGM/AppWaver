@@ -19,13 +19,13 @@ void wireless_controller_read(SWlsCtrlMsg_t *msg);
 void controller_wireless_send(
     SErrorInfo_t alarm,
     SSystemStatus_t status,
-    uint32_t *plant_signal,
+    SPPlantData_t plant_signal,
     SEnvData_t env_data,
     SPowerData_t power_data,
-    SAxisData_t *axis_buff,
+    SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
-    STime_t system_time);
+    int64_t system_time);
 
 void controller_wireless_read(SCtrlWlsMsg_t *msg);
 

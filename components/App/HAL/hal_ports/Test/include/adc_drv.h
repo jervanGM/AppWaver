@@ -3,10 +3,13 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "adc_cfg.h"
 
-void read_adc(uint8_t channel,uint32_t * data);
+int8_t read_adc(uint8_t channel,uint32_t * data);
 
 void set_adc_value(uint32_t data);
+
+void set_read_error(int8_t error);
 
 #endif /* ADC_DRV_H_ */

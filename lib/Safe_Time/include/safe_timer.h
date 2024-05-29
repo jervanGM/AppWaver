@@ -6,7 +6,7 @@
 #include "sw_tmr_cfg.h"
 #include "hw_tmr_cfg.h"
 
-STime_t get_system_time(void);
+int64_t get_system_time(void);
 
 STime_t encode_time_to_date(c_int64_t time);
 

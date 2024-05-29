@@ -7,6 +7,14 @@ extern adc_continuous_handle_t handle;
 extern adc_cali_handle_t adc1_cali_chan0_handle;
 extern adc_oneshot_unit_handle_t adc1_handle;
 extern bool do_calibration1_chan0;
+#ifdef ADVANCED
+extern adc_cali_handle_t adc1_cali_chan1_handle;
+extern adc_cali_handle_t adc1_cali_chan2_handle;
+extern adc_cali_handle_t adc1_cali_chan3_handle;
+extern bool do_calibration1_chan1;
+extern bool do_calibration1_chan2;
+extern bool do_calibration1_chan3;
+#endif
 #ifdef ADC_DMA
 void read_adc(uint8_t channel,uint32_t * data)
 {
@@ -50,14 +58,47 @@ void read_adc(uint8_t channel,uint32_t * data)
 #endif
 
 #ifdef ADC_CONT
-void read_adc(uint8_t channel,uint32_t * data)
+int8_t read_adc(uint8_t channel,uint32_t * data)
 {
-    ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, (adc_channel_t)channel, &adc_raw[0][0]));
-    //ESP_LOGI(TAG, "ADC%d Channel[%d] Raw Data: %d", ADC_UNIT_1 + 1, ADC1_CHAN0, adc_raw[0][0]);
-    if (do_calibration1_chan0) {
-        ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc1_cali_chan0_handle, adc_raw[0][0], &voltage[0][0]));
-            //ESP_LOGI(TAG, "ADC%d Channel[%d] Cali Voltage: %d mV", ADC_UNIT_1 + 1, ADC1_CHAN0, voltage[0][0]);
-            *data = (uint32_t)voltage[0][0];
+    if(adc_oneshot_read(adc1_handle, (adc_channel_t)channel, &adc_raw[channel][0]) != ESP_OK)
+    {
+        return -1;
     }
+    //ESP_LOGI(TAG, "ADC%d Channel[%d] Raw Data: %d", ADC_UNIT_1 + 1, ADC1_CHAN0, adc_raw[0][0]);
+    if (do_calibration1_chan0 && (channel == ADC1_CHAN0)) {
+        if(adc_cali_raw_to_voltage(adc1_cali_chan0_handle, adc_raw[channel][0], &voltage[channel][0]) != ESP_OK)
+        {
+            return -1;
+        }
+            //ESP_LOGI(TAG, "ADC%d Channel[%d] Cali Voltage: %d mV", ADC_UNIT_1 + 1, ADC1_CHAN0, voltage[0][0]);
+            *data = (uint32_t)voltage[channel][0];
+    }
+#ifdef ADVANCED
+    if (do_calibration1_chan1 && (channel == ADC1_CHAN1)) {
+        if(adc_cali_raw_to_voltage(adc1_cali_chan1_handle, adc_raw[1][0], &voltage[1][0]) != ESP_OK)
+        {
+            return -1;
+        }
+            //ESP_LOGI(TAG, "ADC%d Channel[%d] Cali Voltage: %d mV", ADC_UNIT_1 + 1, ADC1_CHAN0, voltage[0][0]);
+            *data = (uint32_t)voltage[1][0];
+    }
+    if (do_calibration1_chan2 && (channel == ADC1_CHAN2)) {
+        if(adc_cali_raw_to_voltage(adc1_cali_chan2_handle, adc_raw[2][0], &voltage[2][0]) != ESP_OK)
+        {
+            return -1;
+        }
+            //ESP_LOGI(TAG, "ADC%d Channel[%d] Cali Voltage: %d mV", ADC_UNIT_1 + 1, ADC1_CHAN0, voltage[0][0]);
+            *data = (uint32_t)voltage[2][0];
+    }
+    if (do_calibration1_chan3 && (channel == ADC1_CHAN3)) {
+        if(adc_cali_raw_to_voltage(adc1_cali_chan3_handle, adc_raw[3][0], &voltage[3][0]) != ESP_OK)
+        {
+            return -1;
+        }
+            //ESP_LOGI(TAG, "ADC%d Channel[%d] Cali Voltage: %d mV", ADC_UNIT_1 + 1, ADC1_CHAN0, voltage[0][0]);
+            *data = (uint32_t)voltage[3][0];
+    }
+#endif
+    return 0;
 }
 #endif

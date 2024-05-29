@@ -60,4 +60,16 @@ void test_analog_app_check_lower_major_fault_boundary(); /**< \test */
 void test_analog_app_check_upper_major_fault_boundary(); /**< \test */
 
 
+void test_analog_app_process_enviromental_data();
+
+void test_analog_app_process_null_enviromental_data();
+
+void test_analog_app_process_enviromental_data_max_values();
+
+void test_analog_app_process_enviromental_data_max_limits();
+
+void test_analog_app_process_enviromental_data_min_values();
+
+void test_analog_app_process_enviromental_data_min_limits();
+
 #endif /* TRACE_TEST_H_ */

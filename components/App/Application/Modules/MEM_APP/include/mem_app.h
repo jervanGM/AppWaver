@@ -12,7 +12,7 @@
  */
 void mem_app_init();
 
-SWavData process_data_to_wav(uint32_t* data,STime_t start_t,STime_t end_t);
+SWavData process_data_to_wav(uint32_t* data,int64_t start_t,int64_t end_t);
 
 /**
  * @brief Checks for faults in the analog application.

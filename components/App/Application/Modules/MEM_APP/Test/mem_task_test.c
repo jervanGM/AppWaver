@@ -49,21 +49,21 @@ void test_mem_task_normal_execution() {
     
     // Execute the filter 256 times to stabilize it and clear any warnings.
 
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     SErrorInfo_t alarm;
     SSystemStatus_t status;
-    SEnvData_t env_data;
+    SAnaEnvData_t env_data;
     SPowerData_t power_data;
-    SAxisData_t axix_buf[DATA_BUFFER_SIZE];
+    SAxisData_t axis_buf[DATA_BUFFER_SIZE];
     end_t.sec = 13;
     for(int i=0; i<128;i++)
     {
         data[i] = rand() % 200;
     }
 
-    ctrl_mem_send(alarm,status,data,env_data,power_data,axix_buf,
+    ctrl_mem_send(alarm,status,data,env_data,power_data,axis_buf,
                     SYS_BUFFER_MODE,SYS_BUFFER_MODE,start_t,end_t,
                     start_t);
     mem_sm_run();

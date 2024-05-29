@@ -106,11 +106,10 @@ void on_wls_execute()
 {
     network_run();
     SCtrlWlsMsg_t msg;
+    SNetworkData_t net_data;
     controller_wireless_read(&msg);
-    update_app_data(msg);
-    update_wireless_data(
-        get_serialized_plant_data()
-    );
+    net_data = update_app_data(msg);
+    update_wireless_data(net_data);
     // Check for faults or software update
     if(network_check_fota())
     {

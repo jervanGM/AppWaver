@@ -26,6 +26,8 @@ target_include_directories(test_suite PUBLIC
     ../../WLS_APP/include
     ../../MEM_APP/include
     ../../SRL_APP/include
+    ../../ACC_IT_APP/include
+    ../../BUS_APP/include
 )
 
 # Add library directories

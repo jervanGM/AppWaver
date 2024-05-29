@@ -1,5 +1,5 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef IND_T_SHARE_TEST_H_
+#define IND_T_SHARE_TEST_H_
 #include "test_suite.h"
 
 /**
@@ -46,4 +46,4 @@ void test_send_and_read_controller_indicator_data(void);
 void test_read_controller_indicator_data_before_sending(void);
 
 
-#endif /* TRACE_TEST_H_ */
+#endif /* IND_T_SHARE_TEST_H_ */

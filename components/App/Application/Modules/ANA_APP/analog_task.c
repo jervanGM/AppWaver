@@ -34,7 +34,8 @@ void task_analog(void *pvParameters)
         // Run analog state machine
         analog_sm_run();
         // Delay task until next execution
-        task_delay_until(&task_info.LastWakeTime, task_info.delay);
+        task_delay(task_info.delay);
+        //task_delay_until(&task_info.LastWakeTime, task_info.delay);
     }
 }
 
@@ -78,6 +79,7 @@ void on_ana_ready()
     static SBufferTime_t buffer_time;
     // Ignore first data buffer for signal stabilization
     get_data_buffer(&plant_buff,&buffer_time);
+    
     // Read the error from the specified error slot
     
     if(plant_buff.ready && (plant_buff.size > 0))
@@ -105,6 +107,14 @@ void on_ana_execute()
     get_data_buffer(&plant_buff,&buffer_time);
     // Send data to analog controller
     analog_controller_send(plant_buff,buffer_time);
+
+#ifdef ADVANCED
+    static SAnaEnvData_t out_env_data = {.direct_sun_percentage = 0, .light_percentage = 0, .soil_moist_percentage = 0};
+    uint32_t in_env_data[ANALOG_ENV_SENSORS];
+    get_env_data(in_env_data,plant_buff.ready);
+    out_env_data = process_enviromental_data(in_env_data);
+    analog_controller_send_env_data(out_env_data);
+#endif
     // Check for faults
     if(analog_app_check_faults() != ANA_TASK_OK)
     {

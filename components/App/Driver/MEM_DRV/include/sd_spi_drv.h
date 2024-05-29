@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sdkconfig.h"
+#include "SERIES_ID.h"
 
 int8_t sd_spi_init(void);
 

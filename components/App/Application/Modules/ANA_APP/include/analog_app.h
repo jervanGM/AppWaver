@@ -12,6 +12,10 @@
  */
 void analog_app_init();
 
+#ifdef ADVANCED
+SAnaEnvData_t process_enviromental_data(uint32_t *env_data);
+#endif
+
 /**
  * @brief Checks for faults in the analog application.
  * 

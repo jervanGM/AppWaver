@@ -1,5 +1,5 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef BTN_T_SHARE_TEST_H_
+#define BTN_T_SHARE_TEST_H_
 #include "test_suite.h"
 
 /**
@@ -42,4 +42,4 @@ void test_set_and_read_task_button_status(void); /**< \test */
 void test_read_button_controller_data_before_sending(void); /**< \test */
 
 
-#endif /* TRACE_TEST_H_ */
+#endif /* BTN_T_SHARE_TEST_H_ */

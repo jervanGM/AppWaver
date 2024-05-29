@@ -18,7 +18,21 @@ extern void ana_t_share_test_suite();
  *
  * This function runs all the test defined for this test suite.
  */
+extern void bus_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
 extern void btn_t_share_test_suite();
+
+/**
+ * @brief Run the test suite.
+ *
+ * This function runs all the test defined for this test suite.
+ */
+extern void acc_it_t_share_test_suite();
 
 /**
  * @brief Run the test suite.
@@ -78,7 +92,9 @@ extern void tearDown(void);
 static inline void run_test_suites()
 {
     ana_t_share_test_suite();
+    bus_t_share_test_suite();
     btn_t_share_test_suite();
+    acc_it_t_share_test_suite();
     ind_t_share_test_suite();
     mem_t_share_test_suite();
     pw_t_share_test_suite();

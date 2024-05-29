@@ -1,5 +1,5 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef ANA_T_SHARE_TEST_H_
+#define ANA_T_SHARE_TEST_H_
 #include "test_suite.h"
 
 /**
@@ -52,4 +52,4 @@ void test_send_and_read_analog_controller_data_large_buffers(void); /**< \test *
 void test_read_analog_controller_data_before_sending(void); /**< \test */
 
 
-#endif /* TRACE_TEST_H_ */
+#endif /* ANA_T_SHARE_TEST_H_ */

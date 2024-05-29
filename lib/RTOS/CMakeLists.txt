@@ -5,5 +5,5 @@ FILE(GLOB_RECURSE rtos_lib rtos.c)
 
 idf_component_register(SRCS ${rtos_lib}
                        INCLUDE_DIRS "include" "../Common_Types"
-                       REQUIRES Panic)
+                       REQUIRES Panic Safe_Trace)
 

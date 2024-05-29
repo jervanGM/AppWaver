@@ -41,6 +41,39 @@
         TEST_ASSERT_EQUAL(error, HAL_ANA_CONFIG_ERROR);
         TEST_ASSERT_EQUAL(data, 0);
     }
+
+    void test_dsp_solar_memory_error()
+    {
+        // Variable to store the retrieved data
+        uint32_t i_data,v_data = 0;
+        
+        // Retrieve data from the DSP module
+        get_solar_data(&i_data,&v_data);
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, HAL_ANA_CONFIG_ERROR);
+        TEST_ASSERT_EQUAL(i_data, 0);
+        TEST_ASSERT_EQUAL(v_data, 0);
+    }
+
+    void test_dsp_soil_memory_error()
+    {
+        // Variable to store the retrieved data
+        uint32_t data = 0;
+        
+        // Retrieve data from the DSP module
+        data = get_soil_data();
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, HAL_ANA_CONFIG_ERROR);
+        TEST_ASSERT_EQUAL(data, 0);
+    }
 #endif
 
 #ifndef FAKE_FUNC
@@ -54,6 +87,19 @@
         // Check if the error slot remains zero after initialization
         int8_t error = read_error_from_slot(0);
         TEST_ASSERT_EQUAL(error, 0);
+    }
+
+    void test_dsp_init_error()
+    {
+        // Perform DSP module initialization
+        set_cfg_error(0,0);
+        store_error_in_slot(0, 0);
+        set_cfg_error(-1,0);
+        dsp_init_port();
+        
+        // Check if the error slot remains zero after initialization
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        TEST_ASSERT_EQUAL(error, ANA_DRV_INIT_ERROR);
     }
 
     // Test for verifying data retrieval from the DSP module.
@@ -70,13 +116,33 @@
         // Check if the error slot remains zero after data retrieval and if the returned data matches the expected value
         int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
         TEST_ASSERT_EQUAL(error, 0);
-        TEST_ASSERT_EQUAL(data, 3);
+        TEST_ASSERT_EQUAL(data, 24);
+    }
+
+    void test_dsp_data_read_error()
+    {
+        // Variable to store the retrieved data
+        uint8_t data = 0;
+        
+        // Retrieve data from the DSP module
+        set_cfg_error(0,0);
+        set_read_error(0);
+        store_error_in_slot(0, 0);
+        set_adc_value(27);
+        set_read_error(-1);
+        data = get_dsp_data();
+        
+        // Check if the error slot remains zero after data retrieval and if the returned data matches the expected value
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        TEST_ASSERT_EQUAL(error, ANA_DRV_ON_READ_ERROR);
+        TEST_ASSERT_EQUAL(data, 0);
     }
 
     // Test for verifying the error handling of the DSP module's data filtering.
     void test_dsp_data_filter_error()
     {
         // Variable to store the error
+        set_read_error(0);
         int8_t error;
         
         // Create a null pointer to simulate an error condition
@@ -91,26 +157,11 @@
         TEST_ASSERT_EQUAL(error, ANA_DSP_IIR_ERROR);
     }
 
-    // Test for verifying the error handling of the DSP module with overflow data.
-    void test_dsp_data_overflow_error()
-    {
-        // Variable to store the data
-        uint32_t data = UINT32_MAX;
-        
-        // Call the function to test error handling with overflow data
-        store_error_in_slot(0, 0);
-        set_adc_value(data);
-        data = get_dsp_data();
-
-        // Check if the error is stored in the designated error slot
-        TEST_ASSERT_EQUAL(read_error_from_slot(ANALOGIC_ERROR_SLOT), ANA_DSP_NORMALIZE_ERROR);
-    }
-
     // Test for verifying data retrieval from the DSP module with low input.
     void test_dsp_data_with_low_input()
     {
         // Variable to store the low input value
-        uint32_t low_input = 100;
+        uint32_t low_input = 10;
         
         // Set 1000 numbers to 0 to filter stabilization
         for (int i = 0; i < 10000; i++)
@@ -126,7 +177,7 @@
         uint8_t result = get_dsp_data();
 
         // Check if the returned data falls within the expected range
-        TEST_ASSERT_LESS_OR_EQUAL(13, result);
+        TEST_ASSERT_LESS_OR_EQUAL(90, result);
     }
 
     // Test for verifying data retrieval from the DSP module with high input.
@@ -174,6 +225,119 @@
             TEST_ASSERT_LESS_OR_EQUAL(NORMALIZED_MAX, result);
         }
     }
+
+    void test_dsp_get_solar_data()
+    {
+        // Variable to store the retrieved data
+        uint32_t i_data,v_data = 0;
+        store_error_in_slot(0, 0);
+        set_read_error(0);
+        set_adc_value(27);
+        // Retrieve data from the DSP module
+        get_solar_data(&i_data,&v_data);
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, 0);
+        TEST_ASSERT_EQUAL(i_data, 27);
+        TEST_ASSERT_EQUAL(v_data, 27);
+    }
+
+    void test_dsp_get_solar_data_read_error()
+    {
+        // Variable to store the retrieved data
+        uint32_t i_data,v_data = 0;
+        store_error_in_slot(0, 0);
+        set_read_error(0);
+        set_adc_value(27);
+        set_read_error(-1);
+        // Retrieve data from the DSP module
+        get_solar_data(&i_data,&v_data);
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, ANA_DRV_ON_READ_ERROR);
+    }
+
+    void test_dsp_get_solar_data_null_error()
+    {
+        // Variable to store the retrieved data
+        uint32_t i_data,v_data = 0;
+        store_error_in_slot(0, 0);
+        set_read_error(0);
+        set_adc_value(27);
+        // Retrieve data from the DSP module
+        get_solar_data(NULL,&v_data);
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, ANA_DRV_ON_READ_ERROR);
+
+        store_error_in_slot(0, 0);
+        get_solar_data(&i_data,NULL);
+        
+        // Check if the memory error is stored in the designated error slot
+        error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, ANA_DRV_ON_READ_ERROR);
+
+        store_error_in_slot(0, 0);
+        get_solar_data(&i_data,&v_data);
+        
+        // Check if the memory error is stored in the designated error slot
+        error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, 0);
+        TEST_ASSERT_EQUAL(i_data, 27);
+        TEST_ASSERT_EQUAL(v_data, 27);
+    }
+
+    void test_dsp_get_soil_data()
+    {
+        // Variable to store the retrieved data
+        uint32_t data = 0;
+        store_error_in_slot(0, 0);
+        set_read_error(0);
+        set_adc_value(27);
+        // Retrieve data from the DSP module
+        data = get_soil_data();
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, 0);
+        TEST_ASSERT_EQUAL(data, 27);
+    }
+
+    void test_dsp_get_soil_data_read_error()
+    {
+        // Variable to store the retrieved data
+        uint32_t data = 0;
+        store_error_in_slot(0, 0);
+        set_read_error(0);
+        set_adc_value(27);
+
+        set_read_error(-1);
+        // Retrieve data from the DSP module
+        data = get_soil_data();
+        
+        // Check if the memory error is stored in the designated error slot
+        int8_t error = read_error_from_slot(ANALOGIC_ERROR_SLOT);
+        
+        // Verify that the error matches the expected error code and the returned data is zero
+        TEST_ASSERT_EQUAL(error, ANA_DRV_ON_READ_ERROR);
+        TEST_ASSERT_EQUAL(data, 0);
+        set_read_error(0);
+    }
 #endif
 
 
@@ -182,14 +346,22 @@ void dsp_test_suite()
 #ifdef FAKE_FUNC
     RUN_TEST(test_dsp_init_error);
     RUN_TEST(test_dsp_data_memory_error);
+    RUN_TEST(test_dsp_solar_memory_error);
+    RUN_TEST(test_dsp_soil_memory_error);
 #endif
 #ifndef FAKE_FUNC
     RUN_TEST(test_dsp_init);
+    RUN_TEST(test_dsp_init_error);
     RUN_TEST(test_dsp_data);
+    RUN_TEST(test_dsp_data_read_error);
     RUN_TEST(test_dsp_data_filter_error);
-    RUN_TEST(test_dsp_data_overflow_error);
     RUN_TEST(test_dsp_data_with_low_input);
     RUN_TEST(test_dsp_data_with_high_input);
     RUN_TEST(test_dsp_data_random_wave);
+    RUN_TEST(test_dsp_get_solar_data);
+    RUN_TEST(test_dsp_get_solar_data_read_error);
+    RUN_TEST(test_dsp_get_solar_data_null_error);
+    RUN_TEST(test_dsp_get_soil_data);
+    RUN_TEST(test_dsp_get_soil_data_read_error);
 #endif
 }

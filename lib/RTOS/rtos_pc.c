@@ -49,9 +49,9 @@ void task_delay(uint32_t ms_delay)
     return;
 }
 
-void task_wait_for_event()
+uint32_t task_wait_for_event()
 {
-    return;
+    return 0;
 }
 
 void mutex_create()

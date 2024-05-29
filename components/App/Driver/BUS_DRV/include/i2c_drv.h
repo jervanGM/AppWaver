@@ -1,0 +1,41 @@
+#ifndef I2C_DRV_H_
+#define I2C_DRV_H_
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "sdkconfig.h"
+#include "esp_log.h"
+#include "driver/i2c.h"
+
+static const char *TAG = "i2c driver";
+
+#define I2C_MASTER_SCL_IO           7                          /*!< GPIO number used for I2C master clock */
+#define I2C_MASTER_SDA_IO           6                          /*!< GPIO number used for I2C master data  */
+#define I2C_MASTER_NUM              0                          /*!< I2C master i2c port number, the number of i2c peripheral interfaces available will depend on the chip */
+#define I2C_MASTER_FREQ_HZ          400000                     /*!< I2C master clock frequency */
+#define I2C_MASTER_TX_BUF_DISABLE   0                          /*!< I2C master doesn't need buffer */
+#define I2C_MASTER_RX_BUF_DISABLE   0                          /*!< I2C master doesn't need buffer */
+#define I2C_MASTER_TIMEOUT_MS       1000
+#define DEV_WITHOUT_REG             0x00
+
+/**
+ * @brief i2c master initialization
+ */
+int8_t i2c_bus_init(void);
+
+/**
+ * @brief Read a sequence of bytes from a device registers
+ */
+int8_t i2c_read_register(uint8_t dev_addrs, uint8_t *data, size_t len);
+
+/**
+ * @brief Write a byte to a device register
+ */
+int8_t i2c_write_register(uint8_t dev_addrs, uint8_t *data, size_t len);
+
+/**
+ * @brief i2c master deinitialization
+ */
+int8_t i2c_bus_deinit();
+
+#endif /* I2C_DRV_H_ */

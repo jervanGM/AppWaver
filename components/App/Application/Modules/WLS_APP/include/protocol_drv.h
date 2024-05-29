@@ -24,7 +24,7 @@ void network_fota_reboot(void);
 
 bool network_check_fota(void);
 
-void update_wireless_data(uint32_t plant_val);
+void update_wireless_data(SNetworkData_t net_data);
 
 
 #endif /* PROTOCOL_DRV_H_ */

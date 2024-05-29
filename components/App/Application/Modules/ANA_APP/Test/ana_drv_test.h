@@ -49,5 +49,9 @@ void test_get_data_clean_buffer(); /**< \test */
  */
 void test_get_data_buffer_random_wave(); /**< \test */
 
+void test_ana_drv_get_env_data();
+
+void test_ana_drv_get_env_data_null();
+
 
 #endif /* TRACE_TEST_H_ */

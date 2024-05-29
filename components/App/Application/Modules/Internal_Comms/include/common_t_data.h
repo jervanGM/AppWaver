@@ -1,6 +1,8 @@
 #ifndef COMMON_T_DATA_H_
 #define COMMON_T_DATA_H_
 
+#include "CONSTANTS.h"
+
 typedef enum {
     SYS_BUFFER_MODE
 } ESysMode_t;
@@ -41,7 +43,10 @@ typedef struct {
 
 typedef struct {
     uint8_t light;
+    uint8_t sun;
     uint8_t soil_moist;
+    float temp;
+    float air_moist;
 } SEnvData_t;
 
 typedef struct {
@@ -50,11 +55,19 @@ typedef struct {
 } SPowerData_t;
 
 typedef struct {
-    uint8_t x;
-    uint8_t y;
-    uint8_t z;
+    float x[DATA_BUFFER_SIZE];
+    float y[DATA_BUFFER_SIZE];
+    float z[DATA_BUFFER_SIZE];
     bool it1;
     bool it2;
+    int64_t start_time;
+    int64_t end_time;
 } SAxisData_t;
+
+typedef struct {
+    uint32_t data[DATA_BUFFER_SIZE];
+    int64_t start_time;
+    int64_t end_time;
+} SPPlantData_t;
 
 #endif /* COMMON_T_DATA_H_ */

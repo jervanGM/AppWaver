@@ -18,6 +18,11 @@ void test_dsp_init_error(); /**< \test */
  * and if the retrieved data is set to 0.
  */
 void test_dsp_data_memory_error(); /**< \test */
+
+void test_dsp_solar_memory_error();
+
+void test_dsp_soil_memory_error();
+
 /**
  * @brief Test to verify the initialization of the DSP module.
  *
@@ -26,6 +31,8 @@ void test_dsp_data_memory_error(); /**< \test */
  * indicating successful initialization.
  */
 void test_dsp_init(); /**< \test */
+
+void test_dsp_init_error();
 
 /**
  * @brief Test to verify data retrieval from the DSP module.
@@ -36,6 +43,8 @@ void test_dsp_init(); /**< \test */
  */
 void test_dsp_data(); /**< \test */
 
+ void test_dsp_data_read_error();
+
 /**
  * @brief Test to verify the error handling of the DSP module during data filtering.
  *
@@ -44,15 +53,6 @@ void test_dsp_data(); /**< \test */
  * and checks if the proper error code is stored in the error slot.
  */
 void test_dsp_data_filter_error(); /**< \test */
-
-/**
- * @brief Test to verify the error handling of the DSP module during data normalization with overflow.
- *
- * This test verifies the error handling of the DSP module when the input data exceeds the maximum value
- * during normalization. It initializes the error slot, sets the ADC value to UINT32_MAX (simulated data),
- * retrieves DSP data, and checks if the proper error code is stored in the error slot.
- */
-void test_dsp_data_overflow_error(); /**< \test */
 
 /**
  * @brief Test to verify data retrieval from the DSP module with low input.
@@ -80,5 +80,15 @@ void test_dsp_data_with_high_input(); /**< \test */
  * falls within the expected range for multiple iterations.
  */
 void test_dsp_data_random_wave(); /**< \test */
+
+void test_dsp_get_solar_data();
+
+void test_dsp_get_solar_data_read_error();
+
+void test_dsp_get_solar_data_null_error();
+
+void test_dsp_get_soil_data();
+
+void test_dsp_get_soil_data_read_error();
 
 #endif /* TRACE_TEST_H_ */

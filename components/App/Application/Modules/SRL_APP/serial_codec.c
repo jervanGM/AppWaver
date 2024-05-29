@@ -73,39 +73,36 @@ SSerialCmd_t serial_process_cmd() {
     if (srl_port != NULL) {
         uint8_t data[cmd_size];
         srl_port->read_cmd(data, cmd_size);
-
-        // Verificamos si el comando es solo una barra
+        
         if (data[0] == '/' && data[1] == '\0') {
-            // En caso de que el comando sea solo una barra, establecemos cmd a una cadena vacía
             strcpy(srl_cmd.cmd, "");
             srl_cmd.force = false;
         } else {
-            // Usamos memcpy solo si el tamaño del comando es menor o igual al tamaño esperado
+
             if (cmd_size >= strlen((char *)data) + 1) {
                 memcpy(srl_cmd.cmd, data, strlen((char *)data) + 1);
                 extract_between_slashes(srl_cmd.cmd, cmd_size);
                 
-                // Buscamos la opción --force en el comando
                 char *force_ptr = strstr(srl_cmd.cmd, " --force");
                 if (force_ptr != NULL) {
-                    // Si encontramos la opción --force, la eliminamos del comando y establecemos la bandera force
+                    
                     srl_cmd.force = true;
                     *force_ptr = '\0';
                 } else {
                     srl_cmd.force = false;
                 }
             } else {
-                // Manejo de error: El comando es demasiado largo para almacenarlo en el buffer proporcionado
+                
                 store_error_in_slot(SERIAL_ERROR_SLOT, SRL_DRV_CMD_BUFFER_OVERFLOW);
                 TRACE_ERROR("Command buffer overflow detected.");
-                memset(&srl_cmd, 0, sizeof(srl_cmd)); // Inicializa la estructura a cero
+                memset(&srl_cmd, 0, sizeof(srl_cmd));
             }
         }
     } else {
-        // Manejo de error: Puerto no inicializado
+
         store_error_in_slot(SERIAL_ERROR_SLOT, SRL_DRV_ON_READ_FATAL_ERROR);
         TRACE_ERROR("Unexpected error on serial process command due to port initialization error");
-        memset(&srl_cmd, 0, sizeof(srl_cmd)); // Inicializa la estructura a cero
+        memset(&srl_cmd, 0, sizeof(srl_cmd));
     }
 
     return srl_cmd;

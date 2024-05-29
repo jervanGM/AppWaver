@@ -12,9 +12,9 @@
 
 #define ANA_T_PERIOD 100
 #define DIGI_T_PERIOD 100
-#define EXT_MEM_T_PERIOD 100
+#define EXT_MEM_T_PERIOD 1000
 #define SERIAL_RX_T_PERIOD 1500
-#define WIRELESS_T_PERIOD 100
+#define WIRELESS_T_PERIOD 1000
 #define POWER_T_PERIOD 300
 #define IND_T_PERIOD 500
 #define CONTROL_T_PERIOD 10
@@ -28,6 +28,7 @@
 #define EXT_MEM_T_HANDLER 6
 #define SERIAL_RX_T_HANDLER 7
 #define DIGI_T_HANDLER 8
+#define SPORADIC_ACC_IT_HANDLER 9
 
 void systemConfig();
 

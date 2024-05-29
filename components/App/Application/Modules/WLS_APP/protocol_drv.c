@@ -45,6 +45,12 @@ static char ENDPOINT_NAME[ANJAY_MAX_PK_OR_IDENTITY_SIZE];
 
 static const anjay_dm_object_def_t **DEVICE_OBJ;
 static const anjay_dm_object_def_t **PLANT_DATA_OBJ;
+static const anjay_dm_object_def_t **TIME_BUF_OBJ;
+static const anjay_dm_object_def_t **PER_DATA_OBJ;
+static const anjay_dm_object_def_t **TEMP_DATA_OBJ;
+static const anjay_dm_object_def_t **AIR_MOIST_DATA_OBJ;
+static const anjay_dm_object_def_t **ACCELEROMETER_DATA_OBJ;
+static const anjay_dm_object_def_t **BINARY_DATA_OBJ;
 
 static anjay_t *anjay;
 static avs_sched_handle_t sensors_job_handle;
@@ -128,7 +134,15 @@ static void update_objects_job(avs_sched_t *sched, const void *anjay_ptr) {
     anjay_t *anjay = *(anjay_t *const *) anjay_ptr;
 
     device_object_update(anjay, DEVICE_OBJ);
-    custom_object_update(anjay, PLANT_DATA_OBJ);
+    plant_object_update(anjay, PLANT_DATA_OBJ);
+    time_object_update(anjay,TIME_BUF_OBJ);
+    binary_object_update(anjay, BINARY_DATA_OBJ);
+#ifdef ADVANCED
+    accelerometer_object_update(anjay, ACCELEROMETER_DATA_OBJ);
+    percentage_object_update(anjay,PER_DATA_OBJ);
+    temperature_object_update(anjay,TEMP_DATA_OBJ);
+    air_moist_object_update(anjay,AIR_MOIST_DATA_OBJ);
+#endif
 
     AVS_SCHED_DELAYED(sched, &sensors_job_handle,
                       avs_time_duration_from_scalar(100, AVS_TIME_MS),
@@ -235,10 +249,73 @@ static void anjay_init(void) {
         return; 
     }
 
+    if (!(TIME_BUF_OBJ = time_object_create())
+            || anjay_register_object(anjay, TIME_BUF_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_TIME_OBJ_INIT_ERROR);
+        return; 
+    }
+
+    if (!(BINARY_DATA_OBJ = binary_object_create())
+            || anjay_register_object(anjay, BINARY_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_BINARY_OBJ_INIT_ERROR);
+        return; 
+    }
+#ifdef ADVANCED
+    if (!(ACCELEROMETER_DATA_OBJ = accelerometer_data_object_create())
+            || anjay_register_object(anjay, ACCELEROMETER_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_ACC_OBJ_INIT_ERROR);
+        return; 
+    }
+
+    if (!(PER_DATA_OBJ = percentage_object_create())
+            || anjay_register_object(anjay, PER_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_PER_OBJ_INIT_ERROR);
+        return; 
+    }
+
+    if (!(TEMP_DATA_OBJ = temperature_object_create())
+            || anjay_register_object(anjay, TEMP_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_TEMP_OBJ_INIT_ERROR);
+        return; 
+    }
+
+    if (!(AIR_MOIST_DATA_OBJ = air_moist_object_create())
+            || anjay_register_object(anjay, AIR_MOIST_DATA_OBJ)) {
+        TRACE_ERROR("Could not register Device object");
+        store_error_in_slot(WIRELESS_ERROR_SLOT,WLS_AIR_MOIST_OBJ_INIT_ERROR);
+        return; 
+    }
+#endif
+
 }
-void update_wireless_data(uint32_t plant_val)
+void update_wireless_data(SNetworkData_t net_data)
 {
-    plant_object_value_update(plant_val,PLANT_DATA_OBJ);
+    int64_t time_instances[4]={net_data.plant_time_start,net_data.plant_time_end,
+                               net_data.axis_time_start,net_data.axis_time_end};
+    uint8_t binary_data[4][DATA_BUFFER_SIZE*4];
+    for (int i = 0; i < DATA_BUFFER_SIZE*4; i++) {
+        binary_data[0][i] = net_data.serialized_plant_data[i];
+        binary_data[1][i] = net_data.serialized_x_data[i];
+        binary_data[2][i] = net_data.serialized_y_data[i];
+        binary_data[3][i] = net_data.serialized_z_data[i];
+    }
+
+    plant_object_value_update(net_data.act_plant_data,PLANT_DATA_OBJ);
+    time_object_value_update(time_instances,TIME_BUF_OBJ);
+    device_object_time_update(net_data.current_time,DEVICE_OBJ);
+    binary_object_value_update(binary_data,BINARY_DATA_OBJ);
+#ifdef ADVANCED
+    float per_instances[3]={net_data.av_light,net_data.av_sun,net_data.av_soil_moist};
+    accelerometer_object_value_update(net_data.x_act_data,net_data.y_act_data,net_data.z_act_data,ACCELEROMETER_DATA_OBJ);
+    percentage_object_value_update(per_instances,PER_DATA_OBJ);
+    temperature_object_value_update(net_data.av_temp,TEMP_DATA_OBJ);
+    air_moist_object_value_update(net_data.av_air_moist,AIR_MOIST_DATA_OBJ);
+#endif
 }
 
 static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
@@ -256,6 +333,7 @@ static void send_job(avs_sched_t *sched, const void *anjay_ptr) {
     int32_t res = 0;
 
     plant_object_send(builder,anjay, PLANT_DATA_OBJ);
+    accelerometer_object_send(builder,anjay, ACCELEROMETER_DATA_OBJ);
 
     // After adding all values, compile our batch for sending.
     anjay_send_batch_t *batch = anjay_send_batch_builder_compile(&builder);

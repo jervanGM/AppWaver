@@ -57,8 +57,8 @@ void test_mem_app_check_upper_major_fault_boundary() {
 void test_mem_app_process_wav_data()
 {
     SWavData wav;
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     end_t.sec = 13;
     for(int i=0; i<128;i++)
@@ -89,8 +89,8 @@ void test_mem_app_process_wav_data()
 void test_mem_app_process_same_wav_data()
 {
     SWavData wav;
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     end_t.sec = 13;
     for(int i=0; i<128;i++)
@@ -125,8 +125,8 @@ void test_mem_app_process_same_wav_data()
 void test_mem_app_process_not_init_wav_data()
 {
     SWavData wav;
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     end_t.sec = 13;
     for(int i=0; i<128;i++)
@@ -152,8 +152,8 @@ void test_mem_app_process_not_init_wav_data()
 void test_process_data_to_wav_null_pointer()
 {
     SWavData wav;
-    STime_t start_t = {0};
-    STime_t end_t;
+    int64_t start_t = {0};
+    int64_t end_t;
     uint32_t data[128];
     end_t.sec = 13;
     for(int i = 0; i < 128; i++)

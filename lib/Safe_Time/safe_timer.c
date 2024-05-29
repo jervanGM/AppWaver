@@ -2,7 +2,7 @@
 #include "assert_panic.h"
 #include "safe_trace.h"
 #include <inttypes.h>
-STime_t get_system_time(void)
+int64_t get_system_time(void)
 {
     static bool hw_sys_time_err = false;
     static c_int64_t prev_sys_time = TIME_START;
@@ -29,7 +29,7 @@ STime_t get_system_time(void)
     }
 
     prev_sys_time = sys_time;
-    return encode_time_to_date(sys_time);
+    return sys_time;
 }
 
 STime_t encode_time_to_date(c_int64_t time)

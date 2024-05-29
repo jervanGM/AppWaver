@@ -39,6 +39,9 @@ void read_cmd(uint8_t *data, uint32_t size)
     if (len > 0) {
         memcpy(data,temp_data,size);
     }
+    else{
+        memset(data,0,size);
+    }
 }
 
 int8_t usb_deinit()
