@@ -34,11 +34,31 @@ SNetworkData_t update_app_data(SCtrlWlsMsg_t msg)
 
     if(size>= DATA_BUFFER_SIZE) size = 0;
     network_data.act_plant_data = plant_data[size];
+
+    for (int i = 0; i < DATA_BUFFER_SIZE; i++) {
+        network_data.serialized_plant_data[i * 4] = (uint8_t)(plant_data[i] & 0xFF);
+        network_data.serialized_plant_data[i * 4 + 1] = (uint8_t)((plant_data[i] >> 8) & 0xFF);
+        network_data.serialized_plant_data[i * 4 + 2] = (uint8_t)((plant_data[i] >> 16) & 0xFF);
+        network_data.serialized_plant_data[i * 4 + 3] = (uint8_t)((plant_data[i] >> 24) & 0xFF);
+    }
+
     network_data.plant_time_start = start_secs;
     network_data.plant_time_end = end_secs;
     network_data.x_act_data = msg._axis_buff.x[size];
+    for (int i = 0; i < DATA_BUFFER_SIZE; i++) {
+        uint32_t float_bits = *((uint32_t*)&msg._axis_buff.x[i]);
+        memcpy(&network_data.serialized_x_data[i * 4], &float_bits, 4);
+    }
     network_data.y_act_data = msg._axis_buff.y[size];
+    for (int i = 0; i < DATA_BUFFER_SIZE; i++) {
+        uint32_t float_bits = *((uint32_t*)&msg._axis_buff.y[i]);
+        memcpy(&network_data.serialized_y_data[i * 4], &float_bits, 4);
+    }
     network_data.z_act_data = msg._axis_buff.z[size];
+    for (int i = 0; i < DATA_BUFFER_SIZE; i++) {
+        uint32_t float_bits = *((uint32_t*)&msg._axis_buff.z[i]);
+        memcpy(&network_data.serialized_z_data[i * 4], &float_bits, 4);
+    }
     network_data.axis_time_start = msg._axis_buff.start_time;
     network_data.axis_time_end = msg._axis_buff.end_time;
     network_data.av_light = msg._env_data.light;
@@ -46,6 +66,7 @@ SNetworkData_t update_app_data(SCtrlWlsMsg_t msg)
     network_data.av_soil_moist = msg._env_data.soil_moist;
     network_data.av_sun = msg._env_data.sun;
     network_data.av_temp = msg._env_data.temp;
+    network_data.current_time = msg._system_time;
 
     size++;
 

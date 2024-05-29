@@ -34,6 +34,7 @@ typedef struct device_object_struct {
     const anjay_dm_object_def_t *def;
 
     device_id_t serial_number;
+    int64_t current_time;
     bool do_reboot;
 } device_object_t;
 
@@ -62,10 +63,14 @@ static int list_resources(anjay_t *anjay,
     anjay_dm_emit_res(ctx, RID_REBOOT, ANJAY_DM_RES_E, ANJAY_DM_RES_PRESENT);
     anjay_dm_emit_res(ctx, RID_ERROR_CODE, ANJAY_DM_RES_RM,
                       ANJAY_DM_RES_PRESENT);
+    anjay_dm_emit_res(ctx, RID_DEVICE_CURRENT_TIME, ANJAY_DM_RES_R,
+                      ANJAY_DM_RES_PRESENT);
     anjay_dm_emit_res(ctx, RID_SUPPORTED_BINDING_AND_MODES, ANJAY_DM_RES_R,
                       ANJAY_DM_RES_PRESENT);
     anjay_dm_emit_res(ctx, RID_SOFTWARE_VERSION, ANJAY_DM_RES_R,
                       ANJAY_DM_RES_PRESENT);
+
+
     return 0;
 }
 
@@ -101,6 +106,10 @@ static int resource_read(anjay_t *anjay,
     case RID_ERROR_CODE:
         assert(riid == 0);
         return anjay_ret_i32(ctx, 0);
+
+    case RID_DEVICE_CURRENT_TIME:
+        assert(riid == ANJAY_ID_INVALID);
+        return anjay_ret_i64(ctx, obj->current_time);
 
     case RID_SUPPORTED_BINDING_AND_MODES:
         assert(riid == ANJAY_ID_INVALID);
@@ -207,6 +216,12 @@ void device_object_release(const anjay_dm_object_def_t **def) {
         device_object_t *obj = get_obj(def);
         avs_free(obj);
     }
+}
+
+void device_object_time_update(int64_t current_time,const anjay_dm_object_def_t *const *def)
+{
+    device_object_t *obj = get_obj(def);
+    obj->current_time = current_time;
 }
 
 void device_object_update(anjay_t *anjay,

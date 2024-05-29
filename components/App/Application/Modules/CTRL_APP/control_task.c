@@ -146,50 +146,50 @@ void on_ctrl_execute()
         task_active = CTRL_TASK_BOTH;
     }
     
-#ifdef BASIC
-    switch (task_active)
-    {
-    case CTRL_TASK_WLS:
-        if(get_task_rtos_state(mem_msg._task_info.ID) != TASK_SUSPENDED)
-        {
-            suspend_task(mem_msg._task_info.ID);
-        }
-        if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
-        {
-            resume_task(wls_msg._task_info.ID);
-            wifi_pw_sts = PW_WIFI_ON;
-        }
+// #ifdef BASIC
+//     switch (task_active)
+//     {
+//     case CTRL_TASK_WLS:
+//         if(get_task_rtos_state(mem_msg._task_info.ID) != TASK_SUSPENDED)
+//         {
+//             suspend_task(mem_msg._task_info.ID);
+//         }
+//         if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
+//         {
+//             resume_task(wls_msg._task_info.ID);
+//             wifi_pw_sts = PW_WIFI_ON;
+//         }
         
-        break;
-    case CTRL_TASK_MEM:
-        if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
-        {
-            resume_task(mem_msg._task_info.ID);
-        }
-        if(get_task_rtos_state(wls_msg._task_info.ID) != TASK_SUSPENDED)
-        {
-            suspend_task(wls_msg._task_info.ID);
-            wifi_pw_sts = PW_WIFI_OFF;
-        }
+//         break;
+//     case CTRL_TASK_MEM:
+//         if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
+//         {
+//             resume_task(mem_msg._task_info.ID);
+//         }
+//         if(get_task_rtos_state(wls_msg._task_info.ID) != TASK_SUSPENDED)
+//         {
+//             suspend_task(wls_msg._task_info.ID);
+//             wifi_pw_sts = PW_WIFI_OFF;
+//         }
         
-        break;
-    case CTRL_TASK_BOTH:
-        if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
-        {
-            resume_task(mem_msg._task_info.ID);
-        }
-        if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
-        {
-            resume_task(wls_msg._task_info.ID);
-            wifi_pw_sts = PW_WIFI_ON;
-        }
-        break;
-    default:
-        ASSERT_PANIC(false, "Task change state not available");
-        break;
-    }
+//         break;
+//     case CTRL_TASK_BOTH:
+//         if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
+//         {
+//             resume_task(mem_msg._task_info.ID);
+//         }
+//         if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
+//         {
+//             resume_task(wls_msg._task_info.ID);
+//             wifi_pw_sts = PW_WIFI_ON;
+//         }
+//         break;
+//     default:
+//         ASSERT_PANIC(false, "Task change state not available");
+//         break;
+//     }
 
-#endif
+// #endif
     controller_wireless_send(alarm,status,plant_buf,env_data,power_data,axis_buf,
                             SYS_BUFFER_MODE,SYS_BUFFER_MODE,
                             get_system_time());

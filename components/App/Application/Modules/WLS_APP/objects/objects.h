@@ -26,10 +26,13 @@
 
 #ifdef BASIC
 #define MAX_TIME_INSTANCES 2
+#define MAX_BINARY_INSTANCES 1
+#define MAX_PERCENTAGE_INTANCES 0
 #endif
 
 #ifdef ADVANCED
 #define MAX_TIME_INSTANCES 4
+#define MAX_BINARY_INSTANCES 4
 #define MAX_PERCENTAGE_INTANCES 3
 #endif
 
@@ -45,6 +48,7 @@ const anjay_dm_object_def_t **device_object_create(void);
 void device_object_release(const anjay_dm_object_def_t **def);
 void device_object_update(anjay_t *anjay,
                           const anjay_dm_object_def_t *const *def);
+void device_object_time_update(int64_t current_time,const anjay_dm_object_def_t *const *def);
 
 const anjay_dm_object_def_t **time_object_create(void);
 void time_object_release(const anjay_dm_object_def_t **def);
@@ -66,3 +70,13 @@ void air_moist_object_release(const anjay_dm_object_def_t **def);
 void air_moist_object_value_update(float air_moist_data,const anjay_dm_object_def_t *const *def);
 void air_moist_object_update(anjay_t *anjay,const anjay_dm_object_def_t *const *def);
 
+const anjay_dm_object_def_t **accelerometer_data_object_create(void);
+void accelerometer_object_release(const anjay_dm_object_def_t **def);
+void accelerometer_object_update(anjay_t *anjay,const anjay_dm_object_def_t *const *def);
+void accelerometer_object_value_update(float x, float y, float z,const anjay_dm_object_def_t *const *def);
+void accelerometer_object_send(anjay_send_batch_builder_t *builder,anjay_t *anjay, const anjay_dm_object_def_t **def);
+
+const anjay_dm_object_def_t **binary_object_create(void);
+void binary_object_release(const anjay_dm_object_def_t **def);
+void binary_object_value_update(uint8_t (*binary_data)[DATA_BUFFER_SIZE*4],const anjay_dm_object_def_t *const *def);
+void binary_object_update(anjay_t *anjay,const anjay_dm_object_def_t *const *def);

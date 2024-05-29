@@ -19,7 +19,7 @@
 #define SOIL_PWM_PIN 4
 #define SENS_SW_PIN 5
 
-#define SOIL_FREQ  5
+#define SOIL_FREQ  5000
 #define SOIL_DUTY 50
 #define SOIL_PWM_CHAN 0
 #endif

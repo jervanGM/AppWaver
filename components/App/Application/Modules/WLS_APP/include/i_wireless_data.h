@@ -26,6 +26,8 @@
 #define WLS_PER_OBJ_INIT_ERROR -11
 #define WLS_TEMP_OBJ_INIT_ERROR -10
 #define WLS_AIR_MOIST_OBJ_INIT_ERROR -9
+#define WLS_ACC_OBJ_INIT_ERROR -8
+#define WLS_BINARY_OBJ_INIT_ERROR -7
 
 #define WLS_DRV_OK 0
 
@@ -82,13 +84,18 @@ typedef struct{
 }SCtrlWlsMsg_t;
 typedef struct{
     uint32_t act_plant_data;
+    uint8_t serialized_plant_data[DATA_BUFFER_SIZE*4];
     int64_t plant_time_start;
     int64_t plant_time_end;
     float x_act_data;
+    uint8_t serialized_x_data[DATA_BUFFER_SIZE*4];
     float y_act_data;
+    uint8_t serialized_y_data[DATA_BUFFER_SIZE*4];
     float z_act_data;
+    uint8_t serialized_z_data[DATA_BUFFER_SIZE*4];
     int64_t axis_time_start;
     int64_t axis_time_end;
+    int64_t current_time;
     float av_temp;
     float av_air_moist;
     float av_light;

@@ -7,9 +7,10 @@ void analog_app_init()
     // Empty implementation as no initialization is currently required.
 }
 
-static uint8_t percentage_transform(uint32_t x, uint32_t in_min, uint32_t in_max) {
-    uint32_t percentage = (x >= in_min) ? ((x - in_min) * (100) / (in_max - in_min)) : 0;
+static uint8_t percentage_transform(uint32_t x, int32_t in_min, int32_t in_max) {
+    int32_t percentage = ((((int32_t)x - in_min) * (100)) / (in_max - in_min));
     if(percentage > 100) percentage = 100;
+    else if(percentage <= 0) percentage = 0;
     else {}
     return (uint8_t)percentage;
 }
@@ -26,7 +27,7 @@ SAnaEnvData_t process_enviromental_data(uint32_t *env_data)
     out_env_data.light_percentage = percentage_transform(env_data[0],MIN_I_SOLAR_VALUE_THRESHOLD,MAX_I_SOLAR_VALUE_THRESHOLD);
     out_env_data.direct_sun_percentage = percentage_transform(env_data[1],MIN_V_SOLAR_VALUE_THRESHOLD,MAX_V_SOLAR_VALUE_THRESHOLD);
     out_env_data.soil_moist_percentage = percentage_transform(env_data[2],MIN_SOIL_MOIST_THRESHOLD,MAX_SOIL_MOIST_THRESHOLD);
-    
+
 
     return out_env_data;
 }

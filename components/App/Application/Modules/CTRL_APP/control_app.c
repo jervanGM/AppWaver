@@ -43,10 +43,10 @@ SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
 
             // for(uint16_t i = 0;i<buf_size;i++)
             // {
-            // TRACE_INFO("PLANT INFO:", TO_STRING(temp_msg._plant_buff.data[i]));
+            // TRACE_INFO("PLANT INFO:", TO_STRING(temp_msg.data[i]));
             // }
-            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg._buff_time.start_time.sec));
-            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg._buff_time.end_time.sec));
+            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg.start_time));
+            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg.end_time));
             // TRACE_INFO("LIGHT PERCENTAGE:", TO_STRING(temp_msg._env_data.light_percentage));
             // TRACE_INFO("SUN PERCENTAGE:", TO_STRING(temp_msg._env_data.direct_sun_percentage));
             // TRACE_INFO("SOIL PERCENTAGE:", TO_STRING(temp_msg._env_data.soil_moist_percentage));
@@ -73,16 +73,18 @@ SEnvData_t control_app_process_env_data(SAnalogSensMsg_t analog_env_data, SBusSe
 
 SAxisData_t control_app_process_acc_data(SBusSensCtrlMsg_t axis_data, SAccItMsg_t it_data)
 {
-    SAxisData_t temp_buff;
-    memcpy(temp_buff.x,axis_data._axis_buff.x,DATA_BUFFER_SIZE*sizeof(float));
-    memcpy(temp_buff.y,axis_data._axis_buff.y,DATA_BUFFER_SIZE*sizeof(float));
-    memcpy(temp_buff.z,axis_data._axis_buff.z,DATA_BUFFER_SIZE*sizeof(float));
-    
+    static SAxisData_t temp_buff;
+
+    if(axis_data._axis_buff.ready)
+    {
+        memcpy(temp_buff.x,axis_data._axis_buff.x,DATA_BUFFER_SIZE*sizeof(float));
+        memcpy(temp_buff.y,axis_data._axis_buff.y,DATA_BUFFER_SIZE*sizeof(float));
+        memcpy(temp_buff.z,axis_data._axis_buff.z,DATA_BUFFER_SIZE*sizeof(float));
+        temp_buff.start_time = axis_data._buff_time.start_time;
+        temp_buff.end_time = axis_data._buff_time.end_time;
+    }
     temp_buff.it1 = (it_data._int_cmd == ACT_IT1);
     temp_buff.it2 = (it_data._int_cmd == ACT_IT2);
-
-    temp_buff.start_time = axis_data._buff_time.start_time;
-    temp_buff.end_time = axis_data._buff_time.end_time;
 
     return temp_buff;
 }
