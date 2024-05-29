@@ -40,16 +40,6 @@ SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
             memcpy(&temp_msg.start_time,&data_in._buff_time.start_time,sizeof(STemp_t));
             memcpy(&temp_msg.end_time,&data_in._buff_time.end_time,sizeof(STemp_t));
         }
-
-            // for(uint16_t i = 0;i<buf_size;i++)
-            // {
-            // TRACE_INFO("PLANT INFO:", TO_STRING(temp_msg.data[i]));
-            // }
-            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg.start_time));
-            // TRACE_INFO("TIME SEC:", TO_STRING(temp_msg.end_time));
-            // TRACE_INFO("LIGHT PERCENTAGE:", TO_STRING(temp_msg._env_data.light_percentage));
-            // TRACE_INFO("SUN PERCENTAGE:", TO_STRING(temp_msg._env_data.direct_sun_percentage));
-            // TRACE_INFO("SOIL PERCENTAGE:", TO_STRING(temp_msg._env_data.soil_moist_percentage));
     }
     
     prev_ready = ready;
