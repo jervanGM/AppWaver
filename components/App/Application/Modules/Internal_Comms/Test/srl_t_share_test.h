@@ -1,5 +1,5 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef SRL_T_SHARE_TEST_H_
+#define SRL_T_SHARE_TEST_H_
 #include "test_suite.h"
 
 /**
@@ -42,4 +42,4 @@ void test_set_and_read_task_serial_status(void); /**< \test */
 void test_read_serial_controller_data_before_sending(void); /**< \test */
 
 
-#endif /* TRACE_TEST_H_ */
+#endif /* SRL_T_SHARE_TEST_H_ */

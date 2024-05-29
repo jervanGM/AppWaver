@@ -2,11 +2,19 @@
 #define I_BTN_DATA_H_
 #include <stdint.h>
 #include "safe_timer.h"
+#include "SERIES_ID.h"
+#include "CONSTANTS.h"
 
-#define BUTTON_ERROR_SLOT 4
+#define BUTTON_ERROR_SLOT 12
 #define HAL_BTN_CONFIG_ERROR -127
 
+#ifdef BASIC
 #define BUTTON_PIN 21
+#endif
+
+#ifdef ADVANCED
+#define BUTTON_PIN 18
+#endif
 
 typedef enum{
     BTN_TASK_OK,

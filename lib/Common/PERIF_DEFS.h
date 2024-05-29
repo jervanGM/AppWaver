@@ -27,20 +27,17 @@
 #define SENSORS_OFF 5
 #define I2C_SDA 6
 #define I2C_SCL 7
-#define ACC_IT2 8
+#define ACC_IT2 15
 #define ACC_IT1 14
-#define BUTTON_IT 17
-#define SD_CMD 18
+#define BUTTON_IT 18
 #define SD_CLK 19
-#define SD_DAT0 20
-#define SD_DAT1 21
-#define SD_DAT2 22
-#define SD_DAT3 23
+#define SD_MISO 20
+#define SD_MOSI 22
+#define SD_CS 21
+#define SD_CD 23
 #define SYSTEM_OFF 16
+#define INDICATOR_1 17
 
 #endif
-// #define ADVANCED
-
-#define BASIC
 
 #endif /* PERIF_DEFS_H_ */

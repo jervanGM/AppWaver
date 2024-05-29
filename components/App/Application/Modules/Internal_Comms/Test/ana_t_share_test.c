@@ -24,7 +24,6 @@ void tearDown(void)
 // Test function for verifying the setting and reading of task information.
 void test_set_and_read_task_analog_info(void) {
     SAnaTaskInfo_t task_info_sent = { .ID = 1, .status = ANA_TASK_OK }; // Sample task info to be sent
-    SAnaTaskInfo_t task_info_received; // Variable to store received task info
     SAnalogSensMsg_t _msg;
     // Set the task information
     set_task_analog_info(task_info_sent);
@@ -41,8 +40,7 @@ void test_set_and_read_task_analog_info(void) {
 void test_send_and_read_analog_controller_data(void) {
     SDataBuffer_t plant_buff_sent = { .data = {1, 2, 3, 4, 5} }; // Sample plant buffer to be sent
     SBufferTime_t buff_time_sent;   // Sample buffer time to be sent
-    SDataBuffer_t plant_buff_received; // Variable to store received plant buffer
-    SBufferTime_t buff_time_received;  // Variable to store received buffer time
+    SAnaEnvData_t env_data = {.direct_sun_percentage = 20, .light_percentage = 90, .soil_moist_percentage = 60};
     SAnalogSensMsg_t _msg;
 #ifdef _WIN32
     // Send the analog controller data
@@ -56,6 +54,7 @@ void test_send_and_read_analog_controller_data(void) {
     buff_time_sent.end_time = get_system_time();
 #endif
     analog_controller_send(plant_buff_sent, buff_time_sent);
+    analog_controller_send_env_data(env_data);
 
     // Read the analog controller data
     analog_controller_read(&_msg);
@@ -63,6 +62,7 @@ void test_send_and_read_analog_controller_data(void) {
     // Assert that the sent plant buffer and buffer time match the received plant buffer and buffer time
     TEST_ASSERT_EQUAL_MEMORY(&plant_buff_sent, &_msg._plant_buff, sizeof(SDataBuffer_t));
     TEST_ASSERT_EQUAL_MEMORY(&buff_time_sent, &_msg._buff_time, sizeof(SBufferTime_t));
+    TEST_ASSERT_EQUAL_MEMORY(&env_data, &_msg._env_data, sizeof(SAnaEnvData_t));
 }
 
 // Test function for verifying the setting and reading of task status.
@@ -84,8 +84,6 @@ void test_set_and_read_task_analog_status(void) {
 void test_send_and_read_analog_controller_data_large_buffers(void) {
     SDataBuffer_t plant_buff_sent;
     SBufferTime_t buff_time_sent;
-    SDataBuffer_t plant_buff_received;
-    SBufferTime_t buff_time_received;
     SAnalogSensMsg_t _msg;
     // Fill the plant buffer with large values
     for (int i = 0; i < 128; ++i) {
@@ -120,13 +118,14 @@ void test_read_analog_controller_data_before_sending(void) {
     SAnalogSensMsg_t _msg = {0}; // Initialize _msg with zeros
     SDataBuffer_t plant_buff = {0}; // Initialize plant_buff with zeros
     SBufferTime_t buff_time = {0}; // Initialize buff_time with zeros
-
+    SAnaEnvData_t env_data = {0};
     // Read analog controller data before sending
     analog_controller_read(&_msg);
 
     // Ensure that the size of _msg's _plant_buff and _buff_time members is equal to the size of plant_buff and buff_time, respectively
     TEST_ASSERT_EQUAL(sizeof(_msg._plant_buff), sizeof(plant_buff));
     TEST_ASSERT_EQUAL(sizeof(_msg._buff_time), sizeof(buff_time));
+    TEST_ASSERT_EQUAL(sizeof(_msg._env_data), sizeof(env_data));
 }
 
 void ana_t_share_test_suite()

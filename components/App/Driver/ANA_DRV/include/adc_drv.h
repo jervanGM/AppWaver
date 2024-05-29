@@ -12,9 +12,9 @@
 #include "esp_adc/adc_cali_scheme.h"
 #include "adc_cfg.h"
 
-static int adc_raw[2][10];
-static int voltage[2][10];
+static int adc_raw[4][10];
+static int voltage[4][10];
 
-void read_adc(uint8_t channel,uint32_t * data);
+int8_t read_adc(uint8_t channel,uint32_t * data);
 
 #endif /* ADC_DRV_H_ */

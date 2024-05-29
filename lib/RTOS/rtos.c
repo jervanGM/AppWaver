@@ -4,6 +4,7 @@
 #include "freertos/timers.h"
 #include "freertos/semphr.h"
 #include "assert_panic.h"
+#include "safe_trace.h"
 
 SemaphoreHandle_t xMutex[MAX_MUTEX];
 TaskHandle_t xTaskHandle[MAX_TASK_HANDLE];
@@ -45,9 +46,9 @@ ETaskState_t get_task_rtos_state(uint8_t handle_id)
     return (ETaskState_t)eTaskGetState(xTaskHandle[handle_id]);
 }
 
-void task_wait_for_event()
+uint32_t task_wait_for_event()
 {
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    return ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 }
 
 

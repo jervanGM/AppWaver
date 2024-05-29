@@ -58,10 +58,10 @@ void test_ana_task_breakdown_ready_fatal_error() {
 
     // Set next state event and execute state machine until it transitions to ANA_BREAKDOWN
     analog_sm_set_st_event(STATE_NEXT);
-    while(state == ANA_READY) {
+    do {
         analog_sm_run();
         state = analog_sm_get_state();
-    }
+    } while(state == ANA_READY);
     TEST_ASSERT_EQUAL(state, ANA_BREAKDOWN);
 
     // Execute state machine again and verify transition back to ANA_INIT
@@ -88,10 +88,13 @@ void test_ana_task_breakdown_operational_fatal_error() {
 
     // Set next state event and execute state machine until it transitions to ANA_OPERATIONAL
     analog_sm_set_st_event(STATE_NEXT);
-    while(state == ANA_READY) {
-        analog_sm_run();
-        state = analog_sm_get_state();
-    }
+    analog_sm_run();
+    state = analog_sm_get_state();
+
+    analog_sm_set_st_event(STATE_NEXT);
+    analog_sm_run();
+    state = analog_sm_get_state();
+
     TEST_ASSERT_EQUAL(state, ANA_OPERATIONAL);
 
     // Execute state machine again and verify transition to ANA_BREAKDOWN
@@ -180,6 +183,7 @@ void test_ana_task_breakdown_ready_error() {
     // Execute the state machine until a transition to ANA_BREAKDOWN occurs.
     while(state == ANA_READY) {
         set_adc_value(UINT32_MAX);
+        set_read_error(-1);
         analog_sm_run();
         state = analog_sm_get_state();
     }
@@ -194,6 +198,7 @@ void test_ana_task_breakdown_ready_error() {
 // Test error detection when the analog task is in the ANA_OPERATIONAL state.
 void test_ana_task_breakdown_operational_error() {
     // Initialize the task information structure and delay.
+    set_read_error(0);
     SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
@@ -211,7 +216,7 @@ void test_ana_task_breakdown_operational_error() {
     TEST_ASSERT_EQUAL(state, ANA_READY);
     
     // Execute the filter 256 times to stabilize it and clear any warnings.
-    while(state == ANA_READY || state == ANA_BREAKDOWN) {
+    while(state == ANA_READY) {
         set_adc_value(50);
         analog_sm_run();
         state = analog_sm_get_state();
@@ -221,6 +226,7 @@ void test_ana_task_breakdown_operational_error() {
     // Execute the state machine until a transition to ANA_BREAKDOWN occurs.
     while(state == ANA_OPERATIONAL) {
         set_adc_value(UINT32_MAX);
+        set_read_error(-1);
         analog_sm_run();
         state = analog_sm_get_state();
     }
@@ -235,6 +241,7 @@ void test_ana_task_breakdown_operational_error() {
 // Test error detection of an unknown error and execution of panic handling.
 void test_ana_task_breakdown_unknown_error() {
     // Initialize the task information structure and delay.
+    set_read_error(0);
     SAnaTaskInfo_t task_info;
     uint32_t delay = 1000;
     task_analog_init(&task_info, &delay);
@@ -254,6 +261,7 @@ void test_ana_task_breakdown_unknown_error() {
     // Execute the state machine until a transition to ANA_BREAKDOWN occurs.
     while(state == ANA_READY) {
         set_adc_value(UINT32_MAX);
+        set_read_error(-1);
         analog_sm_run();
         state = analog_sm_get_state();
     }

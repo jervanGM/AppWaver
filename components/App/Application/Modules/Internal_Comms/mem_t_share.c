@@ -31,30 +31,32 @@ void mem_ctrl_read(SMemCtrlMsg_t *msg)
 void ctrl_mem_send(
     SErrorInfo_t alarm,
     SSystemStatus_t status,
-    uint32_t *plant_signal,
+    SPPlantData_t plant_signal,
     SEnvData_t env_data,
     SPowerData_t power_data,
-    SAxisData_t *axis_buff,
+    SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
-    STime_t start_time,
-    STime_t end_time,
-    STime_t system_time)
-    {
-        mutex_lock(CTRL_MEM_M_ID);
-            memcpy(&_ctrl_msg._alarm, &alarm, sizeof(SErrorInfo_t));
-            memcpy(&_ctrl_msg._status, &status, sizeof(SSystemStatus_t));
-            memcpy(_ctrl_msg._plant_signal, plant_signal,DATA_BUFFER_SIZE*sizeof(uint32_t));
-            memcpy(&_ctrl_msg._env_data, &env_data, sizeof(SEnvData_t));
-            memcpy(&_ctrl_msg._power_data, &power_data, sizeof(SPowerData_t));
-            memcpy(_ctrl_msg._axis_buff, axis_buff,DATA_BUFFER_SIZE*sizeof(SAxisData_t));
-            memcpy(&_ctrl_msg._current_mode, &current_mode, sizeof(ESysMode_t));
-            memcpy(&_ctrl_msg._previous_mode, &previous_mode, sizeof(ESysMode_t));
-            memcpy(&_ctrl_msg._start_time, &start_time, sizeof(STime_t));
-            memcpy(&_ctrl_msg._end_time, &end_time, sizeof(STime_t));
-            memcpy(&_ctrl_msg._system_time, &system_time, sizeof(STime_t));
-        mutex_unlock(CTRL_MEM_M_ID);
-    }
+    int64_t system_time)
+{
+    SCtrlMemMsg_t temp_msg;
+
+    // Rellenar el mensaje temporal
+    temp_msg._alarm = alarm;
+    temp_msg._status = status;
+    temp_msg._plant_signal = plant_signal;
+    temp_msg._env_data = env_data;
+    temp_msg._power_data = power_data;
+    temp_msg._axis_buff = axis_buff;
+    temp_msg._current_mode = current_mode;
+    temp_msg._previous_mode = previous_mode;
+    temp_msg._system_time = system_time;
+
+    // Bloquear el mutex, copiar todo el mensaje y desbloquear
+    mutex_lock(CTRL_MEM_M_ID);
+    memcpy(&_ctrl_msg, &temp_msg, sizeof(SCtrlMemMsg_t));
+    mutex_unlock(CTRL_MEM_M_ID);
+}
 
 void ctrl_mem_read(SCtrlMemMsg_t *msg)
 {

@@ -1,5 +1,6 @@
 #include "control_diag.h"
 #include "safe_trace.h"
+#include <string.h>
 
 ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMemTaskStatus_t mem_status)
 {
@@ -45,3 +46,20 @@ ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMem
 
     return task_active;
 }
+
+#ifdef ADVANCED
+SCtrlBusSensMsg_t control_diag_process_bus_cmd(STemp_t temp, SMoist_t moist)
+{
+    SCtrlBusSensMsg_t msg;
+    if(((temp.temperature < 20) && (moist.moist > 70)))
+    {
+        msg._cmd.heater_cmd = SHT4X_MED_HEATER_1S;
+        msg._dev_id = TEMP_HUM_SENS;
+    }
+    else{
+        msg._cmd.heater_cmd = SHT4X_NO_HEATER;
+        msg._dev_id = TEMP_HUM_SENS;
+    }
+    return msg;
+}
+#endif

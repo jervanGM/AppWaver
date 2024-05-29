@@ -5,16 +5,16 @@
 
 EBtnPulse_t btn_handle_pulse(uint8_t btn_pin)
 {
-    STime_t start_time = get_system_time();
+    int64_t start_time = get_system_time();
     const IIOPort *port  = hal_io_get_port();
     if(port != NULL)
     {
-        if(get_system_time().sec > SYSTEM_INIT_WAIT_TIME)
+        if(get_system_time() > SYSTEM_INIT_WAIT_TIME)
         {
             while(!port->read(btn_pin));
             
-            STime_t end_time = get_system_time();
-            c_uint8_t button_time = end_time.sec - start_time.sec;
+            int64_t end_time = get_system_time();
+            c_uint8_t button_time = end_time - start_time;
             if(button_time < SHORT_PRESS_LIMIT)
             {
                     return SHORT_PRESS;

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #define ADC_UNIT                    ADC_UNIT_1
 #define _ADC_UNIT_STR(unit)         #unit
@@ -24,9 +25,11 @@
 
 
 
-void adc_config_init();
-void adc_config_reset();
+int8_t adc_config_init();
+int8_t adc_config_reset();
 
 bool is_init();
+
+void set_cfg_error(int8_t init_err, int8_t reset_err);
 
 #endif /* ADC_CFG_H_ */

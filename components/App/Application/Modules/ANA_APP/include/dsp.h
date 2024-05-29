@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include "gen_types.h"
+#include "SERIES_ID.h"
 
 /*Normalization parameters*/
 #define MAX_INPUT_VALUE 2048
@@ -43,5 +44,11 @@ uint32_t get_dsp_data();
  * @param input Pointer to the input data.
  */
 void iir_filter(uint32_t *input);
+
+#ifdef ADVANCED
+void get_solar_data(uint32_t *i_solar, uint32_t *v_solar);
+
+uint32_t get_soil_data();
+#endif
 
 #endif /* DSP_H_ */

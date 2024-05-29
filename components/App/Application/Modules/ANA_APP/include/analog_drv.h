@@ -36,6 +36,10 @@ void add_to_buffer(SDataBuffer_t *buffer, SBufferTime_t *time, uint32_t value);
  */
 void get_data_buffer(SDataBuffer_t *data_buffer, SBufferTime_t *data_time);
 
+#ifdef ADVANCED
+void get_env_data(uint32_t *env_data, bool ready);
+#endif
+
 /**
  * @brief Clears the data buffer.
  * 
