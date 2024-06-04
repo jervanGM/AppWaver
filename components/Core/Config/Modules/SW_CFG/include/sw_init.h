@@ -3,11 +3,11 @@
 
 #define ANA_T_PRIOR 5
 #define DIGI_T_PRIOR 5
-#define EXT_MEM_T_PRIOR 4
-#define SERIAL_RX_T_PRIOR 1
-#define WIRELESS_T_PRIOR 4
-#define POWER_T_PRIOR 3
-#define IND_T_PRIOR 2
+#define EXT_MEM_T_PRIOR 2
+#define SERIAL_RX_T_PRIOR 2
+#define WIRELESS_T_PRIOR 2
+#define POWER_T_PRIOR 4
+#define IND_T_PRIOR 3
 #define CONTROL_T_PRIOR 6
 
 #define ANA_T_PERIOD 100

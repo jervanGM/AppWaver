@@ -55,6 +55,7 @@ uint32_t get_dsp_data()
         #endif
         // Apply filters and normalization
         iir_filter(&data); // Apply IIR filter
+        
         return data;
     }
     else
@@ -139,7 +140,7 @@ uint32_t get_soil_data()
             TRACE_ERROR("A analog sensor task error has been produced during reading ADC");
             return 0;  
         }
-        printf(">soil_data: %d\n",(int)s_data);
+        
         return s_data;
     }
     else
