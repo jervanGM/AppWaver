@@ -1,8 +1,20 @@
 var searchData=
 [
-  ['ana_5fdrv_5fbuffer_5fempty_0',['ANA_DRV_BUFFER_EMPTY',['../i__analog__data_8h_ad8d92f680a17681a6e4fb438e90fb2b3.html#ad8d92f680a17681a6e4fb438e90fb2b3',1,'i_analog_data.h']]],
-  ['ana_5fdsp_5fiir_5ferror_1',['ANA_DSP_IIR_ERROR',['../i__analog__data_8h_aafbc5bdd871bfca9b43b6058580c0acc.html#aafbc5bdd871bfca9b43b6058580c0acc',1,'i_analog_data.h']]],
-  ['ana_5fdsp_5fnormalize_5ferror_2',['ANA_DSP_NORMALIZE_ERROR',['../i__analog__data_8h_afaedb0d2edd36a700ef1a0dfdf954516.html#afaedb0d2edd36a700ef1a0dfdf954516',1,'i_analog_data.h']]],
-  ['analogic_5ferror_5fslot_3',['ANALOGIC_ERROR_SLOT',['../i__analog__data_8h_acc20854497ff16ec299cf0d28b7fd8e4.html#acc20854497ff16ec299cf0d28b7fd8e4',1,'i_analog_data.h']]],
-  ['architecture_5fid_4',['ARCHITECTURE_ID',['../_c_make_c_compiler_id_8c_aba35d0d200deaeb06aee95ca297acb28.html#aba35d0d200deaeb06aee95ca297acb28',1,'CMakeCCompilerId.c']]]
+  ['ana_5fapp_5fenv_5fdata_5fempty_0',['ANA_APP_ENV_DATA_EMPTY',['../i__analog__data_8h_a696fdf71c68ec20ca5bed6ebf72f4d7f.html#a696fdf71c68ec20ca5bed6ebf72f4d7f',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fbuffer_5fempty_1',['ANA_DRV_BUFFER_EMPTY',['../i__analog__data_8h_ad8d92f680a17681a6e4fb438e90fb2b3.html#ad8d92f680a17681a6e4fb438e90fb2b3',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fdeinit_5ferror_2',['ANA_DRV_DEINIT_ERROR',['../i__analog__data_8h_a6b018dfa531059fc4dde77dd2bc81d65.html#a6b018dfa531059fc4dde77dd2bc81d65',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fenv_5fdata_5fempty_3',['ANA_DRV_ENV_DATA_EMPTY',['../i__analog__data_8h_a1eb5cc2a3d23375c73fba70acfa76721.html#a1eb5cc2a3d23375c73fba70acfa76721',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5ffail_4',['ANA_DRV_FAIL',['../i__analog__data_8h_ac4aac7446c506b1cb42bbb2d419fae12.html#ac4aac7446c506b1cb42bbb2d419fae12',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5finit_5ferror_5',['ANA_DRV_INIT_ERROR',['../i__analog__data_8h_ae861edf4a1e30a5de7d9734d9181c6f1.html#ae861edf4a1e30a5de7d9734d9181c6f1',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fok_6',['ANA_DRV_OK',['../i__analog__data_8h_a500d279c73e0e0a47c59bf4d00841894.html#a500d279c73e0e0a47c59bf4d00841894',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fon_5fread_5ferror_7',['ANA_DRV_ON_READ_ERROR',['../i__analog__data_8h_a932e876aec431867929e73716df237a2.html#a932e876aec431867929e73716df237a2',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fon_5fread_5ffatal_5ferror_8',['ANA_DRV_ON_READ_FATAL_ERROR',['../i__analog__data_8h_a8bb82bd38243ebfe2ba0b4b7335c4bcb.html#a8bb82bd38243ebfe2ba0b4b7335c4bcb',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fon_5fwrite_5ferror_9',['ANA_DRV_ON_WRITE_ERROR',['../i__analog__data_8h_ac4dd55c6e7cae1461eb8382d0425b1c1.html#ac4dd55c6e7cae1461eb8382d0425b1c1',1,'i_analog_data.h']]],
+  ['ana_5fdrv_5fon_5fwrite_5ffatal_5ferror_10',['ANA_DRV_ON_WRITE_FATAL_ERROR',['../i__analog__data_8h_a1cc6c84334b78f30aa8e0312568a1be3.html#a1cc6c84334b78f30aa8e0312568a1be3',1,'i_analog_data.h']]],
+  ['ana_5fdsp_5fiir_5ferror_11',['ANA_DSP_IIR_ERROR',['../i__analog__data_8h_aafbc5bdd871bfca9b43b6058580c0acc.html#aafbc5bdd871bfca9b43b6058580c0acc',1,'i_analog_data.h']]],
+  ['ana_5fdsp_5fnormalize_5ferror_12',['ANA_DSP_NORMALIZE_ERROR',['../i__analog__data_8h_afaedb0d2edd36a700ef1a0dfdf954516.html#afaedb0d2edd36a700ef1a0dfdf954516',1,'i_analog_data.h']]],
+  ['ana_5fhandler_5fid_13',['ANA_HANDLER_ID',['../i__analog__data_8h_ab1dfda0143faa61f5081ec725ca7bfa3.html#ab1dfda0143faa61f5081ec725ca7bfa3',1,'i_analog_data.h']]],
+  ['analog_5fenv_5fsensors_14',['ANALOG_ENV_SENSORS',['../i__analog__data_8h_a29483e62da2fdf5f0e0a49fdd10c6dca.html#a29483e62da2fdf5f0e0a49fdd10c6dca',1,'i_analog_data.h']]],
+  ['analogic_5ferror_5fslot_15',['ANALOGIC_ERROR_SLOT',['../i__analog__data_8h_acc20854497ff16ec299cf0d28b7fd8e4.html#acc20854497ff16ec299cf0d28b7fd8e4',1,'i_analog_data.h']]],
+  ['architecture_5fid_16',['ARCHITECTURE_ID',['../_c_make_c_compiler_id_8c_aba35d0d200deaeb06aee95ca297acb28.html#aba35d0d200deaeb06aee95ca297acb28',1,'CMakeCCompilerId.c']]]
 ];

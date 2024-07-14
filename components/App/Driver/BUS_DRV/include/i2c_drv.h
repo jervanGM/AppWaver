@@ -19,23 +19,37 @@ static const char *TAG = "i2c driver";
 #define DEV_WITHOUT_REG             0x00
 
 /**
- * @brief i2c master initialization
+ * @brief Initialize the I2C bus.
+ *
+ * @return 0 on success, -1 on failure.
  */
 int8_t i2c_bus_init(void);
 
 /**
- * @brief Read a sequence of bytes from a device registers
+ * @brief Read from a register of an I2C device.
+ *
+ * @param dev_addr I2C device address.
+ * @param data Pointer to buffer to store read data.
+ * @param len Number of bytes to read.
+ * @return 0 on success, -1 on failure.
  */
-int8_t i2c_read_register(uint8_t dev_addrs, uint8_t *data, size_t len);
+int8_t i2c_read_register(uint8_t dev_addr, uint8_t *data, size_t len);
 
 /**
- * @brief Write a byte to a device register
+ * @brief Write to a register of an I2C device.
+ *
+ * @param dev_addr I2C device address.
+ * @param data Pointer to data buffer to write.
+ * @param len Number of bytes to write.
+ * @return 0 on success, -1 on failure.
  */
-int8_t i2c_write_register(uint8_t dev_addrs, uint8_t *data, size_t len);
+int8_t i2c_write_register(uint8_t dev_addr, uint8_t *data, size_t len);
 
 /**
- * @brief i2c master deinitialization
+ * @brief Deinitialize the I2C bus.
+ *
+ * @return 0 on success, -1 on failure.
  */
-int8_t i2c_bus_deinit();
+int8_t i2c_bus_deinit(void);
 
 #endif /* I2C_DRV_H_ */

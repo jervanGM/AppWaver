@@ -19,9 +19,21 @@ void test_dsp_init_error(); /**< \test */
  */
 void test_dsp_data_memory_error(); /**< \test */
 
-void test_dsp_solar_memory_error();
+/**
+ * @brief Test to verify memory error handling when retrieving solar data from DSP module.
+ *
+ * This test checks the behavior of the DSP module when a memory error occurs during solar data retrieval.
+ * It verifies if the error code is stored correctly in the designated error slot and if the retrieved data is zero.
+ */
+void test_dsp_solar_memory_error(); /**< \test */
 
-void test_dsp_soil_memory_error();
+/**
+ * @brief Test to verify memory error handling when retrieving soil data from DSP module.
+ *
+ * This test checks the behavior of the DSP module when a memory error occurs during soil data retrieval.
+ * It verifies if the error code is stored correctly in the designated error slot and if the retrieved data is zero.
+ */
+void test_dsp_soil_memory_error(); /**< \test */
 
 /**
  * @brief Test to verify the initialization of the DSP module.
@@ -32,18 +44,23 @@ void test_dsp_soil_memory_error();
  */
 void test_dsp_init(); /**< \test */
 
-void test_dsp_init_error();
-
 /**
  * @brief Test to verify data retrieval from the DSP module.
  *
  * This test verifies the proper retrieval of data from the DSP module.
  * It initializes the error slot, sets the ADC value to 27 (simulated data), retrieves DSP data,
- * and checks if the error slot remains 0, indicating successful data retrieval, and if the retrieved data is 3.
+ * and checks if the error slot remains 0, indicating successful data retrieval, and if the retrieved data is 24.
  */
 void test_dsp_data(); /**< \test */
 
- void test_dsp_data_read_error();
+/**
+ * @brief Test to verify the error handling of the DSP module during data read operation.
+ *
+ * This test verifies the error handling of the DSP module when a read error occurs during data retrieval.
+ * It initializes the error slot, sets the ADC value, simulates a read error, retrieves DSP data,
+ * and checks if the error slot reflects the expected error code and if the retrieved data is 0.
+ */
+void test_dsp_data_read_error(); /**< \test */
 
 /**
  * @brief Test to verify the error handling of the DSP module during data filtering.
@@ -81,14 +98,49 @@ void test_dsp_data_with_high_input(); /**< \test */
  */
 void test_dsp_data_random_wave(); /**< \test */
 
-void test_dsp_get_solar_data();
+/**
+ * @brief Test to verify data retrieval of solar data from the DSP module.
+ *
+ * This test verifies the proper retrieval of solar data from the DSP module.
+ * It initializes the error slot, sets the ADC value, retrieves solar data,
+ * and checks if the error slot remains 0, and if the retrieved data matches the expected value.
+ */
+void test_dsp_get_solar_data(); /**< \test */
 
-void test_dsp_get_solar_data_read_error();
+/**
+ * @brief Test to verify the error handling of the DSP module during solar data retrieval.
+ *
+ * This test verifies the error handling of the DSP module when a read error occurs during solar data retrieval.
+ * It initializes the error slot, sets the ADC value, simulates a read error, retrieves solar data,
+ * and checks if the error slot reflects the expected error code.
+ */
+void test_dsp_get_solar_data_read_error(); /**< \test */
 
-void test_dsp_get_solar_data_null_error();
+/**
+ * @brief Test to verify the error handling of the DSP module when solar data pointers are NULL.
+ *
+ * This test verifies the error handling of the DSP module when solar data pointers are NULL during data retrieval.
+ * It initializes the error slot, sets the ADC value, retrieves solar data with NULL pointers,
+ * and checks if the error slot reflects the expected error code.
+ */
+void test_dsp_get_solar_data_null_error(); /**< \test */
 
-void test_dsp_get_soil_data();
+/**
+ * @brief Test to verify data retrieval of soil data from the DSP module.
+ *
+ * This test verifies the proper retrieval of soil data from the DSP module.
+ * It initializes the error slot, sets the ADC value, retrieves soil data,
+ * and checks if the error slot remains 0, and if the retrieved data matches the expected value.
+ */
+void test_dsp_get_soil_data(); /**< \test */
 
-void test_dsp_get_soil_data_read_error();
+/**
+ * @brief Test to verify the error handling of the DSP module during soil data retrieval.
+ *
+ * This test verifies the error handling of the DSP module when a read error occurs during soil data retrieval.
+ * It initializes the error slot, sets the ADC value, simulates a read error, retrieves soil data,
+ * and checks if the error slot reflects the expected error code.
+ */
+void test_dsp_get_soil_data_read_error(); /**< \test */
 
 #endif /* TRACE_TEST_H_ */

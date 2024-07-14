@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['gen_5findex_5fmd_0',['gen_index_md',['../namespacegen__index__md.html',1,'']]],
+  ['gen_5findex_5fmd_2epy_1',['gen_index_md.py',['../gen__index__md_8py.html',1,'']]],
+  ['generate_5findex_5fmd_2',['generate_index_md',['../namespacegen__index__md_a4e67efeebf06d3bd36fd883d050eef0a.html#a4e67efeebf06d3bd36fd883d050eef0a',1,'gen_index_md']]],
+  ['get_5fheader_5ffiles_3',['get_header_files',['../namespacegen__index__md_a252636707f2016b5e05dbeeecf29b320.html#a252636707f2016b5e05dbeeecf29b320',1,'gen_index_md']]],
+  ['getcenterfrequency_4',['GetCenterFrequency',['../libmfcc_8c_ad4632e9fd0687755ee20207dab4905e8.html#ad4632e9fd0687755ee20207dab4905e8',1,'GetCenterFrequency(unsigned int filterBand):&#160;libmfcc.c'],['../libmfcc_8h_ad4632e9fd0687755ee20207dab4905e8.html#ad4632e9fd0687755ee20207dab4905e8',1,'GetCenterFrequency(unsigned int filterBand):&#160;libmfcc.c']]],
+  ['getcoefficient_5',['GetCoefficient',['../libmfcc_8c_a5d322f9c9bdf0b9a0aa9fa60a7745bf1.html#a5d322f9c9bdf0b9a0aa9fa60a7745bf1',1,'GetCoefficient(double *spectralData, unsigned int samplingRate, unsigned int NumFilters, unsigned int binSize, unsigned int m):&#160;libmfcc.c'],['../libmfcc_8h_a5d322f9c9bdf0b9a0aa9fa60a7745bf1.html#a5d322f9c9bdf0b9a0aa9fa60a7745bf1',1,'GetCoefficient(double *spectralData, unsigned int samplingRate, unsigned int NumFilters, unsigned int binSize, unsigned int m):&#160;libmfcc.c']]],
+  ['getfilterparameter_6',['GetFilterParameter',['../libmfcc_8c_afecfa04901ae3998754d50b109fc4d2a.html#afecfa04901ae3998754d50b109fc4d2a',1,'GetFilterParameter(unsigned int samplingRate, unsigned int binSize, unsigned int frequencyBand, unsigned int filterBand):&#160;libmfcc.c'],['../libmfcc_8h_afecfa04901ae3998754d50b109fc4d2a.html#afecfa04901ae3998754d50b109fc4d2a',1,'GetFilterParameter(unsigned int samplingRate, unsigned int binSize, unsigned int frequencyBand, unsigned int filterBand):&#160;libmfcc.c']]],
+  ['getmagnitudefactor_7',['GetMagnitudeFactor',['../libmfcc_8c_a42533b4afa33071dfdb9197bf28d86b7.html#a42533b4afa33071dfdb9197bf28d86b7',1,'GetMagnitudeFactor(unsigned int filterBand):&#160;libmfcc.c'],['../libmfcc_8h_a42533b4afa33071dfdb9197bf28d86b7.html#a42533b4afa33071dfdb9197bf28d86b7',1,'GetMagnitudeFactor(unsigned int filterBand):&#160;libmfcc.c']]]
+];

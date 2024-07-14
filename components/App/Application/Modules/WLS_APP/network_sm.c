@@ -36,7 +36,7 @@ static void breakdown_transition();
 /* Define the state machine states */
 SWlsSmStates wls_state_sm;
 
-/* Initializes the analog state machine with the provided transition functions for each state */
+/* Initializes the network state machine with the provided transition functions for each state */
 EWlsTaskStatus_t network_sm_init(
     void (*init_func)(void), 
     void (*ready_func)(void), 
@@ -77,20 +77,20 @@ EWlsTaskStatus_t network_sm_init(
     }
 }
 
-/* Runs the current state's execution function in the analog state machine */
+/* Runs the current state's execution function in the network state machine */
 void network_sm_run()
 {
     wls_state_sm.state_func[wls_state_sm.sm_state].handle_execute();
     wls_state_sm.state_func[wls_state_sm.sm_state].handle_transition();
 }
 
-/* Retrieves the current state of the analog state machine */
+/* Retrieves the current state of the network state machine */
 EWlsTaskState_t network_sm_get_state()
 {
     return wls_state_sm.sm_state;
 }
 
-/* Sets the event for the analog state machine */
+/* Sets the event for the network state machine */
 void network_sm_set_st_event(EWlsStateEvent_t event)
 {
     wls_state_sm.st_event = event;

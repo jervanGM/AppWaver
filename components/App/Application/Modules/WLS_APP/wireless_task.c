@@ -25,7 +25,7 @@ void task_wireless(void *pvParameters)
 
     // Verify initialization success
     ASSERT_PANIC(task_info.status == WLS_TASK_OK, 
-              "Analog task state machine has not been initialized correctly");
+              "Wireless task state machine has not been initialized correctly");
     set_task_wireless_info(task_info);
   
     /* Infinite loop */
@@ -33,7 +33,7 @@ void task_wireless(void *pvParameters)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
-        // Run analog state machine
+        // Run wireless state machine
         network_sm_run();
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);

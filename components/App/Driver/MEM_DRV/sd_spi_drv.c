@@ -104,58 +104,76 @@ int8_t sd_spi_init(void)
 
 int8_t sd_spi_write_txt(const char *path, char *data)
 {
+    // Construct full file path
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
-    ESP_LOGI(TAG, "Opening file %s", file_path);
+
+    // Open file in append mode
     FILE *f = fopen(file_path, "a");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for writing");
         return -1;
     }
+
+    // Write data to file
     fprintf(f, data);
+
+    // Close file
     fclose(f);
 
     return 0;
 }
 
-int8_t sd_spi_write_bin(const char* path, void* data,size_t type_size, size_t data_size)
+int8_t sd_spi_write_bin(const char* path, void* data, size_t type_size, size_t data_size)
 {
+    // Construct full file path
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
-    ESP_LOGI(TAG, "Opening file %s", file_path);
+
+    // Open file in append binary mode
     FILE* f = fopen(file_path, "ab");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for writing");
         return -1;
     }
 
+    // Write binary data to file
     fwrite(data, type_size, data_size, f);
 
+    // Close file
     fclose(f);
 
+    // Log success message
     ESP_LOGI(TAG, "Data has been appended to the file");
     return 0;
 }
 
 int8_t sd_spi_read_file(const char *path, char *data)
 {
+    // Construct full file path
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
-    ESP_LOGI(TAG, "Reading file %s", file_path);
+
+    // Open file in read mode
     FILE *f = fopen(file_path, "r");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for reading");
         return -1;
     }
 
+    // Read data from file
     fgets(data, sizeof(data), f);
+
+    // Close file
     fclose(f);
 
-    // strip newline
+    // Strip newline character if present
     char *pos = strchr(data, '\n');
     if (pos) {
         *pos = '\0';
     }
+
+    // Log read data
     ESP_LOGI(TAG, "Read from file: '%s'", data);
 
     return 0;
@@ -163,9 +181,12 @@ int8_t sd_spi_read_file(const char *path, char *data)
 
 bool sd_spi_file_exists(const char *path)
 {
+    // Construct full file path
     struct stat st;
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
+
+    // Check file existence
     if (stat(file_path, &st) == 0) {
         return true;
     }
@@ -174,11 +195,12 @@ bool sd_spi_file_exists(const char *path)
 
 int8_t sd_spi_create_directory(const char *path)
 {
+    // Construct full directory path
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
 
-    if (mkdir(file_path, 0777) != 0) 
-    {
+    // Attempt to create directory
+    if (mkdir(file_path, 0777) != 0) {
         return -1;
     }
 
@@ -187,9 +209,11 @@ int8_t sd_spi_create_directory(const char *path)
 
 int8_t sd_spi_create_file(const char *path)
 {
+    // Construct full file path
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
 
+    // Create empty file
     FILE* archivo = fopen(file_path, "w");
     if (archivo == NULL) {
         return -1;
@@ -201,14 +225,17 @@ int8_t sd_spi_create_file(const char *path)
 
 int8_t sd_spi_delete_file(const char *path)
 {
+    // Construct full file path
     struct stat st;
     char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
+
+    // Check if file exists
     if (stat(file_path, &st) == 0) {
-        // Delete it if it exists
+        // Delete file if it exists
         return unlink(file_path);
     }    
-    return 1;
+    return 1; // File does not exist
 }
 
 int8_t sd_spi_rename_file(const char *old_path,const char *new_path)

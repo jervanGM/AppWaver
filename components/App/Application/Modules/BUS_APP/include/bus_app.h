@@ -8,29 +8,53 @@
 #define MAYOR_FAULT_THESHOLD -20
 
 /**
- * @brief Initializes the serial application.
+ * @brief Initializes the bus application.
  */
 void bus_app_init();
 
+/**
+ * @brief Processes raw data received from the bus.
+ *
+ * This function processes raw data from a bus interface, calculates temperature,
+ * moisture, accelerometer data, and ADC values, and stores them in respective buffers.
+ *
+ * @param[in] raw_data Pointer to the raw data buffer.
+ * @param[in] size Size of the raw data buffer.
+ */
 void process_data(uint8_t *raw_data, size_t size);
 
+/**
+ * @brief Retrieves the axis data buffer.
+ *
+ * @return The current axis data buffer.
+ */
 SAxisDataBuffer_t get_axis_data_buffer();
 
+/**
+ * @brief Retrieves the time information of the axis data buffer.
+ *
+ * @return The time information of the axis data buffer.
+ */
 SBufTime_t get_axis_buffer_time();
 
+/**
+ * @brief Retrieves the average temperature data from the buffer.
+ *
+ * @return The average temperature data.
+ */
 STemp_t get_buffer_average_temp();
 
+/**
+ * @brief Retrieves the average moisture data from the buffer.
+ *
+ * @return The average moisture data.
+ */
 SMoist_t get_buffer_average_moist();
 
 /**
- * @brief Checks for faults in the serial application.
- * 
- * This function reads the error from the specified error slot and determines the task status based on the error value.
- * If the error falls within the range defined by MINOR_FAULT_THRESHOLD and MAYOR_FAULT_THRESHOLD, BUS_MINOR_FAULT is returned.
- * If the error is less than MAYOR_FAULT_THRESHOLD, BUS_MAYOR_FAULT is returned.
- * If the error is greater than or equal to MAYOR_FAULT_THRESHOLD, BUS_TASK_OK is returned.
- * 
- * @return The task status indicating the severity of faults.
+ * @brief Checks for faults in the bus application.
+ *
+ * @return The status of the bus task.
  */
 EBusTaskStatus_t bus_app_check_faults();
 

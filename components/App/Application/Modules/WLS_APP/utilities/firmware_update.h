@@ -21,8 +21,32 @@
 
 #include <anjay/anjay.h>
 
+/**
+ * @brief Function to install firmware update module.
+ *
+ * @param anjay Anjay object instance.
+ * @return 0 on success, error code on failure.
+ *
+ * Installs firmware update module for the given Anjay instance.
+ * Logs an error if OTA port is not properly configured or if already installed.
+ */
 int fw_update_install(anjay_t *anjay);
+
+/**
+ * @brief Checks if firmware update is requested.
+ *
+ * @return true if firmware update is requested, false otherwise.
+ *
+ * Checks if firmware update has been requested by setting a flag.
+ */
 bool fw_update_requested(void);
+
+/**
+ * @brief Reboots to perform a firmware upgrade.
+ *
+ * Initiates a system reboot to finalize firmware upgrade.
+ * Logs an error if OTA port is not properly configured.
+ */
 void fw_update_reboot(void);
 
 #endif // FIRMWARE_UPDATE_H

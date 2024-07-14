@@ -34,6 +34,17 @@ static struct {
     atomic_bool update_requested;
 } fw_state;
 
+/**
+ * @brief Handler for opening a firmware update stream.
+ *
+ * @param user_ptr User pointer (unused).
+ * @param package_uri URI of the firmware package.
+ * @param package_etag ETag of the firmware package.
+ * @return 0 on success, -1 on failure to initialize OTA port.
+ *
+ * Initializes the OTA port for firmware update stream.
+ * Logs an error if OTA port is not properly configured.
+ */
 static int fw_stream_open(void *user_ptr,
                           const char *package_uri,
                           const struct anjay_etag *package_etag) {
@@ -55,6 +66,17 @@ static int fw_stream_open(void *user_ptr,
     return -1;
 }
 
+/**
+ * @brief Handler for writing data to a firmware update stream.
+ *
+ * @param user_ptr User pointer (unused).
+ * @param data Pointer to data to write.
+ * @param length Length of data to write.
+ * @return 0 on success, ANJAY_FW_UPDATE_ERR_UNSUPPORTED_PACKAGE_TYPE if write fails.
+ *
+ * Writes data to the OTA port for firmware update stream.
+ * Logs an error if OTA port is not properly configured.
+ */
 static int fw_stream_write(void *user_ptr, const void *data, size_t length) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
@@ -77,6 +99,16 @@ static int fw_stream_write(void *user_ptr, const void *data, size_t length) {
     return 0;
 }
 
+
+/**
+ * @brief Handler for finishing a firmware update stream.
+ *
+ * @param user_ptr User pointer (unused).
+ * @return 0 on success, ANJAY_FW_UPDATE_ERR_INTEGRITY_FAILURE if finish fails.
+ *
+ * Finalizes the OTA port for firmware update stream.
+ * Logs an error if OTA port is not properly configured.
+ */
 static int fw_stream_finish(void *user_ptr) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
@@ -99,6 +131,14 @@ static int fw_stream_finish(void *user_ptr) {
     return 0;
 }
 
+/**
+ * @brief Handler for resetting after a firmware update.
+ *
+ * @param user_ptr User pointer (unused).
+ *
+ * Resets the OTA port after firmware update.
+ * Logs an error if OTA port is not properly configured.
+ */
 static void fw_reset(void *user_ptr) {
     (void) user_ptr;
     const IOtaPort *port = hal_ota_get_port();
@@ -115,6 +155,15 @@ static void fw_reset(void *user_ptr) {
     
 }
 
+/**
+ * @brief Handler for performing firmware upgrade.
+ *
+ * @param user_ptr User pointer (unused).
+ * @return 0 on success, ANJAY_FW_UPDATE_ERR_INTEGRITY_FAILURE on upgrade failure.
+ *
+ * Initiates firmware upgrade using OTA port.
+ * Logs an error if OTA port is not properly configured.
+ */
 static int fw_perform_upgrade(void *user_ptr) {
     (void) user_ptr;
     int result = 0;

@@ -10,7 +10,6 @@ void serial_init()
 {
     srl_port = hal_srl_get_port();
 
-    
     if (srl_port != NULL)
     {
         if(srl_port->init() != SRL_DRV_OK)
@@ -41,24 +40,29 @@ bool serial_connected()
     return false;
 }
 
-static void extract_between_slashes(const char *buff, size_t size) {
+static void extract_between_slashes(const char *buff, size_t size)
+{
     const char *start_ptr = strstr(buff, "/");
-    if (start_ptr != NULL) {
-        // Avanzamos al siguiente caracter después de '/'
+    if (start_ptr != NULL)
+    {
+        // Move to the next character after '/'
         start_ptr++;
 
         const char *end_ptr = strstr(start_ptr, "/");
-        if (end_ptr != NULL) {
+        if (end_ptr != NULL)
+        {
             size_t length = end_ptr - start_ptr;
 
-            if (length < size) {
-                // Creamos una copia del texto entre las barras
-                char temp[length + 1]; // +1 para el carácter nulo
+            if (length < size)
+            {
+                // Create a copy of the text between the slashes
+                char temp[length + 1]; // +1 for the null terminator
                 strncpy(temp, start_ptr, length);
-                temp[length] = '\0'; // Aseguramos que la cadena termine con el carácter nulo
+                temp[length] = '\0'; // Ensure the string is null-terminated
 
-                // Copiamos la cadena temporal de vuelta al buffer original solo si el tamaño es suficiente
-                if (length < size) {
+                // Copy the temporary string back to the original buffer if size allows
+                if (length < size)
+                {
                     strcpy(buff, temp);
                 }
             }
@@ -73,7 +77,7 @@ SSerialCmd_t serial_process_cmd() {
     if (srl_port != NULL) {
         uint8_t data[cmd_size];
         srl_port->read_cmd(data, cmd_size);
-        
+        // Check if the received command is empty (single '/')
         if (data[0] == '/' && data[1] == '\0') {
             strcpy(srl_cmd.cmd, "");
             srl_cmd.force = false;
@@ -81,8 +85,9 @@ SSerialCmd_t serial_process_cmd() {
 
             if (cmd_size >= strlen((char *)data) + 1) {
                 memcpy(srl_cmd.cmd, data, strlen((char *)data) + 1);
+                // Extract text between '/' characters
                 extract_between_slashes(srl_cmd.cmd, cmd_size);
-                
+                // Check for '--force' option in the command
                 char *force_ptr = strstr(srl_cmd.cmd, " --force");
                 if (force_ptr != NULL) {
                     

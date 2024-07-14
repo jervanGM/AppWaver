@@ -26,15 +26,15 @@
 #endif
 
 #ifndef FAKE_FUNC
-    void test_serial_drv_init_error()
+    void test_serial_codec_init_error()
     {
         set_errors(-1, 0);
         serial_init();
         int8_t error = read_error_from_slot(SERIAL_ERROR_SLOT);
-        TEST_ASSERT_EQUAL(error,SRL_DRV_INIT_ERROR);
+        TEST_ASSERT_EQUAL(error,SRL_codec_INIT_ERROR);
     }
 
-    void test_serial_drv_deinit_error()
+    void test_serial_codec_deinit_error()
     {
         store_error_in_slot(SERIAL_ERROR_SLOT,0);   
         set_errors(0, -1);
@@ -43,7 +43,7 @@
         TEST_ASSERT_EQUAL(error,0);
     }
 
-    void test_serial_drv_connection()
+    void test_serial_codec_connection()
     {
         set_serial_connection(true);
         bool conn = serial_connected();
@@ -54,7 +54,7 @@
         TEST_ASSERT_EQUAL(conn,false);
     }
     
-void test_serial_drv_correct_msg()
+void test_serial_codec_correct_msg()
 {
     SSerialCmd_t cmd;
     
@@ -132,9 +132,9 @@ void srl_codec_test_suite()
     RUN_TEST(test_handle_port_error);
 #endif
 #ifndef FAKE_FUNC
-    RUN_TEST(test_serial_drv_init_error);
-    RUN_TEST(test_serial_drv_deinit_error);
-    RUN_TEST(test_serial_drv_connection);
-    RUN_TEST(test_serial_drv_correct_msg);
+    RUN_TEST(test_serial_codec_init_error);
+    RUN_TEST(test_serial_codec_deinit_error);
+    RUN_TEST(test_serial_codec_connection);
+    RUN_TEST(test_serial_codec_correct_msg);
 #endif
 }

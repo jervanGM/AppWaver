@@ -106,12 +106,14 @@ void on_ctrl_execute()
     static ECtrlTaskAct_t task_active = CTRL_TASK_WLS; 
     static EWifiActSts_t wifi_pw_sts = PW_WIFI_ON;
 
+    // Read sensor data from controllers
     analog_controller_read(&ana_msg);
     wireless_controller_read(&wls_msg);
     button_controller_read(&btn_msg);
     serial_controller_read(&srl_msg);
     mem_ctrl_read(&mem_msg);
 
+    // Process plant data
     plant_buf = control_app_process_plant_data(ana_msg);
 
 #ifdef ADVANCED
@@ -126,12 +128,12 @@ void on_ctrl_execute()
     controller_bus_send(ctrl_msg._dev_id,ctrl_msg._cmd);
 #endif
 
+    // Handle power off and normal mode commands
     if((btn_msg._btn_cmd == BTN_CMD_PW_OFF) || (strcmp(srl_msg._command.cmd, srl_cmd_list[0]) == 0))
     {
         ctrl_pw_send(PW_SENS_OFF,PW_MAIN_OFF,PW_SOIL_OFF,PW_WIFI_OFF,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_OFF);
         power_data.curnt_pw_mode = E_PW_OFF;
-        
     }
     else if(btn_msg._btn_cmd == BTN_CMD_NORMAL || (strcmp(srl_msg._command.cmd, srl_cmd_list[1]) == 0))
     {
@@ -145,51 +147,8 @@ void on_ctrl_execute()
         ctrl_ind_send(IND_LED1,BLINK_500_MS);
         task_active = CTRL_TASK_BOTH;
     }
-    
-// #ifdef BASIC
-//     switch (task_active)
-//     {
-//     case CTRL_TASK_WLS:
-//         if(get_task_rtos_state(mem_msg._task_info.ID) != TASK_SUSPENDED)
-//         {
-//             suspend_task(mem_msg._task_info.ID);
-//         }
-//         if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
-//         {
-//             resume_task(wls_msg._task_info.ID);
-//             wifi_pw_sts = PW_WIFI_ON;
-//         }
-        
-//         break;
-//     case CTRL_TASK_MEM:
-//         if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
-//         {
-//             resume_task(mem_msg._task_info.ID);
-//         }
-//         if(get_task_rtos_state(wls_msg._task_info.ID) != TASK_SUSPENDED)
-//         {
-//             suspend_task(wls_msg._task_info.ID);
-//             wifi_pw_sts = PW_WIFI_OFF;
-//         }
-        
-//         break;
-//     case CTRL_TASK_BOTH:
-//         if(get_task_rtos_state(mem_msg._task_info.ID) == TASK_SUSPENDED)
-//         {
-//             resume_task(mem_msg._task_info.ID);
-//         }
-//         if(get_task_rtos_state(wls_msg._task_info.ID) == TASK_SUSPENDED)
-//         {
-//             resume_task(wls_msg._task_info.ID);
-//             wifi_pw_sts = PW_WIFI_ON;
-//         }
-//         break;
-//     default:
-//         ASSERT_PANIC(false, "Task change state not available");
-//         break;
-//     }
 
-// #endif
+    // Send control messages to wireless and memory controllers
     controller_wireless_send(alarm,status,plant_buf,env_data,power_data,axis_buf,
                             SYS_BUFFER_MODE,SYS_BUFFER_MODE,
                             get_system_time());
@@ -197,6 +156,7 @@ void on_ctrl_execute()
                             SYS_BUFFER_MODE,SYS_BUFFER_MODE,
                             get_system_time());
 
+    // Check for faults and set state machine event accordingly
     if(control_app_check_faults() != CTRL_TASK_OK)
     {
         // Set state machine event to fault

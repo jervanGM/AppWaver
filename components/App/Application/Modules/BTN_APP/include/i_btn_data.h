@@ -23,6 +23,7 @@ typedef enum{
     BTN_MAYOR_FAULT
 }EBtnTaskStatus_t;
 
+
 typedef enum{
     BTN_CMD_NORMAL,
     BTN_CMD_MODE1,

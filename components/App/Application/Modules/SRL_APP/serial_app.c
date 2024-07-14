@@ -3,39 +3,45 @@
 #include <string.h>
 
 /* Initializes the serial application */
-
 const char *srl_cmd_list[] = {
     "system_off",
     "system_on",
     "heater_on",
     "heater_off",
-    "system_reset", //FUNCTIONALITY TBD
-    "wifi_off", //FUNCTIONALITY TBD
-    "wifi_on", //FUNCTIONALITY TBD
-    "act_wls_task", //FUNCTIONALITY TBD
-    "deact_wls_task", //FUNCTIONALITY TBD
-    "act_sd_task", //FUNCTIONALITY TBD
-    "deact_sd_task" //FUNCTIONALITY TBD
+    "system_reset",    // FUNCTIONALITY TBD
+    "wifi_off",        // FUNCTIONALITY TBD
+    "wifi_on",         // FUNCTIONALITY TBD
+    "act_wls_task",    // FUNCTIONALITY TBD
+    "deact_wls_task",  // FUNCTIONALITY TBD
+    "act_sd_task",     // FUNCTIONALITY TBD
+    "deact_sd_task"    // FUNCTIONALITY TBD
 };
 
 void serial_app_init()
 {
-
+    // Initialization function for serial application
+    // Currently no initialization needed
 }
 
-bool cmd_exist(const char *str) 
+bool cmd_exist(const char *str)
 {
-    if(str != NULL)
+    if (str != NULL)
     {
-        for (int i = 0; i < sizeof(srl_cmd_list) / sizeof(srl_cmd_list[0]); i++) {
-            if (strcmp(str, srl_cmd_list[i]) == 0) {
+        // Iterate through the command list
+        for (int i = 0; i < sizeof(srl_cmd_list) / sizeof(srl_cmd_list[0]); i++)
+        {
+            // Check if the command matches any in the list
+            if (strcmp(str, srl_cmd_list[i]) == 0)
+            {
                 return true;
             }
         }
+        // If command not found, set it to "cmd_none"
         strcpy((char *)str, "cmd_none");
     }
     else
     {
+        // Handle NULL command string (should not occur)
         TRACE_WARNING("Cannot process a null serial command, instead the command will be processed as none");
     }
     return false;

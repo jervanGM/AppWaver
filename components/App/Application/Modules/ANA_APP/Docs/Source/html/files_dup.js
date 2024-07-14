@@ -6,5 +6,6 @@ var files_dup =
     [ "analog_drv.c", "analog__drv_8c.html", "analog__drv_8c" ],
     [ "analog_sm.c", "analog__sm_8c.html", "analog__sm_8c" ],
     [ "analog_task.c", "analog__task_8c.html", "analog__task_8c" ],
+    [ "gen_index_md.py", "gen__index__md_8py.html", "gen__index__md_8py" ],
     [ "dsp.c", "dsp_8c.html", "dsp_8c" ]
 ];

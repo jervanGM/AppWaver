@@ -21,4 +21,17 @@ typedef struct {
     char value[13];
 } device_id_t;
 
+/**
+ * @brief Retrieves the device ID based on the wireless MAC address.
+ *
+ * @param[out] out_id Pointer to a structure where the device ID will be stored.
+ * @return 0 on success, non-zero error code on failure.
+ *
+ * Retrieves the device ID using the wireless MAC address obtained from the
+ * wireless port interface. The device ID is hex-encoded and stored in the
+ * provided output structure.
+ *
+ * If the wireless port is not properly configured, logs an error and sets
+ * an appropriate error code.
+ */
 int get_device_id(device_id_t *out_id);

@@ -9,38 +9,38 @@
 #include "safe_memory.h"
 #include "bus_t_share.h"
 
-/*Main serial sensors task function*/
+/* Main bus sensors task function */
 void task_bus(void *pvParameters)
 {   
     // Initialize task information
     SBusTaskInfo_t task_info;
-    task_bus_init(&task_info,pvParameters);
+    task_bus_init(&task_info, pvParameters);
     
-    // Initialize serial state machine
+    // Initialize bus state machine
     task_info.status = bus_sm_init(on_bus_init,
-                                      on_bus_ready,
-                                      on_bus_execute,
-                                      on_bus_breakdown);
+                                   on_bus_ready,
+                                   on_bus_execute,
+                                   on_bus_breakdown);
 
     // Verify initialization success
     ASSERT_PANIC(task_info.status == BUS_TASK_OK, 
-              "Bus task state machine has not been initialized correctly");
+                 "Bus task state machine has not been initialized correctly");
     set_task_bus_info(task_info);
   
     /* Infinite loop */
-    for(;;)
+    for (;;)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
-        // Run serial state machine
+        // Run bus state machine
         bus_sm_run();
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);
     }
 }
 
-/*Init task function*/
-void task_bus_init(SBusTaskInfo_t *task_info,void *pvParams) 
+/* Init task function */
+void task_bus_init(SBusTaskInfo_t *task_info, void *pvParams) 
 {
     // Set task ID
     task_info->ID = BUS_HANDLER_ID;
@@ -52,14 +52,14 @@ void task_bus_init(SBusTaskInfo_t *task_info,void *pvParams)
     task_info->status = BUS_TASK_OK;
 }
 
-/*Init state execute function*/
+/* Init state execute function */
 void on_bus_init()
 {
-    // Initialize serial components
+    // Initialize bus components
     bus_init();
     bus_app_init();
     // Check for faults
-    if(bus_app_check_faults() != BUS_TASK_OK)
+    if (bus_app_check_faults() != BUS_TASK_OK)
     {
         // Set state machine event to fault
         bus_sm_set_st_event(BUS_STATE_FAULT);
@@ -71,11 +71,11 @@ void on_bus_init()
     }
 }
 
-/*Ready state execute function*/
+/* Ready state execute function */
 void on_bus_ready()
 {   
     devices_init();
-    if(bus_app_check_faults() != BUS_TASK_OK)
+    if (bus_app_check_faults() != BUS_TASK_OK)
     {
         // Set state machine event to fault
         bus_sm_set_st_event(BUS_STATE_FAULT);
@@ -84,10 +84,9 @@ void on_bus_ready()
     {
         bus_sm_set_st_event(BUS_STATE_NEXT);
     }
-    
 }
 
-/*Operational state execute function*/
+/* Operational state execute function */
 void on_bus_execute()
 {
     uint8_t raw_data[RAW_DATA_BYTES];
@@ -97,19 +96,19 @@ void on_bus_execute()
     STemp_t temp_data = {0};
     SMoist_t moist_data = {0};
     measure_raw_data(raw_data);
-    process_data(raw_data,RAW_DATA_BYTES);
+    process_data(raw_data, RAW_DATA_BYTES);
     axis_buffer = get_axis_data_buffer();
     axis_buf_time = get_axis_buffer_time();
     temp_data = get_buffer_average_temp();
     moist_data = get_buffer_average_moist();
-    bus_controller_send(axis_buffer,temp_data,moist_data,axis_buf_time);
+    bus_controller_send(axis_buffer, temp_data, moist_data, axis_buf_time);
     bus_controller_read(&ctrl_msg);
-    if(ctrl_msg._dev_id == TEMP_HUM_SENS)
+    if (ctrl_msg._dev_id == TEMP_HUM_SENS)
     {
         write_temp_moist_cmd(ctrl_msg._cmd.heater_cmd);
     }
     
-    if(bus_app_check_faults() != BUS_TASK_OK)
+    if (bus_app_check_faults() != BUS_TASK_OK)
     {
         // Set state machine event to fault
         bus_sm_set_st_event(BUS_STATE_FAULT);
@@ -121,34 +120,35 @@ void on_bus_execute()
     }
 }
 
-/*Breakdown state execute function*/
+/* Breakdown state execute function */
 void on_bus_breakdown()
 {
     // Fault reason
     EBusTaskStatus_t fault_reason = BUS_TASK_OK;
     fault_reason = bus_app_check_faults();
-    //Clean the error memory
-    store_error_in_slot(BUS_ERROR_SLOT,0);
+    // Clean the error memory
+    store_error_in_slot(BUS_ERROR_SLOT, 0);
     switch (fault_reason)
     {
-    case BUS_MINOR_FAULT:
-        // Log minor fault
-        TRACE_WARNING("A minor fault has been produced on bus task");
-        // Set state machine event to previous
-        bus_sm_set_st_event(BUS_STATE_PREV);
-        break;
-    
-    case BUS_MAYOR_FAULT:
-        // Log major fault
-        TRACE_ERROR("A mayor fault has been produced on bus task");
-        // Set state machine event to next
-        bus_deinit();
-        bus_sm_set_st_event(BUS_STATE_NEXT);
-        break;
-    default:
-        // Assert if unknown fault reason
-        ASSERT_PANIC(false,"Unknown fault reason has been produced on bus task");    
-        break;
+        case BUS_MINOR_FAULT:
+            // Log minor fault
+            TRACE_WARNING("A minor fault has been produced on bus task");
+            // Set state machine event to previous
+            bus_sm_set_st_event(BUS_STATE_PREV);
+            break;
+        
+        case BUS_MAJOR_FAULT:
+            // Log major fault
+            TRACE_ERROR("A major fault has been produced on bus task");
+            // Set state machine event to next
+            bus_deinit();
+            bus_sm_set_st_event(BUS_STATE_NEXT);
+            break;
+        
+        default:
+            // Assert if unknown fault reason
+            ASSERT_PANIC(false, "Unknown fault reason has been produced on bus task");    
+            break;
     }
     set_task_bus_status(fault_reason);
 }

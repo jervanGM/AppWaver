@@ -1,5 +1,6 @@
 #ifndef ACC_IT_T_SHARE_TEST_H_
 #define ACC_IT_T_SHARE_TEST_H_
+
 #include "test_suite.h"
 
 /**
@@ -41,5 +42,6 @@ void test_set_and_read_task_acc_it_status(void); /**< \test */
  */
 void test_read_acc_it_controller_data_before_sending(void); /**< \test */
 
+void acc_it_t_share_test_suite();
 
 #endif /* ACC_IT_T_SHARE_TEST_H_ */

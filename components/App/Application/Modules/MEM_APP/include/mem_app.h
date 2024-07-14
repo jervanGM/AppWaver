@@ -8,21 +8,27 @@
 #define MAYOR_FAULT_THESHOLD -20
 
 /**
- * @brief Initializes the analog application.
+ * @brief Initializes the default WAV header.
  */
 void mem_app_init();
 
-SWavData process_data_to_wav(uint32_t* data,int64_t start_t,int64_t end_t);
+/**
+ * @brief Processes raw data into a WAV file format.
+ *
+ * @param data Pointer to the data to be processed.
+ * @param start_t Start time for data processing.
+ * @param end_t End time for data processing.
+ * @return SWavData Struct containing the processed WAV data.
+ */
+SWavData process_data_to_wav(uint32_t* data, int64_t start_t, int64_t end_t);
 
 /**
- * @brief Checks for faults in the analog application.
- * 
- * This function reads the error from the specified error slot and determines the task status based on the error value.
- * If the error falls within the range defined by MINOR_FAULT_THRESHOLD and MAYOR_FAULT_THRESHOLD, ANA_MINOR_FAULT is returned.
- * If the error is less than MAYOR_FAULT_THRESHOLD, ANA_MAYOR_FAULT is returned.
- * If the error is greater than or equal to MAYOR_FAULT_THRESHOLD, ANA_TASK_OK is returned.
- * 
- * @return The task status indicating the severity of faults.
+ * @brief Checks faults in the memory application.
+ *
+ * Reads error information from the specified error slot and determines
+ * the status based on predefined thresholds.
+ *
+ * @return EMemTaskStatus_t Status of the memory application task.
  */
 EMemTaskStatus_t mem_app_check_faults();
 

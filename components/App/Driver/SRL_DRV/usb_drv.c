@@ -18,11 +18,14 @@ int8_t usb_init()
         .tx_buffer_size = BUF_SIZE,
     };
 
-    if(usb_serial_jtag_driver_install(&usb_serial_jtag_config) != ESP_OK)
+    if (usb_serial_jtag_driver_install(&usb_serial_jtag_config) != ESP_OK)
     {
-        return -1;
+        return -1; // Failed to install USB Serial JTAG driver
     }
-    else return 0;
+    else
+    {
+        return 0; // Driver installed successfully
+    }
 }
 
 bool usb_is_connected()
@@ -46,10 +49,13 @@ void read_cmd(uint8_t *data, uint32_t size)
 
 int8_t usb_deinit()
 {
-    if(usb_serial_jtag_driver_uninstall() != ESP_OK)
+    if (usb_serial_jtag_driver_uninstall() != ESP_OK)
     {
-        return -1;
+        return -1; // Failed to uninstall USB Serial JTAG driver
     }
-    return 0;
+    else
+    {
+        return 0; // Driver uninstalled successfully
+    }
 }
 

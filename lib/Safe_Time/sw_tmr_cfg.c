@@ -1,5 +1,10 @@
 #include "sw_tmr_cfg.h"
 
+/**
+ * @brief Callback function for the FreeRTOS timer.
+ *
+ * @param[in] xTimer The handle of the timer that expired.
+ */
 static void timerCallback(TimerHandle_t xTimer);
 
 c_int64_t get_sw_system_time(void)
@@ -11,7 +16,7 @@ ETimerCfgError_t sw_timer_init(STimer_t *timer)
 {
     if (timer->rtos_timer.handler != NULL)
     {
-        // Timer ya inicializado
+        // Timer already initialized
         return TMR_BAD_STATE_ERR;
     }
 
@@ -20,7 +25,7 @@ ETimerCfgError_t sw_timer_init(STimer_t *timer)
                                              (timer->type == PERIODIC) ? pdTRUE : pdFALSE,
                                              NULL,
                                              timerCallback);
-                                             
+
     if (timer->rtos_timer.handler == NULL)
     {
         return TMR_MEM_ERR;
@@ -52,7 +57,7 @@ ETimerCfgError_t sw_timer_restart(STimer_t *timer)
 
 bool sw_timer_is_on(STimer_t *timer)
 {
-    if(timer->rtos_timer.handler != NULL)
+    if (timer->rtos_timer.handler != NULL)
     {
         return (xTimerIsTimerActive(timer->rtos_timer.handler) == pdTRUE);
     }
@@ -60,7 +65,6 @@ bool sw_timer_is_on(STimer_t *timer)
     {
         return false;
     }
-    
 }
 
 bool sw_timer_is_expired(STimer_t *timer)
@@ -90,4 +94,3 @@ static void timerCallback(TimerHandle_t xTimer)
 {
     (void)xTimer;
 }
-

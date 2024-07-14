@@ -1,0 +1,45 @@
+var i__wireless__data_8h =
+[
+    [ "SWlsTaskInfo_t", "struct_s_wls_task_info__t.html", "struct_s_wls_task_info__t" ],
+    [ "SWlsCommand_t", "struct_s_wls_command__t.html", "struct_s_wls_command__t" ],
+    [ "SWlsCtrlMsg_t", "struct_s_wls_ctrl_msg__t.html", "struct_s_wls_ctrl_msg__t" ],
+    [ "SCtrlWlsMsg_t", "struct_s_ctrl_wls_msg__t.html", "struct_s_ctrl_wls_msg__t" ],
+    [ "SNetworkData_t", "struct_s_network_data__t.html", "struct_s_network_data__t" ],
+    [ "FOTA_ERROR_SLOT", "i__wireless__data_8h_aea743e004c550972fe0d368488b6a8f1.html#aea743e004c550972fe0d368488b6a8f1", null ],
+    [ "HAL_OTA_CONFIG_ERROR", "i__wireless__data_8h_a7cb2a00ad6063669758a9529096c987c.html#a7cb2a00ad6063669758a9529096c987c", null ],
+    [ "HAL_WLS_CONFIG_ERROR", "i__wireless__data_8h_a39cbe7d94b2d5e401191e429804ddcc3.html#a39cbe7d94b2d5e401191e429804ddcc3", null ],
+    [ "OTA_NOT_CONFIGURED", "i__wireless__data_8h_aec17197b8381b60ad0f4ddf9c942270e.html#aec17197b8381b60ad0f4ddf9c942270e", null ],
+    [ "WIRELESS_ERROR_SLOT", "i__wireless__data_8h_a6ade211da9cabbeda75e15cacc8d88f5.html#a6ade211da9cabbeda75e15cacc8d88f5", null ],
+    [ "WIRELESS_HANDLER_ID", "i__wireless__data_8h_a135bb02b41c4cadda9eed92182256c8d.html#a135bb02b41c4cadda9eed92182256c8d", null ],
+    [ "WLS_ACC_OBJ_INIT_ERROR", "i__wireless__data_8h_a4d92862bfef3387d4edbd15498086bc7.html#a4d92862bfef3387d4edbd15498086bc7", null ],
+    [ "WLS_AIR_MOIST_OBJ_INIT_ERROR", "i__wireless__data_8h_a0bbf269ec03204953862912fab0732e2.html#a0bbf269ec03204953862912fab0732e2", null ],
+    [ "WLS_ANJAY_CORE_INSTALL_ERROR", "i__wireless__data_8h_a0ea12ab43f337fcdb44748c997ddbfde.html#a0ea12ab43f337fcdb44748c997ddbfde", null ],
+    [ "WLS_ANJAY_LOOP_ERROR", "i__wireless__data_8h_ae6f3582246a3b7f033942284fa7b3be2.html#ae6f3582246a3b7f033942284fa7b3be2", null ],
+    [ "WLS_ANJAY_OBJ_CREATE_ERROR", "i__wireless__data_8h_a0ca93b4df8af7f3b684a972de7f6b39f.html#a0ca93b4df8af7f3b684a972de7f6b39f", null ],
+    [ "WLS_ANJAY_SERVER_CONFIG_ERROR", "i__wireless__data_8h_ad8e7e9f0b8a135e34e9f1a5d346af9fb.html#ad8e7e9f0b8a135e34e9f1a5d346af9fb", null ],
+    [ "WLS_BINARY_OBJ_INIT_ERROR", "i__wireless__data_8h_afbae873991c6aae1b7348ded23b491e5.html#afbae873991c6aae1b7348ded23b491e5", null ],
+    [ "WLS_DEVICE_OBJ_INIT_ERROR", "i__wireless__data_8h_a6307db14e894915b63efeeb0ac5c2d2e.html#a6307db14e894915b63efeeb0ac5c2d2e", null ],
+    [ "WLS_DRV_CONNECT_ERROR", "i__wireless__data_8h_aeaf4a506af4b3a6b7ed97334e52a33af.html#aeaf4a506af4b3a6b7ed97334e52a33af", null ],
+    [ "WLS_DRV_DISCONNECT_ERROR", "i__wireless__data_8h_acd333a2cf1d5d52bee5f3b53882bd847.html#acd333a2cf1d5d52bee5f3b53882bd847", null ],
+    [ "WLS_DRV_GET_MAC_ERROR", "i__wireless__data_8h_ae6e68fa78ba279a50c7a263459f0a615.html#ae6e68fa78ba279a50c7a263459f0a615", null ],
+    [ "WLS_DRV_INIT_ERROR", "i__wireless__data_8h_ad64e9a20c783d509c63b80f918c42e18.html#ad64e9a20c783d509c63b80f918c42e18", null ],
+    [ "WLS_DRV_OK", "i__wireless__data_8h_a166bf21a7c18d2d01b0cfa800fa67685.html#a166bf21a7c18d2d01b0cfa800fa67685", null ],
+    [ "WLS_DRV_RECONNECT_ERROR", "i__wireless__data_8h_aa2c94f9dd29183f9368e4618c24d92c7.html#aa2c94f9dd29183f9368e4618c24d92c7", null ],
+    [ "WLS_DRV_RESET_ERROR", "i__wireless__data_8h_a3f4f0b9c5ebea70ba4816e7121ab29da.html#a3f4f0b9c5ebea70ba4816e7121ab29da", null ],
+    [ "WLS_PER_OBJ_INIT_ERROR", "i__wireless__data_8h_aaea60216dd7e4e2eb1becf535e23ea98.html#aaea60216dd7e4e2eb1becf535e23ea98", null ],
+    [ "WLS_PLANT_OBJ_INIT_ERROR", "i__wireless__data_8h_af1a022612ef6605f245095b21da74f71.html#af1a022612ef6605f245095b21da74f71", null ],
+    [ "WLS_RECONNECT_EVENT", "i__wireless__data_8h_af10b846eb7c1340f502e1cd32dafde77.html#af10b846eb7c1340f502e1cd32dafde77", null ],
+    [ "WLS_TEMP_OBJ_INIT_ERROR", "i__wireless__data_8h_a5471218363b6a584832f2373b74ac751.html#a5471218363b6a584832f2373b74ac751", null ],
+    [ "WLS_TIME_OBJ_INIT_ERROR", "i__wireless__data_8h_a1925cabef5bd7822d4aed7a3897b38d1.html#a1925cabef5bd7822d4aed7a3897b38d1", null ],
+    [ "EWlsCmd_t", "i__wireless__data_8h_aa42217350c93213079311c29e143aa6f.html#aa42217350c93213079311c29e143aa6f", [
+      [ "WLS_CMD_REBOOT", "i__wireless__data_8h_aa42217350c93213079311c29e143aa6f.html#aa42217350c93213079311c29e143aa6fa8a255412d2d444bb4fdd80a77a375156", null ]
+    ] ],
+    [ "EWlsTaskStatus_t", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8a", [
+      [ "WLS_TASK_OK", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aad326e541ab4ee9e231cd2988c367b045", null ],
+      [ "WLS_TASK_INIT_FAIL", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aa8b786543f4828962ea1e1e7f9b2f9bd5", null ],
+      [ "WLS_TASK_SM_INIT_FAIL", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aa3b23a96db8d19cd6789789b0461ffb2f", null ],
+      [ "WLS_TASK_RECONNECT_FAULT", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aac76a5c8d35bd41c2184d6e118c864ee9", null ],
+      [ "WLS_MINOR_FAULT", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aa4a2400ca1b420c02b809965bc65f409c", null ],
+      [ "WLS_MAYOR_FAULT", "i__wireless__data_8h_aa72f0dfead9cb194bfa4d7ad24616e8a.html#aa72f0dfead9cb194bfa4d7ad24616e8aa90b5d56fa5dd45ebcf3ef904aceed737", null ]
+    ] ]
+];

@@ -18,14 +18,15 @@ int8_t ota_init()
 {
     assert(!update_partition);
 
+    // Get the next OTA update partition
     update_partition = esp_ota_get_next_update_partition(NULL);
     if (!update_partition) {
         ESP_LOGE(TAG,"Cannot obtain update partition");
         return -1;
     }
 
-    if (esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN,
-                      &update_handle)) {
+    // Begin OTA update process
+    if (esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &update_handle)) {
         ESP_LOGE(TAG,"OTA begin failed");
         update_partition = NULL;
         return -1;
@@ -39,9 +40,11 @@ int8_t ota_update_install()
     esp_ota_img_states_t partition_state;
     esp_ota_get_state_partition(partition, &partition_state);
 
+    // Check if the current partition is undefined or pending verify
     if (partition_state == ESP_OTA_IMG_UNDEFINED
             || partition_state == ESP_OTA_IMG_PENDING_VERIFY) {
         ESP_LOGI(TAG,"First boot from partition with new firmware");
+        // Mark the new firmware as valid
         esp_ota_mark_app_valid_cancel_rollback();
         return 0;
     }
@@ -52,6 +55,7 @@ int8_t ota_write(const void *data, size_t length)
 {
     assert(update_partition);
 
+    // Write data to the OTA partition
     int result = esp_ota_write(update_handle, data, length);
     if (result) {
         ESP_LOGE(TAG,"OTA write failed");
@@ -62,6 +66,7 @@ int8_t ota_write(const void *data, size_t length)
 
 int8_t ota_upgrade()
 {
+    // Set the current partition to boot from the updated OTA partition
     int result = esp_ota_set_boot_partition(update_partition);
     if (result) {
         update_partition = NULL;
@@ -73,6 +78,7 @@ int8_t ota_upgrade()
 void ota_abort()
 {
     if (update_partition) {
+        // Abort the OTA update process and clean up resources
         esp_ota_abort(update_handle);
         update_partition = NULL;
     }
@@ -82,6 +88,7 @@ int8_t ota_end()
 {
     assert(update_partition);
 
+    // End the OTA update process and clean up resources
     int result = esp_ota_end(update_handle);
     if (result) {
         ESP_LOGE(TAG,"OTA end failed");

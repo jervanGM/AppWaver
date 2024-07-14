@@ -1,5 +1,6 @@
 #ifndef TRACE_TEST_H_
 #define TRACE_TEST_H_
+
 #include "test_suite.h"
 
 /**
@@ -59,17 +60,52 @@ void test_analog_app_check_lower_major_fault_boundary(); /**< \test */
  */
 void test_analog_app_check_upper_major_fault_boundary(); /**< \test */
 
+/**
+ * @brief Test case to verify the processing of environmental data.
+ * 
+ * This test processes environmental data and checks if the
+ * function correctly processes the data.
+ */
+void test_analog_app_process_enviromental_data(); /**< \test */
 
-void test_analog_app_process_enviromental_data();
+/**
+ * @brief Test case to verify the processing of null environmental data.
+ * 
+ * This test processes null environmental data and checks if the
+ * function correctly handles null data.
+ */
+void test_analog_app_process_null_enviromental_data(); /**< \test */
 
-void test_analog_app_process_null_enviromental_data();
+/**
+ * @brief Test case to verify the processing of environmental data with maximum values.
+ * 
+ * This test processes environmental data with maximum values and checks if the
+ * function correctly processes the data.
+ */
+void test_analog_app_process_enviromental_data_max_values(); /**< \test */
 
-void test_analog_app_process_enviromental_data_max_values();
+/**
+ * @brief Test case to verify the processing of environmental data within maximum limits.
+ * 
+ * This test processes environmental data within maximum limits and checks if the
+ * function correctly processes the data.
+ */
+void test_analog_app_process_enviromental_data_max_limits(); /**< \test */
 
-void test_analog_app_process_enviromental_data_max_limits();
+/**
+ * @brief Test case to verify the processing of environmental data with minimum values.
+ * 
+ * This test processes environmental data with minimum values and checks if the
+ * function correctly processes the data.
+ */
+void test_analog_app_process_enviromental_data_min_values(); /**< \test */
 
-void test_analog_app_process_enviromental_data_min_values();
-
-void test_analog_app_process_enviromental_data_min_limits();
+/**
+ * @brief Test case to verify the processing of environmental data within minimum limits.
+ * 
+ * This test processes environmental data within minimum limits and checks if the
+ * function correctly processes the data.
+ */
+void test_analog_app_process_enviromental_data_min_limits(); /**< \test */
 
 #endif /* TRACE_TEST_H_ */

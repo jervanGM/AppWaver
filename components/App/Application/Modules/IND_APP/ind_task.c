@@ -8,7 +8,7 @@
 #include "safe_memory.h"
 #include "safe_timer.h"
 
-/*Main button task function*/
+/*Main indicator task function*/
 void task_indicator(void *pvParameters)
 {   
     // Initialize task information
@@ -17,7 +17,7 @@ void task_indicator(void *pvParameters)
     task_indicator_init(&task_info,pvParameters);
 
     ASSERT_PANIC(task_info.status == IND_TASK_OK, 
-              "Analog task state machine has not been initialized correctly");
+              "Indicator task has not been initialized correctly");
     set_task_indicator_info(task_info);
 
     ind_app_init();

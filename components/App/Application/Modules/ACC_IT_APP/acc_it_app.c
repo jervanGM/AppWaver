@@ -15,17 +15,17 @@ EAccItTaskStatus_t acc_it_app_check_faults()
     // Determine the task status based on the error value
     if ((error < MINOR_FAULT_THRESHOLD) && (error > MAYOR_FAULT_THESHOLD))
     {
-        // Return ANA_MINOR_FAULT if the error falls within the defined range
+        // Return ACC_IT_MINOR_FAULT if the error falls within the defined range
         return ACC_IT_MINOR_FAULT;
     }
     else if (error < MAYOR_FAULT_THESHOLD)
     {
-        // Return ANA_MAYOR_FAULT if the error is less than MAYOR_FAULT_THRESHOLD
+        // Return ACC_IT_MAYOR_FAULT if the error is less than MAYOR_FAULT_THRESHOLD
         return ACC_IT_MAYOR_FAULT;
     }
     else
     {
-        // Return ANA_TASK_OK if no faults are detected
+        // Return ACC_IT_TASK_OK if no faults are detected
         return ACC_IT_TASK_OK;
     }
 }

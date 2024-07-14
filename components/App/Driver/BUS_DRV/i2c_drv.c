@@ -13,12 +13,14 @@ int8_t i2c_bus_init(void)
         .master.clk_speed = I2C_MASTER_FREQ_HZ,
     };
 
-    if(i2c_param_config(i2c_master_port, &conf) != ESP_OK)
+    // Configure I2C parameters
+    if (i2c_param_config(i2c_master_port, &conf) != ESP_OK)
     {
         return -1;
     }
 
-    if(i2c_driver_install(i2c_master_port, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0)  != ESP_OK)
+    // Install I2C driver
+    if (i2c_driver_install(i2c_master_port, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0) != ESP_OK)
     {
         return -1;
     }
@@ -26,18 +28,23 @@ int8_t i2c_bus_init(void)
 }
 
 
-int8_t i2c_read_register(uint8_t dev_addrs, uint8_t *data, size_t len)
+int8_t i2c_read_register(uint8_t dev_addr, uint8_t *data, size_t len)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 
+    // Start I2C transaction
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (dev_addrs << 1) | 1, true);
+    // Write device address for read operation
+    i2c_master_write_byte(cmd, (dev_addr << 1) | 1, true);
+    // Read data from device
     i2c_master_read(cmd, data, len, I2C_MASTER_LAST_NACK);
+    // Stop I2C transaction
     i2c_master_stop(cmd);
 
-    if(i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS) != ESP_OK)
+    // Execute I2C command
+    if (i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS) != ESP_OK)
     {
-        ESP_LOGE(TAG, "Could not read from device [0x%02x at %d]", dev_addrs, I2C_MASTER_NUM);
+        ESP_LOGE(TAG, "Could not read from device [0x%02x at %d]", dev_addr, I2C_MASTER_NUM);
         return -1;
     }
     i2c_cmd_link_delete(cmd);
@@ -46,17 +53,22 @@ int8_t i2c_read_register(uint8_t dev_addrs, uint8_t *data, size_t len)
 }
 
 
-int8_t i2c_write_register(uint8_t dev_addrs, uint8_t *data, size_t len)
+int8_t i2c_write_register(uint8_t dev_addr, uint8_t *data, size_t len)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    // Start I2C transaction
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, dev_addrs << 1, true);
+    // Write device address for write operation
+    i2c_master_write_byte(cmd, dev_addr << 1, true);
+    // Write data to device
     i2c_master_write(cmd, data, len, true);
+    // Stop I2C transaction
     i2c_master_stop(cmd);
 
+    // Execute I2C command
     if (i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS) != ESP_OK)
     {
-        ESP_LOGE(TAG, "Could not write to device [0x%02x at %d]", dev_addrs, I2C_MASTER_NUM);
+        ESP_LOGE(TAG, "Could not write to device [0x%02x at %d]", dev_addr, I2C_MASTER_NUM);
         return -1;
     }
     i2c_cmd_link_delete(cmd);

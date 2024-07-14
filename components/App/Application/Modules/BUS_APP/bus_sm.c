@@ -36,7 +36,7 @@ static void breakdown_transition();
 /* Define the state machine states */
 SBusSmStates_t bus_state_sm;
 
-/* Initializes the serial state machine with the provided transition functions for each state */
+/* Initializes the bus state machine with the provided transition functions for each state */
 EBusTaskStatus_t bus_sm_init(
     void (*init_func)(void), 
     void (*ready_func)(void), 
@@ -73,20 +73,20 @@ EBusTaskStatus_t bus_sm_init(
     }
 }
 
-/* Runs the current state's execution function in the serial state machine */
+/* Runs the current state's execution function in the bus state machine */
 void bus_sm_run()
 {
     bus_state_sm.state_func[bus_state_sm.sm_state].handle_execute();
     bus_state_sm.state_func[bus_state_sm.sm_state].handle_transition();
 }
 
-/* Retrieves the current state of the serial state machine */
+/* Retrieves the current state of the bus state machine */
 EBusTaskState_t bus_sm_get_state()
 {
     return bus_state_sm.sm_state;
 }
 
-/* Sets the event for the serial state machine */
+/* Sets the event for the bus state machine */
 void bus_sm_set_st_event(EBusStateEvent_t event)
 {
     bus_state_sm.st_event = event;

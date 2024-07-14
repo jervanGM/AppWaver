@@ -25,6 +25,15 @@
 var NAVTREE =
 [
   [ "Analogic Sensors Task Documentation", "index.html", [
+    [ "Component list", "md_index.html", null ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ]
+      ] ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -50,7 +59,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_make_c_compiler_id_8c.html",
-"safe__memory__impl_8c_8o_8d.html"
+"i__analog__data_8h_ac4dd55c6e7cae1461eb8382d0425b1c1.html#ac4dd55c6e7cae1461eb8382d0425b1c1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

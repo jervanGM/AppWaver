@@ -30,10 +30,44 @@
 #define DIGI_T_HANDLER 8
 #define SPORADIC_ACC_IT_HANDLER 9
 
-void systemConfig();
+/**
+ * @brief Initializes the hardware.
+ * 
+ * @details This function initializes various hardware components:
+ *          - Disables the watchdog timer to prevent system resets.
+ *          - Initializes GPIO ports for buttons and accelerometers.
+ *          - Enables interrupts for GPIO ports.
+ * 
+ *          If the GPIO configuration port initialization fails, 
+ *          it asserts with a panic message.
+ */
+void hwInit();
 
+/**
+ * @brief Configures various tasks in the system.
+ * 
+ * @details This function configures the following tasks:
+ *          - Analog Task
+ *          - Control Task
+ *          - Power Task
+ *          - Indication Task
+ *          - Wireless Task
+ *          - External Memory Task
+ *          - Serial Task
+ * 
+ *          Additionally, for advanced configurations:
+ *          - Bus Task (if ADVANCED is defined)
+ * 
+ *          It also initializes mutexes and creates sporadic tasks for button and accelerometer tasks.
+ */
 void taskConfig();
 
-void hwInit();
+/**
+ * @brief Configures the system.
+ * 
+ * @details This function calls `hwInit()` to initialize hardware components
+ *          and `taskConfig()` to configure various tasks in the system.
+ */
+void systemConfig();
 
 #endif /* SW_INIT_H_ */

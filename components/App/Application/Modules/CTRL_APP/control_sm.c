@@ -73,20 +73,20 @@ ECtrlTaskStatus_t control_sm_init(
     }
 }
 
-/* Runs the current state's execution function in the analog state machine */
+/* Runs the current state's execution function in the controller state machine */
 void control_sm_run()
 {
     ctrl_state_sm.state_func[ctrl_state_sm.sm_state].handle_execute();
     ctrl_state_sm.state_func[ctrl_state_sm.sm_state].handle_transition();
 }
 
-/* Retrieves the current state of the analog state machine */
+/* Retrieves the current state of the controller state machine */
 ECtrlTaskState_t control_sm_get_state()
 {
     return ctrl_state_sm.sm_state;
 }
 
-/* Sets the event for the analog state machine */
+/* Sets the event for the controller state machine */
 void control_sm_set_st_event(ECtrlStateEvent_t event)
 {
     ctrl_state_sm.st_event = event;

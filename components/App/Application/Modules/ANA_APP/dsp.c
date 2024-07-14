@@ -55,7 +55,7 @@ uint32_t get_dsp_data()
         #endif
         // Apply filters and normalization
         iir_filter(&data); // Apply IIR filter
-        
+        printf(">plant_data: %d\n", (int)data);
         return data;
     }
     else

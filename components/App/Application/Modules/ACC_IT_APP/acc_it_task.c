@@ -8,7 +8,7 @@
 #include "safe_memory.h"
 #include "safe_timer.h"
 
-/*Main button task function*/
+/*Main accelerometer task function*/
 void task_acc_it(void *pvParameters)
 {   
     // Initialize task information
@@ -20,7 +20,7 @@ void task_acc_it(void *pvParameters)
     set_task_acc_it_info(task_info);
     acc_it_app_init();
     for (;;) {
-        // Espera una notificación para activarse
+        // Wait for any evento to activate
         task_wait_for_event();
         int64_t irs_time = get_system_time();
         EIntCmd_t it = acc_it_handle_pulse();

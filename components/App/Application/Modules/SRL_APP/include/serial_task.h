@@ -20,22 +20,30 @@ void task_serial(void *pvParameters);
 void task_serial_init(SSrlTaskInfo_t *task_info,void *pvParams);
 
 /**
- * @brief Function executed when the serial state machine is in the initialization state.
+ * @brief Function executed when entering the initialization state.
+ * 
+ * Initializes serial components and checks for faults.
  */
 void on_srl_init();
 
 /**
- * @brief Function executed when the serial state machine is in the ready state.
+ * @brief Function executed when entering the ready state.
+ * 
+ * Checks for faults and establishes serial connection if available.
  */
 void on_srl_ready();
 
 /**
- * @brief Function executed when the serial state machine is in the execute state.
+ * @brief Function executed when entering the execution state.
+ * 
+ * Processes incoming serial command and checks faults.
  */
 void on_srl_execute();
 
 /**
- * @brief Function executed when the serial state machine is in the breakdown state.
+ * @brief Function executed when entering the breakdown state.
+ * 
+ * Handles faults detected during serial task execution.
  */
 void on_srl_breakdown();
 

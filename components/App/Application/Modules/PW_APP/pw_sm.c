@@ -10,21 +10,27 @@
 static void init_transition();
 
 /**
- * @brief Transition function for the ready state.
+ * @brief Transition function for the full power state.
  * 
- * This function defines the state transitions for the ready state
+ * This function defines the state transitions for the full power state
  * based on the event triggered.
  */
 static void full_power_sts_transition();
 
 /**
- * @brief Transition function for the operational state.
+ * @brief Transition function for the low power state.
  * 
- * This function defines the state transitions for the operational state
+ * This function defines the state transitions for the low power state
  * based on the event triggered.
  */
 static void low_power_sts_transition();
 
+/**
+ * @brief Transition function for the power off state.
+ * 
+ * This function defines the state transitions for the power off state
+ * based on the event triggered.
+ */
 static void power_off_sts_transition();
 
 /**
@@ -38,7 +44,7 @@ static void breakdown_transition();
 /* Define the state machine states */
 SPwSmStates pw_state_sm;
 
-/* Initializes the analog state machine with the provided transition functions for each state */
+/* Initializes the power state machine with the provided transition functions for each state */
 EPwTaskStatus_t pw_sm_init(
     void (*init_func)(void), 
     void (*full_pw_func)(void), 
@@ -79,20 +85,20 @@ EPwTaskStatus_t pw_sm_init(
     }
 }
 
-/* Runs the current state's execution function in the analog state machine */
+/* Runs the current state's execution function in the power state machine */
 void pw_sm_run()
 {
     pw_state_sm.state_func[pw_state_sm.sm_state].handle_execute();
     pw_state_sm.state_func[pw_state_sm.sm_state].handle_transition();
 }
 
-/* Retrieves the current state of the analog state machine */
+/* Retrieves the current state of the power state machine */
 EPwTaskState_t pw_sm_get_state()
 {
     return pw_state_sm.sm_state;
 }
 
-/* Sets the event for the analog state machine */
+/* Sets the event for the power state machine */
 void pw_sm_set_st_event(EPwStateEvent_t event)
 {
     pw_state_sm.st_event = event;

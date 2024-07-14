@@ -2,7 +2,7 @@
 #include "safe_trace.h"
 #include <string.h>
 
-ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMemTaskStatus_t mem_status)
+ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_status)
 {
     static ECtrlTaskAct_t task_active = CTRL_TASK_WLS;
     static STimer_t timer = {
@@ -11,55 +11,62 @@ ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMem
         .period = T_1_MIN
     };
 
-    if(wls_status == WLS_MINOR_FAULT && task_active == CTRL_TASK_WLS)
+    // Handling minor fault in wireless task and timer management
+    if (wls_status == WLS_MINOR_FAULT && task_active == CTRL_TASK_WLS)
     {
-        if(safe_timer_is_on(&timer))
+        // Timer is active, check expiration
+        if (safe_timer_is_on(&timer))
         {
-
-            if(safe_timer_is_expired(&timer))
+            // Timer expired, switch to memory task
+            if (safe_timer_is_expired(&timer))
             {
                 task_active = CTRL_TASK_MEM;
                 TRACE_INFO("TASK_CHANGED_TO_MEMORY_CARD");
-                safe_timer_delete(&timer);
+                safe_timer_delete(&timer); // Delete timer after task change
             }
-            else{}
-
+            // Timer still running, do nothing
         }
         else
         {
+            // Timer not started, initialize it
             safe_timer_init(&timer);
         }
-        
     }
     else
     {
-        if(safe_timer_is_on(&timer))
+        // No minor fault or task already switched, handle timer deletion
+        if (safe_timer_is_on(&timer))
         {
-            safe_timer_delete(&timer);
+            safe_timer_delete(&timer); // Delete timer if still active
         }
     }
     
-    if(wls_status == WLS_MAYOR_FAULT && task_active == CTRL_TASK_MEM)
+    // Handling major fault in wireless task, switch to none
+    if (wls_status == WLS_MAJOR_FAULT && task_active == CTRL_TASK_MEM)
     {
         task_active = CTRL_TASK_NONE;
     }
 
-    return task_active;
+    return task_active; // Return current active task
 }
 
 #ifdef ADVANCED
-SCtrlBusSensMsg_t control_diag_process_bus_cmd(STemp_t temp, SMoist_t moist)
+SCtrlBusSensMsg_t control_diag_process_bus_cmd(uint8_t temp, uint8_t moist)
 {
     SCtrlBusSensMsg_t msg;
-    if(((temp.temperature < 20) && (moist.moist > 70)))
+
+    // Check temperature and moisture thresholds for bus sensor command
+    if ((temp < 20) && (moist > 70))
     {
-        msg._cmd.heater_cmd = SHT4X_MED_HEATER_1S;
-        msg._dev_id = TEMP_HUM_SENS;
+        msg._cmd.heater_cmd = SHT4X_MED_HEATER_1S; // Set medium heater command
+        msg._dev_id = TEMP_HUM_SENS; // Set device ID for temperature and humidity sensor
     }
-    else{
-        msg._cmd.heater_cmd = SHT4X_NO_HEATER;
-        msg._dev_id = TEMP_HUM_SENS;
+    else
+    {
+        msg._cmd.heater_cmd = SHT4X_NO_HEATER; // No heater command needed
+        msg._dev_id = TEMP_HUM_SENS; // Set device ID for temperature and humidity sensor
     }
-    return msg;
+
+    return msg; // Return generated control message
 }
 #endif

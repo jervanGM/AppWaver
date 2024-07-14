@@ -8,9 +8,9 @@
 #define STS_OFF 0
 
 /**
- * @brief Gets the analog port.
+ * @brief Gets the Input/Output port.
  * 
- * @return Pointer to the analog port.
+ * @return Pointer to the Input/Output port.
  */
 const IIOPort * hal_io_get_port(void);
 

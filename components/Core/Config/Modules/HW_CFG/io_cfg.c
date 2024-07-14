@@ -5,6 +5,8 @@
 #include "io_cfg.h"
 
 void config_gpio(gpio_num_t io_pin, gpio_mode_t mode, bool pull_mode) {
+
+    //Init GPIO configuration stucture
     gpio_config_t io_conf = {
         .intr_type = GPIO_INTR_DISABLE,
         .mode = mode,
@@ -18,6 +20,7 @@ void config_gpio(gpio_num_t io_pin, gpio_mode_t mode, bool pull_mode) {
 
 void config_gpio_it(gpio_num_t gpio_pin, gpio_int_type_t it_type, gpio_isr_t isr_handler) {
     
+    //Init GPIO interruption type and handler
     if (it_type != GPIO_INTR_DISABLE && isr_handler != NULL) {
         ESP_ERROR_CHECK(gpio_set_intr_type(gpio_pin, it_type));
         ESP_ERROR_CHECK(gpio_isr_handler_add(gpio_pin, isr_handler, (void*) gpio_pin));

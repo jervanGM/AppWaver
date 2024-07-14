@@ -8,23 +8,29 @@
 #define MAYOR_FAULT_THESHOLD -20
 
 /**
- * @brief Initializes the analog application.
+ * @brief Initializes the button application.
+ *
+ * This function sets the initial button command to BTN_CMD_NORMAL.
  */
-void btn_app_init();
+void btn_app_init(void);
 
+/**
+ * @brief Processes button commands based on pulses.
+ *
+ * This function processes the input pulse and updates the button command state machine.
+ *
+ * @param[in] pulse The input button pulse.
+ * @return The updated button command.
+ */
 EBtnCmd_t btn_app_process_cmd(EBtnPulse_t pulse);
 
 /**
- * @brief Checks for faults in the analog application.
- * 
- * This function reads the error from the specified error slot and determines the task status based on the error value.
- * If the error falls within the range defined by MINOR_FAULT_THRESHOLD and MAYOR_FAULT_THRESHOLD, ANA_MINOR_FAULT is returned.
- * If the error is less than MAYOR_FAULT_THRESHOLD, ANA_MAYOR_FAULT is returned.
- * If the error is greater than or equal to MAYOR_FAULT_THRESHOLD, ANA_TASK_OK is returned.
- * 
- * @return The task status indicating the severity of faults.
+ * @brief Checks for faults in the button application.
+ *
+ * This function reads the error slot and determines the task status based on the error value.
+ *
+ * @return The task status based on the error value.
  */
-EBtnTaskStatus_t btn_app_check_faults();
-
+EBtnTaskStatus_t btn_app_check_faults(void);
 
 #endif /* BTN_APP_H_ */

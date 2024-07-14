@@ -17,7 +17,7 @@ void task_ext_memory(void *pvParameters)
     SMemTaskInfo_t task_info;
     task_mem_init(&task_info,pvParameters);
 
-    // Initialize analog state machine
+    // Initialize external memory state machine
     task_info.status = mem_sm_init( on_mem_init,
                                     on_mem_execute,
                                     on_mem_breakdown);
@@ -32,7 +32,7 @@ void task_ext_memory(void *pvParameters)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
-        // Run analog state machine
+        // Run external memory state machine
         mem_sm_run();
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);

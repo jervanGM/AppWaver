@@ -70,7 +70,7 @@
 #define LIS3DH_ACT_THS                0x3E
 #define LIS3DH_ACT_DUR                0x3F
 
-#define ACC_ADC_CONV_FACTOR (1/64)
+#define ACC_ADC_CONV_FACTOR (64)
 #define ACC_AXIS_CONV_FACTOR (0.004/64)
 
 #define TEMP_CONV_FACTOR (56.0 / 65535.0)

@@ -7,49 +7,39 @@
 
 
 /**
- * @brief Initializes the analog state machine.
+ * @brief Initializes the power state machine with the provided transition functions for each state.
  * 
- * This function initializes the analog state machine by assigning the
- * provided initialization, ready, operational, and breakdown functions
- * to their respective state function pointers.
- * 
- * @param init_func Pointer to the initialization function.
- * @param ready_func Pointer to the ready function.
- * @param operational_func Pointer to the operational function.
- * @param breakdown_func Pointer to the breakdown function.
- * 
- * @return Status of the initialization process.
+ * @param init_func Initialization state function pointer
+ * @param full_pw_func Full power state function pointer
+ * @param low_pw_func Low power state function pointer
+ * @param power_off_func Power off state function pointer
+ * @param breakdown_func Breakdown state function pointer
+ * @return EPwTaskStatus_t Status of the power state machine initialization
  */
 EPwTaskStatus_t pw_sm_init(
-    void (*init_func)(void), 
-    void (*full_pw_func)(void), 
-    void (*low_pw_func)(void), 
-    void (*power_off_func)(void), 
+    void (*init_func)(void),
+    void (*full_pw_func)(void),
+    void (*low_pw_func)(void),
+    void (*power_off_func)(void),
     void (*breakdown_func)(void)
 );
 
 /**
- * @brief Runs the analog state machine.
- * 
- * This function executes the current state's execute function and then
- * triggers the state transition function.
+ * @brief Runs the current state's execution function in the power state machine.
  */
 void pw_sm_run();
 
 /**
- * @brief Gets the current state of the analog state machine.
+ * @brief Retrieves the current state of the power state machine.
  * 
- * @return Current state of the state machine.
+ * @return EPwTaskState_t Current state of the power state machine
  */
 EPwTaskState_t pw_sm_get_state();
 
 /**
- * @brief Sets the state machine event.
+ * @brief Sets the event for the power state machine.
  * 
- * This function sets the event that triggers state transitions in the
- * state machine.
- * 
- * @param event State machine event.
+ * @param event Event to set for the power state machine
  */
 void pw_sm_set_st_event(EPwStateEvent_t event);
 

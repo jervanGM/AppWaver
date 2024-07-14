@@ -8,19 +8,23 @@
 #define MAYOR_FAULT_THESHOLD -20
 
 /**
- * @brief Initializes the analog application.
+ * @brief Initializes the ACC IT application.
+ *
+ * This function performs the initialization for the ACC IT application.
  */
 void acc_it_app_init();
 
 /**
- * @brief Checks for faults in the analog application.
- * 
- * This function reads the error from the specified error slot and determines the task status based on the error value.
- * If the error falls within the range defined by MINOR_FAULT_THRESHOLD and MAYOR_FAULT_THRESHOLD, ANA_MINOR_FAULT is returned.
- * If the error is less than MAYOR_FAULT_THRESHOLD, ANA_MAYOR_FAULT is returned.
- * If the error is greater than or equal to MAYOR_FAULT_THRESHOLD, ANA_TASK_OK is returned.
- * 
- * @return The task status indicating the severity of faults.
+ * @brief Checks for faults in the ACC IT application.
+ *
+ * This function reads the error value from a specified error slot and determines
+ * the task status based on the error value. It returns different status values
+ * depending on the severity of the error.
+ *
+ * @return The status of the ACC IT task.
+ * @retval ACC_IT_MINOR_FAULT if the error is between MINOR_FAULT_THRESHOLD and MAYOR_FAULT_THESHOLD.
+ * @retval ACC_IT_MAYOR_FAULT if the error is less than MAYOR_FAULT_THESHOLD.
+ * @retval ACC_IT_TASK_OK if no faults are detected.
  */
 EAccItTaskStatus_t acc_it_app_check_faults();
 

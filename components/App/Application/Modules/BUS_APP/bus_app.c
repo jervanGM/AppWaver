@@ -50,6 +50,7 @@ void bus_app_init()
     STemp_t init_temp_data = {0};
     SMoist_t init_moist_data = {0};
 
+    /*Initializate buffers to 0*/
     memcpy(&data_buffer, &init_axis_data, sizeof(SAxisDataBuffer_t));
     memcpy(&data_time, &init_time_data, sizeof(SBufTime_t));
     memcpy(&temp_data, &init_temp_data, sizeof(STemp_t));
@@ -58,53 +59,59 @@ void bus_app_init()
 
 void process_data(uint8_t *raw_data, size_t size)
 {
-    float temperature; 
-    float adc1,adc2,adc3;
+    float temperature;
+    float adc1, adc2, adc3;
     float moisture;
-    float x,y,z;
-    static float sum_temp,sum_moist;
+    float x, y, z;
+    static float sum_temp, sum_moist;
     static bool clean_data = false;
 
     if (raw_data == NULL || size != RAW_DATA_BYTES) {
-        // Log an error if the pointers are null
+        // Log an error if the pointers are null or size is incorrect
         store_error_in_slot(BUS_ERROR_SLOT, BUS_APP_BUFFER_EMPTY);
         TRACE_ERROR("Bus data buffer is empty or not valid");
         return;
     }
 
+    // Process temperature data
     temperature = ((uint16_t)raw_data[0] << 8 | raw_data[1]) * TEMP_CONV_FACTOR;
 
+    // Process moisture data
     moisture = ((uint16_t)raw_data[3] << 8 | raw_data[4]) * MOIST_CONV_FACTOR;
 
-    x = ((uint16_t)raw_data[6] << 8 | raw_data[7])*ACC_AXIS_CONV_FACTOR;
-    y = ((uint16_t)raw_data[8] << 8 | raw_data[9])*ACC_AXIS_CONV_FACTOR;
-    z = ((uint16_t)raw_data[10] << 8 | raw_data[11])*ACC_AXIS_CONV_FACTOR;
+    // Process accelerometer data
+    x = ((uint16_t)raw_data[6] << 8 | raw_data[7]) * ACC_AXIS_CONV_FACTOR;
+    y = ((uint16_t)raw_data[8] << 8 | raw_data[9]) * ACC_AXIS_CONV_FACTOR;
+    z = ((uint16_t)raw_data[10] << 8 | raw_data[11]) * ACC_AXIS_CONV_FACTOR;
 
-    adc1 = ((uint16_t)raw_data[12] << 8 | raw_data[13])*ACC_ADC_CONV_FACTOR;
-
-    adc2 = ((uint16_t)raw_data[14] << 8 | raw_data[15])*ACC_ADC_CONV_FACTOR;
-
-    adc3 = ((uint16_t)raw_data[16] << 8 | raw_data[17])*ACC_ADC_CONV_FACTOR;
+    // Process ADC data
+    adc1 = ((uint16_t)raw_data[12] << 8 | raw_data[13]) / ACC_ADC_CONV_FACTOR;
+    adc2 = ((uint16_t)raw_data[14] << 8 | raw_data[15]) / ACC_ADC_CONV_FACTOR;
+    adc3 = ((uint16_t)raw_data[16] << 8 | raw_data[17]) / ACC_ADC_CONV_FACTOR;
 
     if (clean_data) {
         // Clear the data buffer if it's ready
-        clear_axis_data_buffer(data_buffer);
+        clear_axis_data_buffer();
         sum_temp = 0;
         sum_moist = 0;
         clean_data = false;
     }
-    // Add data to the buffer
-    add_to_axis_buffer(x,y,z);
+
+    // Add data to the axis buffer
+    add_to_axis_buffer(x, y, z);
     sum_temp += temperature;
     sum_moist += moisture;
 
     if (data_buffer.ready) {
-        temp_data.temperature = sum_temp/DATA_BUFFER_SIZE;
-        moist_data.moist = sum_moist/DATA_BUFFER_SIZE;
+        // Calculate and store average temperature and moisture
+        temp_data.temperature = sum_temp / DATA_BUFFER_SIZE;
+        moist_data.moist = sum_moist / DATA_BUFFER_SIZE;
         clean_data = true;
     }
 
-    //printf("SENSOR MSG: %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f\n", temperature, moisture,x,y,z,adc1,adc2,adc3);    
+    // Uncomment the following line to print sensor data for debugging
+    // printf("SENSOR MSG: %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f\n", temperature, moisture, x, y, z, adc1, adc2, adc3);
+    printf(">emg info: %0.3f\n", adc1);  // Example output for ADC data
 }
 
 SAxisDataBuffer_t get_axis_data_buffer()

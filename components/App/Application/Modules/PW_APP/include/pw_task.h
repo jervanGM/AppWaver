@@ -3,35 +3,55 @@
 
 #include "i_pw_data.h"
 /**
- * @brief Task function responsible for managing the analog task.
+ * @brief Task function responsible for managing the power task.
  * 
- * This function initializes the analog task and executes the analog state machine in an infinite loop.
+ * This function initializes the power task and executes the power state machine in an infinite loop.
  * 
  * @param pvParameters Pointer to task parameters.
  */
 void task_power(void *pvParameters);
 
 /**
- * @brief Initializes the analog task.
+ * @brief Initializes the power task.
  * 
  * @param task_info Pointer to the task information structure.
  * @param pvParams Pointer to task parameters.
  */
 void task_pw_init(SPwTaskInfo_t *task_info,void *pvParams);
 
-/*Init state execute function*/
+/**
+ * @brief Init state execute function.
+ * 
+ * Executes actions during the initialization state.
+ */
 void on_pw_init();
 
-/*Ready state execute function*/
+/**
+ * @brief Ready state execute function.
+ * 
+ * Executes actions during the full power state.
+ */
 void on_pw_full();
 
-/*Operational state execute function*/
+/**
+ * @brief Operational state execute function.
+ * 
+ * Executes actions during the low power state.
+ */
 void on_pw_low();
 
-/*Operational state execute function*/
+/**
+ * @brief Operational state execute function.
+ * 
+ * Executes actions during the power off state.
+ */
 void on_pw_off();
 
-/*Breakdown state execute function*/
+/**
+ * @brief Breakdown state execute function.
+ * 
+ * Executes actions during the breakdown state.
+ */
 void on_pw_breakdown();
 
 

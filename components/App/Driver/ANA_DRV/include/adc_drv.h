@@ -15,6 +15,18 @@
 static int adc_raw[4][10];
 static int voltage[4][10];
 
+/**
+ * @brief Reads the ADC value from the specified channel and performs optional calibration.
+ *
+ * This function reads the ADC value from the specified channel and optionally performs
+ * calibration based on the channel. If calibration is enabled for the channel, it converts
+ * the raw ADC value to voltage and stores it in the provided data pointer.
+ *
+ * @param channel ADC channel number to read.
+ * @param data Pointer to store the ADC value converted to voltage (in millivolts).
+ * @return 0 on success, -1 on failure.
+ *
+ */
 int8_t read_adc(uint8_t channel,uint32_t * data);
 
 #endif /* ADC_DRV_H_ */

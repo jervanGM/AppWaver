@@ -1,33 +1,59 @@
-#include "mem_t_share.h"
-#include "rtos.h"
-#include <string.h>
-#include "safe_trace.h"
+/**
+ * @file mem_t_share.h
+ * @brief Shared definitions and functions for Memory tasks.
+ */
 
-static SMemCtrlMsg_t _mem_msg = {0};
-static SCtrlMemMsg_t _ctrl_msg = {0};
+#ifndef MEM_T_SHARE_H_
+#define MEM_T_SHARE_H_
 
+#include <stdbool.h>
+#include "i_mem_data.h"
+#include "common_t_data.h"
 
-void set_task_ext_mem_info(SMemTaskInfo_t task_info)
-{
-    mutex_lock(MEM_CTRL_M_ID);
-        memcpy(&_mem_msg._task_info, &task_info, sizeof(SMemTaskInfo_t));
-    mutex_unlock(MEM_CTRL_M_ID);
-}
+/**
+ * @brief Mutex identifier for Memory Control tasks.
+ */
+#define MEM_CTRL_M_ID 10
 
-void set_task_ext_mem_status(EMemTaskStatus_t status)
-{
-    mutex_lock(MEM_CTRL_M_ID);
-        _mem_msg._task_info.status = status;
-    mutex_unlock(MEM_CTRL_M_ID);
-}
+/**
+ * @brief Mutex identifier for Control Memory tasks.
+ */
+#define CTRL_MEM_M_ID 11
 
-void mem_ctrl_read(SMemCtrlMsg_t *msg)
-{
-    mutex_lock(MEM_CTRL_M_ID);
-        memcpy(msg, &_mem_msg, sizeof(SMemCtrlMsg_t));
-    mutex_unlock(MEM_CTRL_M_ID);
-}
+/**
+ * @brief Sets the task information for external Memory tasks.
+ * 
+ * @param task_info The task information structure to be copied.
+ */
+void set_task_ext_mem_info(SMemTaskInfo_t task_info);
 
+/**
+ * @brief Sets the task status for external Memory tasks.
+ * 
+ * @param status The task status to be set.
+ */
+void set_task_ext_mem_status(EMemTaskStatus_t status);
+
+/**
+ * @brief Reads the message from the Memory control.
+ * 
+ * @param msg Pointer to the structure where the read message will be copied.
+ */
+void mem_ctrl_read(SMemCtrlMsg_t *msg);
+
+/**
+ * @brief Sends the control message to Memory.
+ * 
+ * @param alarm The alarms information to be sent.
+ * @param status The system status to be sent.
+ * @param plant_signal The plant signal data and time to be sent.
+ * @param env_data The environmental data and time to be sent.
+ * @param power_data The power data to be sent.
+ * @param axis_buff The axis buffer data to be sent.
+ * @param current_mode The current system mode.
+ * @param previous_mode The previous system mode.
+ * @param system_time The system current time to be sent.
+ */
 void ctrl_mem_send(
     SErrorInfo_t alarm,
     SSystemStatus_t status,
@@ -37,30 +63,13 @@ void ctrl_mem_send(
     SAxisData_t axis_buff,
     ESysMode_t current_mode,
     ESysMode_t previous_mode,
-    int64_t system_time)
-{
-    SCtrlMemMsg_t temp_msg;
+    int64_t system_time);
 
-    // Rellenar el mensaje temporal
-    temp_msg._alarm = alarm;
-    temp_msg._status = status;
-    temp_msg._plant_signal = plant_signal;
-    temp_msg._env_data = env_data;
-    temp_msg._power_data = power_data;
-    temp_msg._axis_buff = axis_buff;
-    temp_msg._current_mode = current_mode;
-    temp_msg._previous_mode = previous_mode;
-    temp_msg._system_time = system_time;
+/**
+ * @brief Reads a message from Control Memory.
+ * 
+ * @param msg Pointer to the structure where the read message will be copied.
+ */
+void ctrl_mem_read(SCtrlMemMsg_t *msg);
 
-    // Bloquear el mutex, copiar todo el mensaje y desbloquear
-    mutex_lock(CTRL_MEM_M_ID);
-    memcpy(&_ctrl_msg, &temp_msg, sizeof(SCtrlMemMsg_t));
-    mutex_unlock(CTRL_MEM_M_ID);
-}
-
-void ctrl_mem_read(SCtrlMemMsg_t *msg)
-{
-    mutex_lock(CTRL_MEM_M_ID);
-        memcpy(msg, &_ctrl_msg, sizeof(SCtrlMemMsg_t));
-    mutex_unlock(CTRL_MEM_M_ID);
-}
+#endif /* MEM_T_SHARE_H_ */

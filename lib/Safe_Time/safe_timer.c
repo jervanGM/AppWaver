@@ -2,11 +2,13 @@
 #include "assert_panic.h"
 #include "safe_trace.h"
 #include <inttypes.h>
+
 int64_t get_system_time(void)
 {
     static bool hw_sys_time_err = false;
     static c_int64_t prev_sys_time = TIME_START;
     c_int64_t sys_time = TIME_START;
+
     if (!hw_sys_time_err)
     {
         sys_time = get_hw_system_time();
@@ -54,23 +56,23 @@ int64_t encode_date_to_time(STime_t date)
 {
     int64_t time = 0;
 
-    // Convertir años a meses y sumarlos
+    // Convert years to months and add
     time += date.year * MONTH_DIV;
 
-    // Convertir meses a días y sumarlos
+    // Convert months to days and add
     time += date.month * DAY_DIV;
 
-    // Sumar días
+    // Add days
     time += date.day;
 
-    // Convertir horas a segundos y sumarlos
+    // Convert hours to seconds and add
     time *= HOUR_DIV * MIN_DIV * SEC_DIV;
     time += date.hour * MIN_DIV * SEC_DIV;
 
-    // Convertir minutos a segundos y sumarlos
+    // Convert minutes to seconds and add
     time += date.min * SEC_DIV;
 
-    // Sumar segundos
+    // Add seconds
     time += date.sec;
 
     return time;
@@ -96,7 +98,7 @@ ETimerCfgError_t safe_timer_init(STimer_t *timer)
 }
 
 ETimerCfgError_t safe_timer_restart(STimer_t *timer)
-{   
+{
     if (!timer->redundant_timer_active)
     {
         return sw_timer_restart(timer);
@@ -108,7 +110,7 @@ ETimerCfgError_t safe_timer_restart(STimer_t *timer)
 }
 
 bool safe_timer_is_on(STimer_t *timer)
-{   
+{
     if (!timer->redundant_timer_active)
     {
         return sw_timer_is_on(timer);
@@ -120,7 +122,7 @@ bool safe_timer_is_on(STimer_t *timer)
 }
 
 bool safe_timer_is_expired(STimer_t *timer)
-{   
+{
     if (!timer->redundant_timer_active)
     {
         return sw_timer_is_expired(timer);

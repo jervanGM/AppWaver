@@ -52,81 +52,107 @@ void devices_init()
     uint32_t serial = 0;
     uint8_t cmd = SHT4x_READSERIAL;
     int8_t err = BUS_DRV_OK;
-    if(bus_port != NULL)
+
+    if (bus_port != NULL)
     {
-        err += bus_port->write_reg(SHT4x_DEFAULT_ADDR,&cmd,1);
+        // Initialize temperature/humidity sensor (SHT4x)
+        err += bus_port->write_reg(SHT4x_DEFAULT_ADDR, &cmd, 1);
         task_delay(15);
-        err += bus_port->read_reg(SHT4x_DEFAULT_ADDR,rxbytes,6);
+        //Read sensor id and checks if it's different from 0
+        err += bus_port->read_reg(SHT4x_DEFAULT_ADDR, rxbytes, 6);
         serial = ((uint32_t)rxbytes[0] << 24) | ((uint32_t)rxbytes[1] << 16) | ((uint32_t)rxbytes[3] << 8) | rxbytes[4];
-        if(serial == 0 || err != BUS_DRV_OK)
+
+        if (serial == 0 || err != BUS_DRV_OK)
         {
-            store_error_in_slot(BUS_ERROR_SLOT,BUS_DEVICE_NOT_INIT);
+            // Handle initialization error
+            store_error_in_slot(BUS_ERROR_SLOT, BUS_DEVICE_NOT_INIT);
             TRACE_ERROR("Temperature/Humidity sensor device was not initialized correctly");
         }
 
+        // Initialize accelerometer (LIS3DH)
+
+        //Enable axis and configure normal mode 100 Hz
         buf[0] = LIS3DH_CTRL_REG1;
         buf[1] = 0x57;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Disable high pass filter options
         buf[0] = LIS3DH_CTRL_REG2;
         buf[1] = 0x00;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Enable INT1
         buf[0] = LIS3DH_CTRL_REG3;
         buf[1] = 0x40;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Enable block data update when values are readed
         buf[0] = LIS3DH_CTRL_REG4;
-        // buf[1] = 0x80;
-        buf[1] = 0x00;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        buf[1] = 0x80;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Enable clear INT1 flag when readed
         buf[0] = LIS3DH_CTRL_REG5;
         buf[1] = 0x08;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //INT2 options disabled
         buf[0] = LIS3DH_CTRL_REG6;
         buf[1] = 0x00;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
-        // buf[0] = LIS3DH_REFERENCE;
-        // buf[1] = 0x00;
-        // bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
-        // task_delay(10);
+
+        //ADC and internal temperature sensor enabled
         buf[0] = LIS3DH_TEMP_CFG_REG;
-        buf[1] = 0x80;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        buf[1] = 0xC0;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //INT1 theshold at 350 mg
         buf[0] = LIS3DH_INT1_THS;
         buf[1] = 0x10;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Set INT1 duration
         buf[0] = LIS3DH_INT1_DURATION;
         buf[1] = 0x05;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Enable free fall interruption trigger
         buf[0] = LIS3DH_INT1_CFG;
         buf[1] = 0x95;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
+        //Read device id
         buf[0] = LIS3DH_WHO_AM_I;
         buf[1] = 0x00;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR,buf,2);
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
+
         uint8_t chip_id = 0;
-        err += bus_port->read_reg(LIS3DH_DEFAULT_ADDR,&chip_id,1);
-        if(chip_id == 0 || err != BUS_DRV_OK)
+        err += bus_port->read_reg(LIS3DH_DEFAULT_ADDR, &chip_id, 1);
+
+        if (chip_id == 0 || err != BUS_DRV_OK)
         {
-            store_error_in_slot(BUS_ERROR_SLOT,BUS_DEVICE_NOT_INIT);
+            // Handle initialization error
+            store_error_in_slot(BUS_ERROR_SLOT, BUS_DEVICE_NOT_INIT);
             TRACE_ERROR("Accelerometer sensor device was not initialized correctly");
         }
     }
     else
     {
-        store_error_in_slot(BUS_ERROR_SLOT,BUS_DRN_ON_DEVINIT_FATAL_ERROR);
+        // Handle bus port error
+        store_error_in_slot(BUS_ERROR_SLOT, BUS_DRN_ON_DEVINIT_FATAL_ERROR);
         TRACE_ERROR("Bus port on devices init is not valid");
     }
-
 }
 
 void measure_raw_data(uint8_t *raw_data)
@@ -136,18 +162,20 @@ void measure_raw_data(uint8_t *raw_data)
     uint8_t cmd = SHT4x_NOHEAT_LOWPRECISION;
     if(raw_data != NULL && bus_port != NULL)
     {
+        //Read SHTx values with heater disabled.
         int8_t err = 0;
         err += bus_port->write_reg(SHT4x_DEFAULT_ADDR,&cmd,1);
         task_delay(10);
         err += bus_port->read_reg(SHT4x_DEFAULT_ADDR,rxbytes,6);
         memcpy(total_data, rxbytes, sizeof(uint8_t) * 6);
-
+        //Reads X,Y,Z MSB and LSB values
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_X_L, &total_data[7], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_X_H, &total_data[6], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_Y_L, &total_data[9], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_Y_H, &total_data[8], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_Z_L, &total_data[11], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_Z_H, &total_data[10], LIS3DH_READ_DELAY);
+        //Reads MSB and LSB from Acceleromenter ADC values
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_ADC1_L, &total_data[13], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_ADC1_H, &total_data[12], LIS3DH_READ_DELAY);
         err += read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_OUT_ADC2_L, &total_data[15], LIS3DH_READ_DELAY);
@@ -164,12 +192,6 @@ void measure_raw_data(uint8_t *raw_data)
         {
             memcpy(raw_data, total_data, RAW_DATA_BYTES);
         }
-        // reg = LIS3DH_INT1_SRC;
-        // uint8_t data = 0;
-        // bus_port->write_reg(LIS3DH_DEFAULT_ADDR,&reg,1);
-        // task_delay(10);
-        // bus_port->read_reg(LIS3DH_DEFAULT_ADDR,&data,1);    
-        // TRACE_DEBUG("INT DATA:", TO_STRING(data));
     }
     else
     {
@@ -183,6 +205,7 @@ void write_temp_moist_cmd(ESht4xHeaterCmd_t cmd)
 {
     uint8_t reg = SHT4x_NOHEAT_LOWPRECISION;
     int8_t err = BUS_DRV_OK;
+    //Send to SHT sensor heater duration command.
     if(bus_port != NULL)
     {
         switch (cmd)

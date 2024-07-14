@@ -1,13 +1,38 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef IND_CODEC_TEST_H_
+#define IND_CODEC_TEST_H_
+
 #include "test_suite.h"
 
-void test_handle_port_error();
+/**
+ * @brief Test for verifying the handling of port error during DSP module initialization.
+ * 
+ * This test initializes the DSP module, checks if an initialization error is stored
+ * in the designated error slot, and verifies that the error matches the expected code.
+ */
+void test_handle_port_error(); /**< \test */
 
-void test_indicator_init();
+/**
+ * @brief Test case for initializing the indicator and reading its state.
+ * 
+ * This test initializes the indicator module, retrieves the IO port,
+ * and verifies that reading from the port returns a true value after initialization.
+ */
+void test_indicator_init(); /**< \test */
 
-void test_indicator_set_state_fix_on();
+/**
+ * @brief Test case for setting the indicator state to 'fixed on'.
+ * 
+ * This test initializes the indicator module, sets the state of a specific indicator
+ * to 'fixed on', and verifies that reading from the IO port returns a true value.
+ */
+void test_indicator_set_state_fix_on(); /**< \test */
 
-void test_indicator_set_state_fix_off();
+/**
+ * @brief Test case for setting the indicator state to 'fixed off'.
+ * 
+ * This test initializes the indicator module, sets the state of a specific indicator
+ * to 'fixed off', and verifies that reading from the IO port returns a false value.
+ */
+void test_indicator_set_state_fix_off(); /**< \test */
 
-#endif /* TRACE_TEST_H_ */
+#endif /* IND_CODEC_TEST_H_ */

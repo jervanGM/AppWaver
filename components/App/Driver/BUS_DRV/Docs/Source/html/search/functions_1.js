@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['i2c_5fbus_5fdeinit_0',['i2c_bus_deinit',['../i2c__drv_8c_ab97d4163cefc837b78008f3cd7cc1174.html#ab97d4163cefc837b78008f3cd7cc1174',1,'i2c_bus_deinit():&#160;i2c_drv.c'],['../i2c__drv_8h_ab17a4632e52f39cd0248bbaec71d0498.html#ab17a4632e52f39cd0248bbaec71d0498',1,'i2c_bus_deinit(void):&#160;i2c_drv.c']]],
+  ['i2c_5fbus_5finit_1',['i2c_bus_init',['../i2c__drv_8c_a63e55a9b954b61a0f6c29f7e4451002c.html#a63e55a9b954b61a0f6c29f7e4451002c',1,'i2c_bus_init(void):&#160;i2c_drv.c'],['../i2c__drv_8h_a63e55a9b954b61a0f6c29f7e4451002c.html#a63e55a9b954b61a0f6c29f7e4451002c',1,'i2c_bus_init(void):&#160;i2c_drv.c']]],
+  ['i2c_5fread_5fregister_2',['i2c_read_register',['../i2c__drv_8c_a35ea0283da76f778ac20c75a65363c32.html#a35ea0283da76f778ac20c75a65363c32',1,'i2c_read_register(uint8_t dev_addr, uint8_t *data, size_t len):&#160;i2c_drv.c'],['../i2c__drv_8h_a35ea0283da76f778ac20c75a65363c32.html#a35ea0283da76f778ac20c75a65363c32',1,'i2c_read_register(uint8_t dev_addr, uint8_t *data, size_t len):&#160;i2c_drv.c']]],
+  ['i2c_5fwrite_5fregister_3',['i2c_write_register',['../i2c__drv_8c_a13c3b24e545a3382be8f7e4c0f4005b0.html#a13c3b24e545a3382be8f7e4c0f4005b0',1,'i2c_write_register(uint8_t dev_addr, uint8_t *data, size_t len):&#160;i2c_drv.c'],['../i2c__drv_8h_a13c3b24e545a3382be8f7e4c0f4005b0.html#a13c3b24e545a3382be8f7e4c0f4005b0',1,'i2c_write_register(uint8_t dev_addr, uint8_t *data, size_t len):&#160;i2c_drv.c']]]
+];

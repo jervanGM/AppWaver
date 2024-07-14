@@ -9,9 +9,19 @@
 
 /**
  * @brief Initializes the serial application.
+ * 
+ * Function prototype for initializing the serial application.
  */
 void serial_app_init();
 
+/**
+ * @brief Checks if a command exists in the command list.
+ * 
+ * Checks if the given command string exists in the predefined command list.
+ * 
+ * @param str Command string to check
+ * @return true if command exists, false otherwise
+ */
 bool cmd_exist(const char *str);
 
 /**

@@ -28,7 +28,7 @@ static void breakdown_transition();
 /* Define the state machine states */
 SMemSmStates state_mem_sm;
 
-/* Initializes the analog state machine with the provided transition functions for each state */
+/* Initializes the external memory state machine with the provided transition functions for each state */
 EMemTaskStatus_t mem_sm_init(
     void (*init_func)(void), 
     void (*operational_func)(void), 
@@ -61,20 +61,20 @@ EMemTaskStatus_t mem_sm_init(
     }
 }
 
-/* Runs the current state's execution function in the analog state machine */
+/* Runs the current state's execution function in the external memory state machine */
 void mem_sm_run()
 {
     state_mem_sm.state_func[state_mem_sm.sm_state].handle_execute();
     state_mem_sm.state_func[state_mem_sm.sm_state].handle_transition();
 }
 
-/* Retrieves the current state of the analog state machine */
+/* Retrieves the current state of the external memory state machine */
 EMemTaskState_t mem_sm_get_state()
 {
     return state_mem_sm.sm_state;
 }
 
-/* Sets the event for the analog state machine */
+/* Sets the event for the external memory state machine */
 void mem_sm_set_st_event(EMemStateEvent_t event)
 {
     state_mem_sm.st_event = event;

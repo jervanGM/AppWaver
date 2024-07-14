@@ -1,8 +1,15 @@
 #ifndef CTRL_APP_TEST_H_
 #define CTRL_APP_TEST_H_
+
 #include "test_suite.h"
 
-void fft_test_task();
+/**
+ * @brief Task to test FFT analysis and MFCC coefficient calculation.
+ * 
+ * This function initializes an FFT configuration, fills its input with random values,
+ * performs FFT analysis, computes MFCC coefficients, and validates the results.
+ */
+void fft_test_task(); /**< \test */
 
 /**
  * @brief Test case to verify the detection of a major fault.
@@ -61,12 +68,40 @@ void test_controller_app_check_lower_major_fault_boundary(); /**< \test */
  */
 void test_controller_app_check_upper_major_fault_boundary(); /**< \test */
 
-void test_controller_app_process_plant_data_random();
+/**
+ * @brief Test case to process plant data with random values.
+ * 
+ * This test initializes plant data with random values, processes it using
+ * the control application function, and validates that the output matches
+ * the input data.
+ */
+void test_controller_app_process_plant_data_random(); /**< \test */
 
-void test_controller_app_process_plant_data_random_low_level();
+/**
+ * @brief Test case to process plant data with low-level random values.
+ * 
+ * This test initializes plant data with low-level random values, processes
+ * it using the control application function, and validates the output against
+ * a comparison array of zeros.
+ */
+void test_controller_app_process_plant_data_random_low_level(); /**< \test */
 
-void test_controller_app_process_plant_data_random_sim_real();
+/**
+ * @brief Test case to process plant data with simulated real-world conditions.
+ * 
+ * This test initializes plant data with a mix of zeros, low values, and high values,
+ * processes it using the control application function, and validates that the output
+ * matches the input data.
+ */
+void test_controller_app_process_plant_data_random_sim_real(); /**< \test */
 
-void test_controller_app_process_plant_data_random_sim_low();
+/**
+ * @brief Test case to process plant data with simulated low-level conditions.
+ * 
+ * This test initializes plant data with a mix of zeros, low values, and lower high values,
+ * processes it using the control application function, and validates the output against
+ * a comparison array of zeros.
+ */
+void test_controller_app_process_plant_data_random_sim_low(); /**< \test */
 
 #endif /* CTRL_APP_TEST_H_ */

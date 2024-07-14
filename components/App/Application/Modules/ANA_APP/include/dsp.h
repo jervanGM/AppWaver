@@ -13,41 +13,53 @@
 
 /**
  * @brief Initializes the DSP port.
- * 
- * This function initializes the analog port used by the DSP module.
- * It retrieves the analog port interface, checks its validity, and then
- * calls the initialization function of the port.
- * If the port is not properly configured, an error is logged.
+ *
+ * This function retrieves the analog port interface and initializes it. 
+ * If the initialization fails, it logs an error.
  */
 void dsp_init_port();
 
 /**
  * @brief Retrieves data from the DSP module.
- * 
- * This function retrieves data from the analog port connected to the DSP module.
- * It reads data from a specific channel of the analog port, applies filters and normalization,
- * and returns the normalized data.
- * If the analog port is not properly configured or if an error occurs during data retrieval,
- * an error is logged and a default value of 0 is returned.
- * 
- * @return Normalized value of the DSP data.
+ *
+ * This function reads data from a specified analog port channel. It applies
+ * filters and normalization to the data. In case of an error, it logs the error
+ * and returns 0.
+ *
+ * @return The processed data from the DSP module.
  */
 uint32_t get_dsp_data();
 
 /**
  * @brief Applies an IIR filter to the input data.
- * 
- * This function applies a 1Hz high pass Infinite Impulse Response (IIR) filter to the input data.
- * It implements a second-order IIR filter with predefined coefficients.
- * If the input pointer is NULL, an error is logged, and the input value is set to 0.
- * 
- * @param input Pointer to the input data.
+ *
+ * This function applies a 1 Hz high pass IIR filter to the input data. If the 
+ * input pointer is NULL, it logs a warning.
+ *
+ * @param[in,out] input Pointer to the input data to be filtered.
  */
 void iir_filter(uint32_t *input);
 
 #ifdef ADVANCED
+/**
+ * @brief Retrieves solar data (current and voltage).
+ *
+ * This function reads the current and voltage data from the analog port. In case of 
+ * an error or invalid input pointers, it logs the error and sets the output values to 0.
+ *
+ * @param[out] i_solar Pointer to store the solar current data.
+ * @param[out] v_solar Pointer to store the solar voltage data.
+ */
 void get_solar_data(uint32_t *i_solar, uint32_t *v_solar);
 
+/**
+ * @brief Retrieves soil data.
+ *
+ * This function reads the soil data from the analog port. In case of an error, it logs 
+ * the error and returns 0.
+ *
+ * @return The soil data.
+ */
 uint32_t get_soil_data();
 #endif
 

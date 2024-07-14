@@ -225,28 +225,38 @@ static esp_err_t connect() {
 
 static void disconnect(void) 
 {
+    // Unregister Wi-Fi event handlers
     ESP_ERROR_CHECK(esp_event_handler_unregister(
             WIFI_EVENT, WIFI_EVENT_STA_DISCONNECTED, &on_wifi_disconnect));
     ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP,
                                                  &on_got_ip));
+
+    // Unregister IPv6 event handlers if IPv6 is enabled
     #ifdef CONFIG_ANJAY_WIFI_CONNECT_IPV6
     ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_GOT_IP6,
                                                  &on_got_ipv6));
     ESP_ERROR_CHECK(esp_event_handler_unregister(
             WIFI_EVENT, WIFI_EVENT_STA_CONNECTED, &on_wifi_connect));
     #endif // CONFIG_ANJAY_WIFI_CONNECT_IPV6
+
+    // Stop Wi-Fi operations
     esp_err_t err = esp_wifi_stop();
     if (err == ESP_ERR_WIFI_NOT_INIT) {
-        return;
+        return; // Wi-Fi not initialized, nothing to stop
     }
-    ESP_ERROR_CHECK(err);
+    ESP_ERROR_CHECK(err); // Check for errors during Wi-Fi stop
 }
 
 static void deinit(void) 
 {
+    // Deinitialize Wi-Fi
     ESP_ERROR_CHECK(esp_wifi_deinit());
+
+    // Clear default Wi-Fi driver and event handlers
     ESP_ERROR_CHECK(
             esp_wifi_clear_default_wifi_driver_and_handlers(s_anjay_esp_netif));
+
+    // Destroy the Wi-Fi network interface
     esp_netif_destroy(s_anjay_esp_netif);
     s_anjay_esp_netif = NULL;
 }

@@ -1,7 +1,14 @@
-#ifndef TRACE_TEST_H_
-#define TRACE_TEST_H_
+#ifndef PW_TASK_TEST_H_
+#define PW_TASK_TEST_H_
+
 #include "test_suite.h"
 
-void test_pw_task_init();
+/**
+ * @brief Test the initialization of a task information structure.
+ *
+ * This test initializes a task information structure using `task_pw_init`
+ * and verifies that the initialization values are correct.
+ */
+void test_pw_task_init(); /**< \test */
 
-#endif /* TRACE_TEST_H_ */
+#endif /* PW_TASK_TEST_H_ */

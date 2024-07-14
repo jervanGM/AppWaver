@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['btn_5fapp_2ec_0',['btn_app.c',['../btn__app_8c.html',1,'']]],
+  ['btn_5fapp_2eh_1',['btn_app.h',['../btn__app_8h.html',1,'']]],
+  ['btn_5fapp_5fcheck_5ffaults_2',['btn_app_check_faults',['../btn__app_8c_a2649d139a5765886678c310ef44780d6.html#a2649d139a5765886678c310ef44780d6',1,'btn_app_check_faults():&#160;btn_app.c'],['../btn__app_8h_a2e75e2ee90f4e7c3fabffb5f4b3743cf.html#a2e75e2ee90f4e7c3fabffb5f4b3743cf',1,'btn_app_check_faults(void):&#160;btn_app.c']]],
+  ['btn_5fapp_5finit_3',['btn_app_init',['../btn__app_8c_a6a48a17edc572eb0f16a2514605911b0.html#a6a48a17edc572eb0f16a2514605911b0',1,'btn_app_init():&#160;btn_app.c'],['../btn__app_8h_a54a984fd82fa3226427c2046ca5c669a.html#a54a984fd82fa3226427c2046ca5c669a',1,'btn_app_init(void):&#160;btn_app.c']]],
+  ['btn_5fapp_5fprocess_5fcmd_4',['btn_app_process_cmd',['../btn__app_8c_a81bf99dc296de5f3152dd6f1b3b9be4e.html#a81bf99dc296de5f3152dd6f1b3b9be4e',1,'btn_app_process_cmd(EBtnPulse_t pulse):&#160;btn_app.c'],['../btn__app_8h_a81bf99dc296de5f3152dd6f1b3b9be4e.html#a81bf99dc296de5f3152dd6f1b3b9be4e',1,'btn_app_process_cmd(EBtnPulse_t pulse):&#160;btn_app.c']]],
+  ['btn_5fcmd_5',['btn_cmd',['../btn__app_8c_ac7d8a52726d16683e9a572a71d065552.html#ac7d8a52726d16683e9a572a71d065552',1,'btn_app.c']]],
+  ['btn_5fcmd_5ferror_6',['BTN_CMD_ERROR',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52a92e1c0e347567022b848be3621135632',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5flong1_7',['BTN_CMD_LONG1',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52a3e3fb82fe830abbf0e02211390372f7e',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5fmode1_8',['BTN_CMD_MODE1',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52a79eb05beef7269446b990599d2b31bcb',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5fmode2_9',['BTN_CMD_MODE2',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52ad6cb53522e985d413a6b145c3d4207e8',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5fmode3_10',['BTN_CMD_MODE3',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52a73b5ca6acea63370234f261c96938c57',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5fnormal_11',['BTN_CMD_NORMAL',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52ac0a37f23400c91d05180a5566c6ace2c',1,'i_btn_data.h']]],
+  ['btn_5fcmd_5fpw_5foff_12',['BTN_CMD_PW_OFF',['../i__btn__data_8h_a0e1bfd215a63ef7dc901c16873e5fb52.html#a0e1bfd215a63ef7dc901c16873e5fb52a59594ac4d84eeb89c6d89281bcc088d8',1,'i_btn_data.h']]],
+  ['btn_5fhandle_5fpulse_13',['btn_handle_pulse',['../cmd__handler_8c_a3caaaaf936df8b7614a999ffadd13dce.html#a3caaaaf936df8b7614a999ffadd13dce',1,'btn_handle_pulse(uint8_t btn_pin):&#160;cmd_handler.c'],['../cmd__handler_8h_a3caaaaf936df8b7614a999ffadd13dce.html#a3caaaaf936df8b7614a999ffadd13dce',1,'btn_handle_pulse(uint8_t btn_pin):&#160;cmd_handler.c']]],
+  ['btn_5fmayor_5ffault_14',['BTN_MAYOR_FAULT',['../i__btn__data_8h_ad1928b3f19e8f55c424cdbf724cf5e9b.html#ad1928b3f19e8f55c424cdbf724cf5e9baa21dda62e265a3e89c6fc4138364da54',1,'i_btn_data.h']]],
+  ['btn_5fminor_5ffault_15',['BTN_MINOR_FAULT',['../i__btn__data_8h_ad1928b3f19e8f55c424cdbf724cf5e9b.html#ad1928b3f19e8f55c424cdbf724cf5e9baf3962371d17696a6d717df5de2437f25',1,'i_btn_data.h']]],
+  ['btn_5ftask_2ec_16',['btn_task.c',['../btn__task_8c.html',1,'']]],
+  ['btn_5ftask_2eh_17',['btn_task.h',['../btn__task_8h.html',1,'']]],
+  ['btn_5ftask_5finit_5ffail_18',['BTN_TASK_INIT_FAIL',['../i__btn__data_8h_ad1928b3f19e8f55c424cdbf724cf5e9b.html#ad1928b3f19e8f55c424cdbf724cf5e9ba11deeb12e1209aa8000bedab220e5969',1,'i_btn_data.h']]],
+  ['btn_5ftask_5fok_19',['BTN_TASK_OK',['../i__btn__data_8h_ad1928b3f19e8f55c424cdbf724cf5e9b.html#ad1928b3f19e8f55c424cdbf724cf5e9bac24cb3a2ea88079c5f6e5a89dddd7b80',1,'i_btn_data.h']]],
+  ['button_5ferror_5fslot_20',['BUTTON_ERROR_SLOT',['../i__btn__data_8h_ad7dc53c193bbc0dddede64fb1ac3066f.html#ad7dc53c193bbc0dddede64fb1ac3066f',1,'i_btn_data.h']]],
+  ['button_5fpin_21',['BUTTON_PIN',['../i__btn__data_8h_abc2ad14f0789907024ac765711ffd3da.html#abc2ad14f0789907024ac765711ffd3da',1,'i_btn_data.h']]]
+];

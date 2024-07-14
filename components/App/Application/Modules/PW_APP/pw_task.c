@@ -8,14 +8,14 @@
 #include "rtos.h"
 #include "safe_memory.h"
 
-/*Main analog sensors task function*/
+/*Main power sensors task function*/
 void task_power(void *pvParameters)
 {   
     // Initialize task information
     SPwTaskInfo_t task_info;
     task_pw_init(&task_info,pvParameters);
 
-    // Initialize analog state machine
+    // Initialize power state machine
     task_info.status = pw_sm_init(on_pw_init,
                                       on_pw_full,
                                       on_pw_low,
@@ -24,7 +24,7 @@ void task_power(void *pvParameters)
 
     // Verify initialization success
     ASSERT_PANIC(task_info.status == PW_TASK_OK, 
-              "Analog task state machine has not been initialized correctly");
+              "Power task state machine has not been initialized correctly");
     set_task_power_info(task_info);
   
     /* Infinite loop */
@@ -32,7 +32,7 @@ void task_power(void *pvParameters)
     {
         // Update task wake time
         task_info.LastWakeTime = get_task_tick_count();  
-        // Run analog state machine
+        // Run power state machine
         pw_sm_run();
         // Delay task until next execution
         task_delay_until(&task_info.LastWakeTime, task_info.delay);
@@ -55,7 +55,7 @@ void task_pw_init(SPwTaskInfo_t *task_info,void *pvParams)
 /*Init state execute function*/
 void on_pw_init()
 {
-    // Initialize analog components
+    // Initialize power components
     pw_init();
     power_app_init();
     // Check for faults

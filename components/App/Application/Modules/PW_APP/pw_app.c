@@ -1,13 +1,13 @@
 #include "pw_app.h"
 #include "safe_memory.h"
 
-/* Initializes the analog application */
+/* Initializes the power application */
 void power_app_init()
 {
     // Empty implementation as no initialization is currently required.
 }
 
-/* Checks for faults in the analog application */
+/* Checks for faults in the power application */
 EPwTaskStatus_t power_app_check_faults()
 {
     int8_t error = 0;

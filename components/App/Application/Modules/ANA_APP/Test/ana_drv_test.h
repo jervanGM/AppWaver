@@ -33,6 +33,7 @@ void test_ana_drv_clean_data_buffer_error(); /**< \test */
  * It ensures that the buffer is populated correctly with data from the DSP and the time stamps are updated accordingly.
  */
 void test_get_data_buffer(); /**< \test */
+
 /**
  * @brief Test to verify the behavior of `get_data_buffer` when clearing the buffer.
  *
@@ -49,9 +50,18 @@ void test_get_data_clean_buffer(); /**< \test */
  */
 void test_get_data_buffer_random_wave(); /**< \test */
 
-void test_ana_drv_get_env_data();
+/**
+ * @brief Test for verifying environmental data retrieval.
+ *
+ * This test validates the `get_env_data` function under normal conditions.
+ */
+void test_ana_drv_get_env_data(); /**< \test */
 
-void test_ana_drv_get_env_data_null();
-
+/**
+ * @brief Test for handling error when environmental data pointer is NULL.
+ *
+ * This test verifies error handling in `get_env_data` when the environmental data pointer is NULL.
+ */
+void test_ana_drv_get_env_data_null(); /**< \test */
 
 #endif /* TRACE_TEST_H_ */

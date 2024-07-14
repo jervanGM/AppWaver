@@ -11,34 +11,39 @@ void control_app_init()
 static bool plant_data_is_valid(uint32_t *signal, int length) {
     uint32_t msv = 0.0;
 
-    // Calcula la suma de los cuadrados de los valores absolutos de las muestras
+    // Calculate the sum of squares of the absolute values of the samples
     for (int i = 0; i < length; i++) {
         msv += signal[i] * signal[i];
     }
 
-    // Divide por el número total de muestras para obtener el MSV
+    // Divide by the total number of samples to obtain the MSV
     msv /= length;
-    if(msv > SIGNAL_THRESHOLD)
+    
+    // Check if MSV is above the threshold
+    if (msv > SIGNAL_THRESHOLD)
     {
-        return true;
+        return true; // Valid data
     }
-    return false;
+    return false; // Invalid data
 }
 
 SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
 {
     static bool prev_ready = false;
-    static SPPlantData_t temp_msg;
+    static SPPlantData_t temp_msg = {0};
     bool ready = data_in._plant_buff.ready;
     size_t buf_size = data_in._plant_buff.size;
 
-    if((buf_size > 0) && ready && (ready != prev_ready))
+    // Process plant data if buffer size is valid and ready status changed
+    if ((buf_size > 0) && ready && (ready != prev_ready))
     {
-        if(plant_data_is_valid(data_in._plant_buff.data,buf_size))
+        // Validate plant data using internal function
+        if (plant_data_is_valid(data_in._plant_buff.data, buf_size))
         {
-            memcpy(temp_msg.data,data_in._plant_buff.data,buf_size*sizeof(uint32_t));
-            memcpy(&temp_msg.start_time,&data_in._buff_time.start_time,sizeof(STemp_t));
-            memcpy(&temp_msg.end_time,&data_in._buff_time.end_time,sizeof(STemp_t));
+            // Copy valid plant data and associated timestamps
+            memcpy(temp_msg.data, data_in._plant_buff.data, buf_size * sizeof(uint32_t));
+            memcpy(&temp_msg.start_time, &data_in._buff_time.start_time, sizeof(STemp_t));
+            memcpy(&temp_msg.end_time, &data_in._buff_time.end_time, sizeof(STemp_t));
         }
     }
     
@@ -52,6 +57,7 @@ SEnvData_t control_app_process_env_data(SAnalogSensMsg_t analog_env_data, SBusSe
 {
     SEnvData_t temp_env = {0};
 
+    // Extract relevant environmental data from analog and digital sensor messages
     temp_env.light = analog_env_data._env_data.light_percentage;
     temp_env.soil_moist = analog_env_data._env_data.soil_moist_percentage;
     temp_env.sun = analog_env_data._env_data.direct_sun_percentage;
@@ -63,16 +69,20 @@ SEnvData_t control_app_process_env_data(SAnalogSensMsg_t analog_env_data, SBusSe
 
 SAxisData_t control_app_process_acc_data(SBusSensCtrlMsg_t axis_data, SAccItMsg_t it_data)
 {
-    static SAxisData_t temp_buff;
+    static SAxisData_t temp_buff = {0};
 
-    if(axis_data._axis_buff.ready)
+    // Process accelerometer data if buffer is ready
+    if (axis_data._axis_buff.ready)
     {
-        memcpy(temp_buff.x,axis_data._axis_buff.x,DATA_BUFFER_SIZE*sizeof(float));
-        memcpy(temp_buff.y,axis_data._axis_buff.y,DATA_BUFFER_SIZE*sizeof(float));
-        memcpy(temp_buff.z,axis_data._axis_buff.z,DATA_BUFFER_SIZE*sizeof(float));
+        // Copy accelerometer data buffers and associated timestamps
+        memcpy(temp_buff.x, axis_data._axis_buff.x, DATA_BUFFER_SIZE * sizeof(float));
+        memcpy(temp_buff.y, axis_data._axis_buff.y, DATA_BUFFER_SIZE * sizeof(float));
+        memcpy(temp_buff.z, axis_data._axis_buff.z, DATA_BUFFER_SIZE * sizeof(float));
         temp_buff.start_time = axis_data._buff_time.start_time;
         temp_buff.end_time = axis_data._buff_time.end_time;
     }
+
+    // Set interrupt flags based on received interrupt command
     temp_buff.it1 = (it_data._int_cmd == ACT_IT1);
     temp_buff.it2 = (it_data._int_cmd == ACT_IT2);
 

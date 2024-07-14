@@ -13,10 +13,31 @@
 #include "ind_t_share.h"
 #include "srl_t_share.h"
 
-ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMemTaskStatus_t mem_status);
+/**
+ * @brief Processes the change in control task based on wireless and memory status.
+ *
+ * This function determines the active control task based on the status of wireless (wls_status)
+ * and memory (mem_status). It handles task switching and timer management.
+ *
+ * @param wls_status Wireless status
+ * @param mem_status Memory status
+ * @return Active control task after processing
+ */
+ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_status);
 
 #ifdef ADVANCED
-SCtrlBusSensMsg_t control_diag_process_bus_cmd(STemp_t temp, SMoist_t moist);
+/**
+ * @brief Processes the bus command based on temperature and moisture readings.
+ *
+ * This function generates a control message for the bus sensor based on temperature and moisture
+ * values. If temperature is below 20°C and moisture is above 70%, it sets a medium heater command
+ * for the temperature and humidity sensor.
+ *
+ * @param temp Temperature structure containing temperature readings
+ * @param moist Moisture structure containing moisture readings
+ * @return Control message for bus sensor
+ */
+SCtrlBusSensMsg_t control_diag_process_bus_cmd(uint8_t temp, uint8_t moist);
 #endif
 
 #endif /* CONTROL_DIAG_H_ */

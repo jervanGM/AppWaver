@@ -7,9 +7,9 @@
 
 
 /**
- * @brief Initializes the analog state machine.
+ * @brief Initializes the external memory state machine.
  * 
- * This function initializes the analog state machine by assigning the
+ * This function initializes the external memory state machine by assigning the
  * provided initialization, ready, operational, and breakdown functions
  * to their respective state function pointers.
  * 
@@ -27,7 +27,7 @@ EMemTaskStatus_t mem_sm_init
 );
 
 /**
- * @brief Runs the analog state machine.
+ * @brief Runs the external memory state machine.
  * 
  * This function executes the current state's execute function and then
  * triggers the state transition function.
@@ -35,7 +35,7 @@ EMemTaskStatus_t mem_sm_init
 void mem_sm_run();
 
 /**
- * @brief Gets the current state of the analog state machine.
+ * @brief Gets the current state of the external memory state machine.
  * 
  * @return Current state of the state machine.
  */

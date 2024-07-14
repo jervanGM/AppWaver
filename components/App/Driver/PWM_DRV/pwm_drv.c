@@ -32,6 +32,7 @@ int8_t pwm_init(int gpio, uint8_t pwm_chan, uint32_t freq) {
 }
 
 int8_t pwm_set(uint8_t pwm_chan, uint8_t duty, uint8_t sts) {
+  // Calculate the duty cycle value based on percentage and resolution
   uint32_t converted_duty = sts ? (uint32_t)(1 << (uint8_t)LEDC_DUTY_RES) * (duty / 100.0) : 0;
 
     if (ledc_set_duty(LEDC_MODE, (ledc_channel_t)pwm_chan, converted_duty) != ESP_OK) {
@@ -44,6 +45,7 @@ int8_t pwm_set(uint8_t pwm_chan, uint8_t duty, uint8_t sts) {
 }
 
 int8_t pwm_deinit(uint8_t pwm_chan) {
+  // Stop the PWM channel
   if (ledc_stop(LEDC_MODE, (ledc_channel_t)pwm_chan, IDLE_LEVEL) != ESP_OK) {
     return -1;
   }

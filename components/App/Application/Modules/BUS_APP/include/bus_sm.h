@@ -7,9 +7,9 @@
 
 
 /**
- * @brief Initializes the serial state machine.
+ * @brief Initializes the bus state machine.
  * 
- * This function initializes the serial state machine by assigning the
+ * This function initializes the bus state machine by assigning the
  * provided initialization, ready, operational, and breakdown functions
  * to their respective state function pointers.
  * 
@@ -29,7 +29,7 @@ EBusTaskStatus_t bus_sm_init
 );
 
 /**
- * @brief Runs the serial state machine.
+ * @brief Runs the bus state machine.
  * 
  * This function executes the current state's execute function and then
  * triggers the state transition function.
@@ -37,7 +37,7 @@ EBusTaskStatus_t bus_sm_init
 void bus_sm_run();
 
 /**
- * @brief Gets the current state of the serial state machine.
+ * @brief Gets the current state of the bus state machine.
  * 
  * @return Current state of the state machine.
  */

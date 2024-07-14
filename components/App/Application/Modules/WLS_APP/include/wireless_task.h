@@ -21,27 +21,39 @@ void task_wireless(void *pvParameters);
 void task_wireless_init(SWlsTaskInfo_t *task_info,void *pvParams);
 
 /**
- * @brief Function executed when the wireless state machine is in the initialization state.
+ * @brief Initialization state execution function.
+ *
+ * Initializes network components and checks for faults or software updates.
  */
 void on_wls_init();
 
 /**
- * @brief Function executed when the wireless state machine is in the ready state.
+ * @brief Ready state execution function.
+ *
+ * Connects to the network and checks for faults or software updates.
  */
 void on_wls_ready();
 
 /**
- * @brief Function executed when the wireless state machine is in the execute state.
+ * @brief Operational state execution function.
+ *
+ * Runs network operations, reads controller messages, updates application data,
+ * and updates wireless data objects.
  */
 void on_wls_execute();
 
 /**
- * @brief Function executed when the wireless state machine is in the update state.
+ * @brief Update state execution function.
+ *
+ * Deinitializes network components and performs FOTA reboot if necessary.
  */
 void on_wls_update();
 
 /**
- * @brief Function executed when the wireless state machine is in the breakdown state.
+ * @brief Breakdown state execution function.
+ *
+ * Handles breakdown scenarios, checks fault reasons, logs faults,
+ * cleans error memory, and manages state transitions accordingly.
  */
 void on_wls_breakdown();
 

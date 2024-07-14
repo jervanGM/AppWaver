@@ -4,16 +4,16 @@
 #include "i_ind_data.h"
 
 /**
- * @brief Task function responsible for managing the button task.
+ * @brief Task function responsible for managing the indicator task.
  * 
- * This function initializes the button task and executes the button state machine in an infinite loop.
+ * This function initializes the button task and executes the indicator state machine in an infinite loop.
  * 
  * @param pvParameters Pointer to task parameters.
  */
 void task_indicator(void *pvParameters);
 
 /**
- * @brief Initializes the button task.
+ * @brief Initializes the indicator task.
  * 
  * @param task_info Pointer to the task information structure.
  * @param pvParams Pointer to task parameters.
