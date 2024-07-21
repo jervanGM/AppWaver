@@ -1,6 +1,6 @@
 #ifndef CONTROL_TASK_H_
 #define CONTROL_TASK_H_
-
+#include "i_control_data.h"
 
 /**
  * @brief Task function for the controller task.
@@ -20,7 +20,7 @@ void task_control(void *pvParameters);
  * @param task_info Pointer to control task information structure
  * @param pvParams Pointer to task parameters
  */
-void task_control_init(SAnaTaskInfo_t *task_info,void *pvParams);
+void task_control_init(SCtrlTaskInfo_t *task_info,void *pvParams);
 
 /**
  * @brief Handler for initialization state in control state machine.

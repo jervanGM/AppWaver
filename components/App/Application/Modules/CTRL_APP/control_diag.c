@@ -2,7 +2,7 @@
 #include "safe_trace.h"
 #include <string.h>
 
-ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_status)
+ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMemTaskStatus_t mem_status)
 {
     static ECtrlTaskAct_t task_active = CTRL_TASK_WLS;
     static STimer_t timer = {
@@ -42,7 +42,7 @@ ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_
     }
     
     // Handling major fault in wireless task, switch to none
-    if (wls_status == WLS_MAJOR_FAULT && task_active == CTRL_TASK_MEM)
+    if (wls_status == WLS_MAYOR_FAULT && task_active == CTRL_TASK_MEM)
     {
         task_active = CTRL_TASK_NONE;
     }
@@ -51,12 +51,12 @@ ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_
 }
 
 #ifdef ADVANCED
-SCtrlBusSensMsg_t control_diag_process_bus_cmd(uint8_t temp, uint8_t moist)
+SCtrlBusSensMsg_t control_diag_process_bus_cmd(STemp_t temp, SMoist_t moist)
 {
     SCtrlBusSensMsg_t msg;
 
     // Check temperature and moisture thresholds for bus sensor command
-    if ((temp < 20) && (moist > 70))
+    if(((temp.temperature < 20) && (moist.moist > 70)))
     {
         msg._cmd.heater_cmd = SHT4X_MED_HEATER_1S; // Set medium heater command
         msg._dev_id = TEMP_HUM_SENS; // Set device ID for temperature and humidity sensor

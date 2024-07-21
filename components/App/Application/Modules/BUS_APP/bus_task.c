@@ -137,7 +137,7 @@ void on_bus_breakdown()
             bus_sm_set_st_event(BUS_STATE_PREV);
             break;
         
-        case BUS_MAJOR_FAULT:
+        case BUS_MAYOR_FAULT:
             // Log major fault
             TRACE_ERROR("A major fault has been produced on bus task");
             // Set state machine event to next

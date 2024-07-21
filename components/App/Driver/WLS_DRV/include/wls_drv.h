@@ -47,6 +47,8 @@ int8_t wifi_disconnect(void);
  */
 int8_t wifi_deinitialize(void);
 
+int32_t get_last_wifi_event_id();
+
 /**
  * @brief Get the default MAC address of the ESP32.
  *

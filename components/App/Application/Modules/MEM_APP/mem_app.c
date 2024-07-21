@@ -99,7 +99,7 @@ EMemTaskStatus_t mem_app_check_faults()
     else if (error < MAYOR_FAULT_THESHOLD)
     {
         // Return MAYOR_FAULT if error is less than MAYOR_FAULT_THRESHOLD
-        return MEM_MAJOR_FAULT;
+        return MEM_MAYOR_FAULT;
     }
     else
     {

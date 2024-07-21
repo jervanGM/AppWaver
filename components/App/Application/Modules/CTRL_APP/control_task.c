@@ -48,7 +48,7 @@ void task_control(void *pvParameters)
     }
 }
 
-void task_control_init(SAnaTaskInfo_t *task_info,void *pvParams) 
+void task_control_init(SCtrlTaskInfo_t *task_info,void *pvParams) 
 {
     // Set task ID
     task_info->ID = CONTROL_HANDLER_ID;

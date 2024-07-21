@@ -23,7 +23,7 @@
  * @param mem_status Memory status
  * @return Active control task after processing
  */
-ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_status);
+ECtrlTaskAct_t control_diag_process_change_task(EWlsTaskStatus_t wls_status,EMemTaskStatus_t mem_status);
 
 #ifdef ADVANCED
 /**
@@ -37,7 +37,7 @@ ECtrlTaskAct_t control_diag_process_change_task(uint8_t wls_status, uint8_t mem_
  * @param moist Moisture structure containing moisture readings
  * @return Control message for bus sensor
  */
-SCtrlBusSensMsg_t control_diag_process_bus_cmd(uint8_t temp, uint8_t moist);
+SCtrlBusSensMsg_t control_diag_process_bus_cmd(STemp_t temp, SMoist_t moist);
 #endif
 
 #endif /* CONTROL_DIAG_H_ */

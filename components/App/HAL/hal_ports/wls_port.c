@@ -62,6 +62,11 @@ static int8_t wls_disconnect(void)
     return wifi_disconnect(); // Call function to disconnect from WiFi network
 }
 
+static int32_t get_wifi_event()
+{
+    return get_last_wifi_event_id();
+}
+
 /* Function to receive data from the wireless port */
 static void wls_port_receive(uint8_t channel, uint32_t *data)
 {
