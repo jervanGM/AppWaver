@@ -111,7 +111,6 @@ void process_data(uint8_t *raw_data, size_t size)
 
     // Uncomment the following line to print sensor data for debugging
     // printf("SENSOR MSG: %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f\n", temperature, moisture, x, y, z, adc1, adc2, adc3);
-    printf(">emg info: %0.3f\n", adc1);  // Example output for ADC data
 }
 
 SAxisDataBuffer_t get_axis_data_buffer()

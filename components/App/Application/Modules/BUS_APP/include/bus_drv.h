@@ -48,5 +48,5 @@ void measure_raw_data(uint8_t *raw_data);
  * @param[in] cmd Command to set the temperature/heater mode of the moisture sensor.
  */
 void write_temp_moist_cmd(ESht4xHeaterCmd_t cmd);
-
+void bus_deinit();
 #endif /* BUS_DRV_H_ */

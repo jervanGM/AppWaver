@@ -109,6 +109,7 @@ int8_t sd_spi_write_txt(const char *path, char *data)
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
 
     // Open file in append mode
+    ESP_LOGI(TAG, "Opening file %s", file_path);
     FILE *f = fopen(file_path, "a");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for writing");
@@ -131,6 +132,7 @@ int8_t sd_spi_write_bin(const char* path, void* data, size_t type_size, size_t d
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
 
     // Open file in append binary mode
+    ESP_LOGI(TAG, "Opening file %s", file_path);
     FILE* f = fopen(file_path, "ab");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for writing");
@@ -155,6 +157,7 @@ int8_t sd_spi_read_file(const char *path, char *data)
     snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
 
     // Open file in read mode
+    ESP_LOGI(TAG, "Reading file %s", file_path);
     FILE *f = fopen(file_path, "r");
     if (f == NULL) {
         ESP_LOGE(TAG, "Failed to open file for reading");
