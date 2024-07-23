@@ -45,13 +45,7 @@ static void short_press_sm()
     switch (btn_cmd)
     {
     case BTN_CMD_NORMAL:
-        btn_cmd = BTN_CMD_MODE1;
-        break;
-    case BTN_CMD_MODE1:
-        btn_cmd = BTN_CMD_MODE2;
-        break;
-    case BTN_CMD_MODE2:
-        btn_cmd = BTN_CMD_MODE3;
+        btn_cmd = BTN_CMD_RECORD;
         break;
     default:
         btn_cmd = BTN_CMD_NORMAL;
@@ -65,7 +59,7 @@ static void long_press_sm()
     switch (btn_cmd)
     {
     case BTN_CMD_NORMAL:
-        btn_cmd = BTN_CMD_LONG1;
+        btn_cmd = BTN_CMD_RECORD;
         break;
     default:
         btn_cmd = BTN_CMD_NORMAL;

@@ -4,7 +4,8 @@
 #include "CONSTANTS.h"
 
 typedef enum {
-    SYS_BUFFER_MODE
+    SYS_NORMAL,
+    SYS_RECORD
 } ESysMode_t;
 
 typedef enum {

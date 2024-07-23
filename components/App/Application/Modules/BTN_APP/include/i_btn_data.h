@@ -26,10 +26,7 @@ typedef enum{
 
 typedef enum{
     BTN_CMD_NORMAL,
-    BTN_CMD_MODE1,
-    BTN_CMD_MODE2,
-    BTN_CMD_MODE3,
-    BTN_CMD_LONG1,
+    BTN_CMD_RECORD,
     BTN_CMD_PW_OFF,
     BTN_CMD_ERROR
 }EBtnCmd_t;

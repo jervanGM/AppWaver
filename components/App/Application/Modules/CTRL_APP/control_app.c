@@ -8,25 +8,6 @@ void control_app_init()
     // Empty implementation as no initialization is currently required.
 }
 
-static bool plant_data_is_valid(uint32_t *signal, int length) {
-    uint32_t msv = 0.0;
-
-    // Calculate the sum of squares of the absolute values of the samples
-    for (int i = 0; i < length; i++) {
-        msv += signal[i] * signal[i];
-    }
-
-    // Divide by the total number of samples to obtain the MSV
-    msv /= length;
-    
-    // Check if MSV is above the threshold
-    if (msv > SIGNAL_THRESHOLD)
-    {
-        return true; // Valid data
-    }
-    return false; // Invalid data
-}
-
 SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
 {
     static bool prev_ready = false;
@@ -37,14 +18,11 @@ SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
     // Process plant data if buffer size is valid and ready status changed
     if ((buf_size > 0) && ready && (ready != prev_ready))
     {
-        // Validate plant data using internal function
-        if (plant_data_is_valid(data_in._plant_buff.data, buf_size))
-        {
             // Copy valid plant data and associated timestamps
             memcpy(temp_msg.data, data_in._plant_buff.data, buf_size * sizeof(uint32_t));
             memcpy(&temp_msg.start_time, &data_in._buff_time.start_time, sizeof(STemp_t));
             memcpy(&temp_msg.end_time, &data_in._buff_time.end_time, sizeof(STemp_t));
-        }
+
     }
     
     prev_ready = ready;

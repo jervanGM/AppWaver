@@ -103,8 +103,10 @@ void on_ctrl_execute()
     SAxisData_t axis_buf = {0};
     SSerialMsg_t srl_msg = {0};
 
-    static ECtrlTaskAct_t task_active = CTRL_TASK_WLS; 
-    static EWifiActSts_t wifi_pw_sts = PW_WIFI_ON;
+    ESysMode_t sys_mode = SYS_NORMAL;
+    static ESysMode_t prev_sys_mode = SYS_NORMAL;
+
+    static uint8_t record_counter = 0;
 
     // Read sensor data from controllers
     analog_controller_read(&ana_msg);
@@ -129,33 +131,32 @@ void on_ctrl_execute()
 #endif
 
     // Handle power off and normal mode commands
-    if((btn_msg._btn_cmd == BTN_CMD_PW_OFF) || (strcmp(srl_msg._command.cmd, srl_cmd_list[0]) == 0))
+    if(btn_msg._btn_cmd == BTN_CMD_PW_OFF)
     {
         ctrl_pw_send(PW_SENS_OFF,PW_MAIN_OFF,PW_SOIL_OFF,PW_WIFI_OFF,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_OFF);
         power_data.curnt_pw_mode = E_PW_OFF;
     }
-    else if(btn_msg._btn_cmd == BTN_CMD_NORMAL || (strcmp(srl_msg._command.cmd, srl_cmd_list[1]) == 0))
+    else if(btn_msg._btn_cmd == BTN_CMD_NORMAL)
     {
-        ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,wifi_pw_sts,PW_MODE_FULL);
+        ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,PW_WIFI_ON,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_ON);
-        task_active = control_diag_process_change_task(wls_msg._task_info.status,mem_msg._task_info.status);
+        sys_mode = SYS_NORMAL;
     }
     else
     {
-        ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,wifi_pw_sts,PW_MODE_FULL);
+        ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,PW_WIFI_ON,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,BLINK_500_MS);
-        task_active = CTRL_TASK_BOTH;
+        sys_mode = SYS_RECORD;
     }
 
     // Send control messages to wireless and memory controllers
     controller_wireless_send(alarm,status,plant_buf,env_data,power_data,axis_buf,
-                            SYS_BUFFER_MODE,SYS_BUFFER_MODE,
-                            get_system_time());
+                                sys_mode,prev_sys_mode,
+                                get_system_time());
     ctrl_mem_send(alarm,status,plant_buf,env_data,power_data,axis_buf,
-                            SYS_BUFFER_MODE,SYS_BUFFER_MODE,
-                            get_system_time());
-
+                                sys_mode,prev_sys_mode,
+                                get_system_time());
     // Check for faults and set state machine event accordingly
     if(control_app_check_faults() != CTRL_TASK_OK)
     {
