@@ -76,8 +76,8 @@ void on_mem_execute()
     SWavData wav;
     SCtrlMemMsg_t msg;
     ctrl_mem_read(&msg);
-
-    wav = process_data_to_wav(msg._plant_signal.data,msg._plant_signal.start_time,msg._plant_signal.end_time);
+    bool record = (msg._current_mode == SYS_RECORD);
+    wav = process_data_to_wav(msg._plant_signal.data,msg._plant_signal.start_time,record);
 
     if(msg._power_data.curnt_pw_mode == E_PW_OFF)
     {

@@ -66,7 +66,7 @@ void mem_drv_init()
             }
 
             // Write firmware version to device info file
-            if (mem_port->file_txt_write(DEV_INFO_FILE, "FW VERSION:1.0.0") != MEM_DRV_OK)
+            if (mem_port->file_txt_write(DEV_INFO_FILE, "FW VERSION:2.1.0") != MEM_DRV_OK)
             {
                 store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
                 TRACE_WARNING(DEV_INFO_FILE, "file cannot be written");
@@ -82,24 +82,38 @@ void mem_drv_init()
 
 void save_wav_data(SWavData wav)
 {
-    if (!mem_port->file_exists(wav.file_path))
-    {
-        // Create WAV file if it doesn't exist
-        if (mem_port->file_create(wav.file_path) != MEM_DRV_OK)
+    static bool file_create = true;
+
+        if(wav.record)
         {
-            store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_CREATE_FILE_ERROR);
-            TRACE_WARNING(wav.file_path, "file cannot be created");
-            return; ///< Exit function.
+            // Write WAV header and data to file
+            if(file_create)
+            {
+                // Create WAV file if it doesn't exist
+                if (mem_port->file_create(wav.file_path) != MEM_DRV_OK)
+                {
+                    store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_CREATE_FILE_ERROR);
+                    TRACE_WARNING(wav.file_path, "file cannot be created");
+                    return; ///< Exit function.
+                }
+                if (mem_port->file_bin_write(wav.file_path, &wav.header, sizeof(char), sizeof(SWavHeader)) != MEM_DRV_OK)
+                {
+                    store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
+                    TRACE_WARNING(wav.file_path, "file cannot be written correctly");
+                }
+                file_create = false;
+            }
+            if (mem_port->file_bin_write(wav.file_path, wav.data, sizeof(int16_t), DATA_BUFFER_SIZE) != MEM_DRV_OK)
+            {
+                store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
+                TRACE_WARNING(wav.file_path, "file cannot be written correctly");
+            }
+        }
+        else
+        {
+            file_create = true;
         }
 
-        // Write WAV header and data to file
-        if ((mem_port->file_bin_write(wav.file_path, &wav.header, sizeof(char), sizeof(SWavHeader)) != MEM_DRV_OK) ||
-            (mem_port->file_bin_write(wav.file_path, wav.data, sizeof(int16_t), DATA_BUFFER_SIZE) != MEM_DRV_OK))
-        {
-            store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
-            TRACE_WARNING(wav.file_path, "file cannot be written correctly");
-        }
-    }
 }
 
 void mem_drv_deinit()

@@ -5,6 +5,7 @@
 static int8_t ext_mem_port_init(void); // Initializes the external memory port using SD SPI driver
 static int8_t ext_mem_port_txt_file_write(const char *path, char *data); // Writes text data to a file on the external memory
 static int8_t ext_mem_port_bin_file_write(const char* path, void* data, size_t type_size, size_t data_size); // Writes binary data to a file on the external memory
+static int8_t ext_mem_port_bin_file_update(const char* path, void* data, size_t type_size, size_t data_size, size_t offset);
 static int8_t ext_mem_port_file_read(const char *path, char *data); // Reads a file from the external memory
 static bool ext_mem_port_file_exists(const char *path); // Checks if a file exists in the external memory
 static int8_t ext_mem_port_dir_create(const char *path); // Creates a directory in the external memory
@@ -19,6 +20,7 @@ static const IMemPort ext_mem_port_interface = {
     .init = ext_mem_port_init,
     .file_txt_write = ext_mem_port_txt_file_write,
     .file_bin_write = ext_mem_port_bin_file_write,
+    .file_bin_update = ext_mem_port_bin_file_update,
     .file_read = ext_mem_port_file_read,
     .file_exists = ext_mem_port_file_exists,
     .dir_create = ext_mem_port_dir_create,
@@ -45,6 +47,11 @@ static int8_t ext_mem_port_txt_file_write(const char *path, char *data)
 static int8_t ext_mem_port_bin_file_write(const char* path, void* data, size_t type_size, size_t data_size)
 {
     return sd_spi_write_bin(path, data, type_size, data_size);
+}
+
+static int8_t ext_mem_port_bin_file_update(const char* path, void* data, size_t type_size, size_t data_size, size_t offset)
+{
+    return sd_spi_update_bin(path, data, type_size, data_size, offset);
 }
 
 // Reads a file from the external memory

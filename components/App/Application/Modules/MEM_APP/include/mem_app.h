@@ -20,7 +20,7 @@ void mem_app_init();
  * @param end_t End time for data processing.
  * @return SWavData Struct containing the processed WAV data.
  */
-SWavData process_data_to_wav(uint32_t* data, int64_t start_t, int64_t end_t);
+SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record);
 
 /**
  * @brief Checks faults in the memory application.

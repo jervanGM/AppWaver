@@ -150,6 +150,42 @@ int8_t sd_spi_write_bin(const char* path, void* data, size_t type_size, size_t d
     return 0;
 }
 
+int8_t sd_spi_update_bin(const char* path, void* data, size_t type_size, size_t data_size, size_t offset)
+{
+    // Construct full file path
+    char file_path[strlen(path) + strlen(MOUNT_POINT) + 1];
+    snprintf(file_path, sizeof(file_path), "%s%s", MOUNT_POINT, path);
+
+    // Open file in read/write binary mode
+    ESP_LOGI(TAG, "Opening file %s", file_path);
+    FILE* f = fopen(file_path, "r+b");
+    if (f == NULL) {
+        ESP_LOGE(TAG, "Failed to open file for updating");
+        return -1;
+    }
+
+    // Move the file cursor to the desired position (offset)
+    if (fseek(f, offset, SEEK_SET) != 0) {
+        ESP_LOGE(TAG, "Failed to seek to position %zu", offset);
+        fclose(f);
+        return -1;
+    }
+
+    // Write binary data to file
+    if (fwrite(data, type_size, data_size, f) != data_size) {
+        ESP_LOGE(TAG, "Failed to write data to file");
+        fclose(f);
+        return -1;
+    }
+
+    // Close file
+    fclose(f);
+
+    // Log success message
+    ESP_LOGI(TAG, "Data has been updated in the file");
+    return 0;
+}
+
 int8_t sd_spi_read_file(const char *path, char *data)
 {
     // Construct full file path

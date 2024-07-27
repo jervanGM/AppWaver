@@ -22,7 +22,11 @@ SPPlantData_t control_app_process_plant_data(SAnalogSensMsg_t data_in)
             memcpy(temp_msg.data, data_in._plant_buff.data, buf_size * sizeof(uint32_t));
             memcpy(&temp_msg.start_time, &data_in._buff_time.start_time, sizeof(STemp_t));
             memcpy(&temp_msg.end_time, &data_in._buff_time.end_time, sizeof(STemp_t));
+            temp_msg.is_ready = true;
 
+    }
+    else{
+        temp_msg.is_ready = false;
     }
     
     prev_ready = ready;

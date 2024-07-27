@@ -3,16 +3,10 @@
 
 EBtnCmd_t btn_cmd;
 
-/* Handles short press state machine transitions */
-static void short_press_sm(void);
-
-/* Handles long press state machine transitions */
-static void long_press_sm(void);
-
 /* Initializes the button application */
 void btn_app_init()
 {
-    btn_cmd = BTN_CMD_NORMAL;
+    btn_cmd = BTN_CMD_NONE;
 }
 
 /* Processes button commands based on pulses */
@@ -21,50 +15,22 @@ EBtnCmd_t btn_app_process_cmd(EBtnPulse_t pulse)
     switch (pulse)
     {
     case SHORT_PRESS:
-        short_press_sm();  // Handle short press
+        btn_cmd = BTN_CMD_SHORT_PRESS;
         break;
     case LONG_PRESS:
-        long_press_sm();  // Handle long press
+        btn_cmd = BTN_CMD_LONG_PRESS;
         break;
     case POWER_OFF:
         btn_cmd = BTN_CMD_PW_OFF;  // Set command to power off
         break;
     case NO_PULSE:
-        // Do nothing if there is no pulse
+        btn_cmd = BTN_CMD_NONE;
         break;
     default:
         btn_cmd = BTN_CMD_ERROR;  // Handle unknown pulse
         break;
     }
     return btn_cmd;
-}
-
-/* Handles short press state machine transitions */
-static void short_press_sm()
-{
-    switch (btn_cmd)
-    {
-    case BTN_CMD_NORMAL:
-        btn_cmd = BTN_CMD_RECORD;
-        break;
-    default:
-        btn_cmd = BTN_CMD_NORMAL;
-        break;
-    }
-}
-
-/* Handles long press state machine transitions */
-static void long_press_sm()
-{
-    switch (btn_cmd)
-    {
-    case BTN_CMD_NORMAL:
-        btn_cmd = BTN_CMD_RECORD;
-        break;
-    default:
-        btn_cmd = BTN_CMD_NORMAL;
-        break;
-    }
 }
 
 /* Checks for faults in the button application */

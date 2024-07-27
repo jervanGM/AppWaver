@@ -21,21 +21,20 @@ void mem_app_init()
     def_header.bytes_per_sec = def_header.srate * def_header.bits_per_samp / 8 * def_header.num_chans;
     def_header.bytes_per_samp = (def_header.bits_per_samp / 8) * def_header.num_chans;
 
-    def_header.dlength = DATA_BUFFER_SIZE * def_header.bytes_per_samp;
+    def_header.dlength = DATA_BUFFER_SIZE * (RECORD_MULTIPLER-1) * def_header.bytes_per_samp;
     def_header.flength = def_header.dlength + sizeof(SWavHeader);
 }
 
-SWavData process_data_to_wav(uint32_t* data, int64_t start_t, int64_t end_t)
+SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record)
 {
     SWavData wav;
     SWavHeader empty_header = {0};
     STime_t start_secs = encode_time_to_date(start_t);
     static int64_t prev_start_secs = 0;
-    static int64_t prev_end_secs = 0;
+    static bool file_create = true;
 
     // Check if data, time interval, or default header is empty
-    if ((data == NULL) || ((end_t - start_t) == 0) || 
-        (memcmp(&def_header, &empty_header, sizeof(SWavHeader)) == 0))
+    if ((data == NULL) || (memcmp(&def_header, &empty_header, sizeof(SWavHeader)) == 0))
     {
         // Store error and log warning if any input data is invalid
         store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_APP_PROCESS_NULL_WAV_DATA);
@@ -46,39 +45,42 @@ SWavData process_data_to_wav(uint32_t* data, int64_t start_t, int64_t end_t)
     
     uint32_t average = 0;
     
-    char time_string[100];
-    if ((prev_start_secs != start_t) && (prev_end_secs != end_t))
+    static char time_string[100];
+    if(record)
     {
-        // Generate WAV file name based on start time
-        sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d.wav", start_secs.year, start_secs.month, start_secs.day, start_secs.hour, start_secs.min, start_secs.sec);
- 
-        // Create file path for WAV file
-        sprintf(wav.file_path, "%s/%d/%s", WAV_FOLDER, wav_subfolder, time_string);
-
-        wav.header = def_header;
-        wav.header.srate = DATA_BUFFER_SIZE / (end_t - start_t);
-        wav.header.bytes_per_sec = wav.header.srate * wav.header.bits_per_samp / 8 * wav.header.num_chans;
-        wav.data = (int16_t *)malloc(DATA_BUFFER_SIZE * sizeof(int16_t));
-
-        // Copy data and calculate average
-        for (size_t i = 0; i < DATA_BUFFER_SIZE; i++)
+        if (prev_start_secs != start_t)
         {
-            average += data[i] / DATA_BUFFER_SIZE;
-        }
+            // Generate WAV file name based on start time
+            if(file_create)
+            {
+                sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d.wav", start_secs.year, start_secs.month, start_secs.day, start_secs.hour, start_secs.min, start_secs.sec);
+                file_create = false;
+            }
+            // Create file path for WAV file
+            sprintf(wav.file_path, "%s/%d/%s", WAV_FOLDER, wav_subfolder, time_string);
+            wav.header = def_header;
+            wav.data = (int16_t *)malloc(DATA_BUFFER_SIZE * sizeof(int16_t));
 
-        for (size_t i = 0; i < DATA_BUFFER_SIZE; i++)
+            for (size_t i = 0; i < DATA_BUFFER_SIZE; i++)
+            {
+                wav.data[i] = (int16_t)data[i]*10;
+            }
+            wav.average = 1;
+
+        }
+        else
         {
-            wav.data[i] = (int16_t)data[i];
+            wav.average = 0;
         }
-
-        wav.average = average;
     }
     else
     {
-        wav.average = 0;
+        file_create = true;
     }
+
+    wav.record = record;
+
     prev_start_secs = start_t;
-    prev_end_secs = end_t;
 
     return wav;
 }

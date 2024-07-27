@@ -35,6 +35,8 @@ int8_t sd_spi_write_txt(const char *path, char *data);
  */
 int8_t sd_spi_write_bin(const char* path, void* data, size_t type_size, size_t data_size);
 
+int8_t sd_spi_update_bin(const char* path, void* data, size_t type_size, size_t data_size, size_t offset);
+
 /**
  * @brief Read text data from a file on the SD card.
  *

@@ -58,6 +58,7 @@ typedef struct
     SWavHeader header;
     int16_t* data;
     uint32_t average;
+    bool record;
 } SWavData;
 
 

@@ -22,6 +22,11 @@ typedef enum{
     CTRL_TASK_NONE
 }ECtrlTaskAct_t;
 
+typedef enum{
+    CTRL_RECORD_ON,
+    CTRL_RECORD_OFF
+}ECtrlRecordSts_t;
+
 typedef struct {
     uint8_t ID;
     ECtrlTaskStatus_t status;

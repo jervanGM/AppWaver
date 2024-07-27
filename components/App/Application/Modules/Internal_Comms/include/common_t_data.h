@@ -69,6 +69,8 @@ typedef struct {
     uint32_t data[DATA_BUFFER_SIZE];
     int64_t start_time;
     int64_t end_time;
+    bool is_ready;
+    uint8_t record_counter;
 } SPPlantData_t;
 
 #endif /* COMMON_T_DATA_H_ */

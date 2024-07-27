@@ -105,7 +105,7 @@ void on_ctrl_execute()
 
     ESysMode_t sys_mode = SYS_NORMAL;
     static ESysMode_t prev_sys_mode = SYS_NORMAL;
-
+    static ECtrlRecordSts_t record_sts = CTRL_RECORD_OFF;
     static uint8_t record_counter = 0;
 
     // Read sensor data from controllers
@@ -117,7 +117,6 @@ void on_ctrl_execute()
 
     // Process plant data
     plant_buf = control_app_process_plant_data(ana_msg);
-
 #ifdef ADVANCED
     SBusSensCtrlMsg_t bus_msg = {0};
     SCtrlBusSensMsg_t ctrl_msg = {0};
@@ -129,6 +128,12 @@ void on_ctrl_execute()
     ctrl_msg = control_diag_process_bus_cmd(bus_msg._temp_data, bus_msg._moist_data);
     controller_bus_send(ctrl_msg._dev_id,ctrl_msg._cmd);
 #endif
+    if(btn_msg._btn_cmd == BTN_CMD_SHORT_PRESS || btn_msg._btn_cmd == BTN_CMD_LONG_PRESS)
+    {
+        if(record_sts == CTRL_RECORD_OFF) record_sts = CTRL_RECORD_ON;
+        else record_sts = CTRL_RECORD_OFF;
+        button_controller_send(BTN_CMD_NONE);
+    }
 
     // Handle power off and normal mode commands
     if(btn_msg._btn_cmd == BTN_CMD_PW_OFF)
@@ -137,17 +142,24 @@ void on_ctrl_execute()
         ctrl_ind_send(IND_LED1,FIXED_OFF);
         power_data.curnt_pw_mode = E_PW_OFF;
     }
-    else if(btn_msg._btn_cmd == BTN_CMD_NORMAL)
+    else if(record_sts == CTRL_RECORD_OFF)
     {
         ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,PW_WIFI_ON,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,FIXED_ON);
         sys_mode = SYS_NORMAL;
+        record_counter = 0;
     }
     else
-    {
+    {   
         ctrl_pw_send(PW_SENS_ON,PW_MAIN_ON,PW_SOIL_ON,PW_WIFI_ON,PW_MODE_FULL);
         ctrl_ind_send(IND_LED1,BLINK_500_MS);
         sys_mode = SYS_RECORD;
+        if(plant_buf.is_ready) 
+        {
+            record_counter++;
+        }
+        if(record_counter >= RECORD_MULTIPLER) record_sts = CTRL_RECORD_OFF;
+        plant_buf.record_counter = record_counter;
     }
 
     // Send control messages to wireless and memory controllers
