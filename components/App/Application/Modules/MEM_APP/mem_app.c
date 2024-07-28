@@ -43,8 +43,6 @@ SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record)
         return wav;
     }
     
-    uint32_t average = 0;
-    
     static char time_string[100];
     if(record)
     {
@@ -83,6 +81,72 @@ SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record)
     prev_start_secs = start_t;
 
     return wav;
+}
+
+SCsvData process_analog_data_to_csv(SEnvData_t analog_env,int64_t start_t, bool record)
+{
+    SCsvData csv;
+    STime_t start_secs = encode_time_to_date(start_t);
+    static bool file_create = true;
+    
+    static char time_string[100];
+    csv.file_create = file_create;
+    if(record)
+    {
+        // Generate WAV file name based on start time
+        if(file_create)
+        {
+            sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d_analog.csv", start_secs.year, start_secs.month, start_secs.day, start_secs.hour, start_secs.min, start_secs.sec);
+            file_create = false;
+        }
+        // Create file path for WAV file
+        sprintf(csv.file_path, "%s/%d/%s", WAV_FOLDER, wav_subfolder, time_string);
+        snprintf(csv.header, CSV_HEADER_SIZE, "Time(s),Analog Data,Soil Moisture(Percentage),Direct Sunlight(Percentage),Ambient Light(Percentage)\n");
+        snprintf(csv.data, CSV_ROW_SIZE, "%lld,%d,%u,%u,%u\n",(long long int)analog_env.instant_analog_time,(int)analog_env.plant_inst_data,analog_env.soil_moist,analog_env.sun,analog_env.light);
+
+    }
+    else
+    {
+        file_create = true;
+    }
+
+    csv.record = record;
+
+
+    return csv;
+}
+
+SCsvData process_digital_data_to_csv(SEnvData_t digital_env,int64_t start_t, bool record)
+{
+    SCsvData csv;
+    STime_t start_secs = encode_time_to_date(start_t);
+    static bool file_create = true;
+    
+    static char time_string[100];
+    csv.file_create = file_create;
+    if(record)
+    {
+        // Generate WAV file name based on start time
+        if(file_create)
+        {
+            sprintf(time_string, "%02d-%02d-%04d_%02d-%02d-%02d_digital.csv", start_secs.year, start_secs.month, start_secs.day, start_secs.hour, start_secs.min, start_secs.sec);
+            file_create = false;
+        }
+        // Create file path for WAV file
+        sprintf(csv.file_path, "%s/%d/%s", WAV_FOLDER, wav_subfolder, time_string);
+        snprintf(csv.header, CSV_HEADER_SIZE, "Time(s),X Val(g),Y Val(g),Z Val(g),Temperature (Celsius), Air Moisture(Percentage)\n");
+        snprintf(csv.data, CSV_ROW_SIZE, "%lld,%.2f,%.2f,%.2f,%.2f,%.2f\n",(long long int)digital_env.instant_digital_time,digital_env.x,digital_env.y,digital_env.z,digital_env.temp,digital_env.air_moist);
+
+    }
+    else
+    {
+        file_create = true;
+    }
+
+    csv.record = record;
+
+
+    return csv;
 }
 
 EMemTaskStatus_t mem_app_check_faults()

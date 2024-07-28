@@ -116,6 +116,36 @@ void save_wav_data(SWavData wav)
 
 }
 
+void save_csv_data(SCsvData csv)
+{
+
+        if(csv.record)
+        {
+            // Write WAV header and data to file
+            if(csv.file_create)
+            {
+                // Create WAV file if it doesn't exist
+                if (mem_port->file_create(csv.file_path) != MEM_DRV_OK)
+                {
+                    store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_CREATE_FILE_ERROR);
+                    TRACE_WARNING(csv.file_path, "file cannot be created");
+                    return; ///< Exit function.
+                }
+                if (mem_port->file_txt_write(csv.file_path, csv.header) != MEM_DRV_OK)
+                {
+                    store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
+                    TRACE_WARNING(csv.file_path, "file cannot be written correctly");
+                }
+            }
+            if (mem_port->file_txt_write(csv.file_path, csv.data) != MEM_DRV_OK)
+            {
+                store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
+                TRACE_WARNING(csv.file_path, "file cannot be written correctly");
+            }
+        }
+
+}
+
 void mem_drv_deinit()
 {
     if(mem_port->deinit() != MEM_DRV_OK)

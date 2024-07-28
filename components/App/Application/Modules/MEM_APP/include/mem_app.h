@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "i_mem_data.h"
+#include "mem_t_share.h"
 
 #define MINOR_FAULT_THRESHOLD -1
 #define MAYOR_FAULT_THESHOLD -20
@@ -21,6 +22,11 @@ void mem_app_init();
  * @return SWavData Struct containing the processed WAV data.
  */
 SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record);
+
+SCsvData process_analog_data_to_csv(SEnvData_t analog_env,int64_t start_t, bool record);
+
+SCsvData process_digital_data_to_csv(SEnvData_t digital_env,int64_t start_t, bool record);
+
 
 /**
  * @brief Checks faults in the memory application.

@@ -43,8 +43,14 @@ SEnvData_t control_app_process_env_data(SAnalogSensMsg_t analog_env_data, SBusSe
     temp_env.light = analog_env_data._env_data.light_percentage;
     temp_env.soil_moist = analog_env_data._env_data.soil_moist_percentage;
     temp_env.sun = analog_env_data._env_data.direct_sun_percentage;
+    temp_env.plant_inst_data = analog_env_data._plant_buff.instand_data;
+    temp_env.instant_analog_time = analog_env_data._plant_buff.instant_time;
     temp_env.temp = digital_env_data._temp_data.temperature;
     temp_env.air_moist = digital_env_data._moist_data.moist;
+    temp_env.x = digital_env_data._axis_buff.instant_x;
+    temp_env.y = digital_env_data._axis_buff.instant_y;
+    temp_env.z = digital_env_data._axis_buff.instant_z;
+    temp_env.instant_digital_time = digital_env_data._axis_buff.instant_time;
 
     return temp_env;
 }

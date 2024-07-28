@@ -22,6 +22,8 @@
 #define MEM_DRV_OK 0
 
 #define FILE_NAME_SIZE 200
+#define CSV_HEADER_SIZE 200
+#define CSV_ROW_SIZE 300
 
 #define WAV_CHUNKS 16
 #define WAV_CHANNELS 1
@@ -60,6 +62,15 @@ typedef struct
     uint32_t average;
     bool record;
 } SWavData;
+
+typedef struct
+{
+    char file_path[FILE_NAME_SIZE];
+    char header[CSV_HEADER_SIZE];
+    char data[CSV_ROW_SIZE];
+    bool record;
+    bool file_create;
+} SCsvData;
 
 
 typedef enum{

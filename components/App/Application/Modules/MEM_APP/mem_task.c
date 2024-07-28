@@ -74,11 +74,16 @@ void on_mem_init()
 void on_mem_execute()
 {
     SWavData wav;
+    static SCsvData analog_csv;
+    static SCsvData digital_csv;
     SCtrlMemMsg_t msg;
     ctrl_mem_read(&msg);
     bool record = (msg._current_mode == SYS_RECORD);
     wav = process_data_to_wav(msg._plant_signal.data,msg._plant_signal.start_time,record);
-
+    #ifdef ADVANCED
+        analog_csv = process_analog_data_to_csv(msg._env_data,msg._plant_signal.start_time,record);
+        digital_csv = process_digital_data_to_csv(msg._env_data,msg._plant_signal.start_time,record);
+    #endif
     if(msg._power_data.curnt_pw_mode == E_PW_OFF)
     {
         mem_drv_deinit();
@@ -88,7 +93,12 @@ void on_mem_execute()
         if(wav.average != 0)
         {
             save_wav_data(wav);
+
         }
+#ifdef ADVANCED
+        save_csv_data(analog_csv);
+        save_csv_data(digital_csv);
+#endif
     }
     // Check for faults
     if(mem_app_check_faults() != MEM_TASK_OK)

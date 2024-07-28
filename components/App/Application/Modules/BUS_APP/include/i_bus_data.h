@@ -75,6 +75,10 @@ typedef struct {
     float z[DATA_BUFFER_SIZE];
     size_t size;
     bool ready;
+    float instant_x;
+    float instant_y;
+    float instant_z;
+    int64_t instant_time;
 } SAxisDataBuffer_t;
 
 typedef struct{

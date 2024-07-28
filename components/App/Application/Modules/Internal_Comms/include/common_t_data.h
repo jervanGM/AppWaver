@@ -46,8 +46,14 @@ typedef struct {
     uint8_t light;
     uint8_t sun;
     uint8_t soil_moist;
+    uint32_t plant_inst_data;
+    int64_t instant_analog_time;
+    float x;
+    float y;
+    float z;
     float temp;
     float air_moist;
+    int64_t instant_digital_time;
 } SEnvData_t;
 
 typedef struct {

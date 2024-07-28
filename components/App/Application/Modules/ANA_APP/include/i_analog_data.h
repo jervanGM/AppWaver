@@ -52,6 +52,8 @@ typedef struct {
     uint32_t data[DATA_BUFFER_SIZE];
     size_t size;
     bool ready;
+    uint32_t instand_data;
+    int64_t instant_time;
 } SDataBuffer_t;
 
 typedef struct{

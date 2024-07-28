@@ -20,6 +20,8 @@ void mem_drv_init();
  */
 void save_wav_data(SWavData wav);
 
+void save_csv_data(SCsvData csv);
+
 /**
  * @brief Deinitializes the memory driver.
  * 

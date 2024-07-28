@@ -89,25 +89,22 @@ void process_data(uint8_t *raw_data, size_t size)
     adc2 = ((uint16_t)raw_data[14] << 8 | raw_data[15]) / ACC_ADC_CONV_FACTOR;
     adc3 = ((uint16_t)raw_data[16] << 8 | raw_data[17]) / ACC_ADC_CONV_FACTOR;
 
-    if (clean_data) {
+    if (data_buffer.ready) {
         // Clear the data buffer if it's ready
         clear_axis_data_buffer();
-        sum_temp = 0;
-        sum_moist = 0;
-        clean_data = false;
     }
 
+    data_buffer.instant_x = x;
+    data_buffer.instant_y = y;
+    data_buffer.instant_z = z;
+
+    data_buffer.instant_time = get_system_time();
     // Add data to the axis buffer
     add_to_axis_buffer(x, y, z);
-    sum_temp += temperature;
-    sum_moist += moisture;
 
-    if (data_buffer.ready) {
-        // Calculate and store average temperature and moisture
-        temp_data.temperature = sum_temp / DATA_BUFFER_SIZE;
-        moist_data.moist = sum_moist / DATA_BUFFER_SIZE;
-        clean_data = true;
-    }
+    // Calculate and store average temperature and moisture
+    temp_data.temperature = temperature;
+    moist_data.moist = moisture;
 
     // Uncomment the following line to print sensor data for debugging
     // printf("SENSOR MSG: %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f %0.3f\n", temperature, moisture, x, y, z, adc1, adc2, adc3);
@@ -120,6 +117,10 @@ SAxisDataBuffer_t get_axis_data_buffer()
         return data_buffer;
     }
     SAxisDataBuffer_t default_data = {0};
+    default_data.instant_time = data_buffer.instant_time;
+    default_data.instant_x = data_buffer.instant_x;
+    default_data.instant_y = data_buffer.instant_y;
+    default_data.instant_z = data_buffer.instant_z;
     return default_data;   
 }
 
