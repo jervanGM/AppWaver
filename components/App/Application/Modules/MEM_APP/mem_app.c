@@ -44,6 +44,7 @@ SWavData process_data_to_wav(uint32_t* data, int64_t start_t, bool record)
     }
     
     static char time_string[100];
+    wav.file_create = file_create;
     if(record)
     {
         if (prev_start_secs != start_t)

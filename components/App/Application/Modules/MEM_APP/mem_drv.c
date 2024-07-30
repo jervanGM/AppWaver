@@ -82,12 +82,11 @@ void mem_drv_init()
 
 void save_wav_data(SWavData wav)
 {
-    static bool file_create = true;
 
         if(wav.record)
         {
             // Write WAV header and data to file
-            if(file_create)
+            if(wav.file_create)
             {
                 // Create WAV file if it doesn't exist
                 if (mem_port->file_create(wav.file_path) != MEM_DRV_OK)
@@ -101,17 +100,12 @@ void save_wav_data(SWavData wav)
                     store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
                     TRACE_WARNING(wav.file_path, "file cannot be written correctly");
                 }
-                file_create = false;
             }
             if (mem_port->file_bin_write(wav.file_path, wav.data, sizeof(int16_t), DATA_BUFFER_SIZE) != MEM_DRV_OK)
             {
                 store_error_in_slot(EXT_MEM_ERROR_SLOT, MEM_DRV_WRITE_FILE_ERROR);
                 TRACE_WARNING(wav.file_path, "file cannot be written correctly");
             }
-        }
-        else
-        {
-            file_create = true;
         }
 
 }

@@ -123,6 +123,11 @@ void on_ctrl_execute()
     SAccItMsg_t acc_it_msg = {0};
     bus_controller_read(&bus_msg);
     acc_it_controller_read(&acc_it_msg);
+    if(acc_it_msg._int_cmd == ACT_IT1)
+    {
+        btn_msg._btn_cmd = BTN_CMD_SHORT_PRESS;
+        acc_it_controller_send(ACT_NONE,get_system_time());
+    }
     env_data = control_app_process_env_data(ana_msg,bus_msg);
     axis_buf = control_app_process_acc_data(bus_msg,acc_it_msg);
     ctrl_msg = control_diag_process_bus_cmd(bus_msg._temp_data, bus_msg._moist_data);

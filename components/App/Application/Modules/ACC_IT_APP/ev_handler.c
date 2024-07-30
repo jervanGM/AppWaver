@@ -35,29 +35,7 @@ EIntCmd_t acc_it_handle_pulse()
     /*Checks for any IT event*/
     if (acc_bus_port != NULL)
     {
-        uint8_t data = 0;
-        if(read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_INT1_SRC, &data) != ACC_IT_DRV_OK)
-        {
-            return EV_FAIL;
-        }
-        if(data >= IT1_THESHOLD)
-        {
-            return ACT_IT1;
-        }
-
-        data = 0;
-        if(read_register(LIS3DH_DEFAULT_ADDR, LIS3DH_INT2_SRC, &data) != ACC_IT_DRV_OK)
-        {
-            return EV_FAIL;
-        }
-        if(data >= IT2_THESHOLD)
-        {
-            return ACT_IT2;
-        }
-
-        store_error_in_slot(ACC_IT_ERROR_SLOT, ACC_IT_CMD_ERROR);  // Log unknown interrupt error
-        TRACE_ERROR("Unknown interrupt has been launched");
-        return ACT_UNK;
+        return ACT_IT1;
     }
     else
     {

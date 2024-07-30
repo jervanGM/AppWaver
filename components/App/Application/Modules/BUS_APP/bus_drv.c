@@ -85,13 +85,13 @@ void devices_init()
 
         //Enable INT1
         buf[0] = LIS3DH_CTRL_REG3;
-        buf[1] = 0x40;
+        buf[1] = 0x80;
         err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
 
         //Enable block data update when values are readed
         buf[0] = LIS3DH_CTRL_REG4;
-        buf[1] = 0x80;
+        buf[1] = 0xB8;
         err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
 
@@ -107,29 +107,55 @@ void devices_init()
         err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
 
+        //Double click X axis enable
+        buf[0] = LIS3DH_CLICK_CFG;
+        buf[1] = 0x2A;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        task_delay(10);
+
+        buf[0] = LIS3DH_CLICK_THS;
+        buf[1] = 0x10;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        task_delay(10);
+
+        buf[0] = LIS3DH_TIME_LIMIT;
+        buf[1] = 0x20;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        task_delay(10);
+
+        buf[0] = LIS3DH_TIME_LATENCY;
+        buf[1] = 0x10;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        task_delay(10);
+
+        buf[0] = LIS3DH_TIME_WINDOW;
+        buf[1] = 0x10;
+        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        task_delay(10);
+
         //ADC and internal temperature sensor enabled
         buf[0] = LIS3DH_TEMP_CFG_REG;
         buf[1] = 0xC0;
         err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
         task_delay(10);
 
-        //INT1 theshold at 350 mg
-        buf[0] = LIS3DH_INT1_THS;
-        buf[1] = 0x10;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
-        task_delay(10);
+        // //INT1 theshold at 350 mg
+        // buf[0] = LIS3DH_INT1_THS;
+        // buf[1] = 0x10;
+        // err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        // task_delay(10);
 
-        //Set INT1 duration
-        buf[0] = LIS3DH_INT1_DURATION;
-        buf[1] = 0x05;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
-        task_delay(10);
+        // //Set INT1 duration
+        // buf[0] = LIS3DH_INT1_DURATION;
+        // buf[1] = 0x05;
+        // err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        // task_delay(10);
 
-        //Enable free fall interruption trigger
-        buf[0] = LIS3DH_INT1_CFG;
-        buf[1] = 0x95;
-        err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
-        task_delay(10);
+        // //Enable free fall interruption trigger
+        // buf[0] = LIS3DH_INT1_CFG;
+        // buf[1] = 0x95;
+        // err += bus_port->write_reg(LIS3DH_DEFAULT_ADDR, buf, 2);
+        // task_delay(10);
 
         //Read device id
         buf[0] = LIS3DH_WHO_AM_I;

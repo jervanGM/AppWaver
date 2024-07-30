@@ -37,6 +37,7 @@ typedef enum{
 }EAccItTaskStatus_t;
 
 typedef enum{
+    ACT_NONE,
     ACT_IT1,
     ACT_IT2,
     ACT_UNK,

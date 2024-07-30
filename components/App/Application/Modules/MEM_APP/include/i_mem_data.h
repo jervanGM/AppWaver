@@ -61,6 +61,7 @@ typedef struct
     int16_t* data;
     uint32_t average;
     bool record;
+    bool file_create;
 } SWavData;
 
 typedef struct
